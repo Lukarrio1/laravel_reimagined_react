@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { restClient } from "./Laravel Reimagined Library/restClient";
+import { restClient } from "./Laravel _Reimagined_Library/restClient";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setNodes } from "./store/coreNodes";
@@ -73,7 +73,7 @@ function App() {
         {pages_properties.length > 0 &&
           Object.keys(pages).map((page) => {
             let page_props = pages_properties.filter(
-              (p) => p.component == page
+              (p) => p.component && p.component == page
             )[0];
             page_props = page_props ? page_props : {};
             const path = page_props?.path ? page_props.path : "/";
