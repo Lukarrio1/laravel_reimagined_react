@@ -1,13 +1,6 @@
 import { createSlice, configureStore, combineReducers } from "@reduxjs/toolkit";
-
-import coreNodesReducer from "./coreNodes";
-import settingReducer from "./setting";
-import AuthenticationReducer from "./auth";
+import Laravel_Reimagined_Reducers from "../Laravel _Reimagined_Library/React Base Stores/Laravel_Reimagined_Reducers";
 
 export const store = configureStore({
-  reducer: {
-    coreNodes: coreNodesReducer,
-    setting: settingReducer,
-    authentication: AuthenticationReducer,
-  },
+  reducer: { ...Laravel_Reimagined_Reducers },
 });

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import PermissionWrapper from "./PermissionWrapper";
+import { useNavigate } from "react-router-dom";
 
-
-// use text from rest to override the text of the button
-export default function Link({ uuid, ...rest }) {
+const useNavigator = (UUID) => {
+  const navigate = useNavigate();
+  const [isReady, setIsReady] = useState(false);
+  const [rest, setProperties] = useState({});
   const { Actual_link } = useSelector((state) => {
     let temp = true;
     const currentNode = [
       ...state?.coreNodes.links,
       ...state?.coreNodes.components,
-    ]?.filter((cl) => cl.uuid == uuid)[0];
+    ]?.filter((cl) => cl.uuid == UUID)[0];
 
     if (!currentNode) temp = false;
     if (
@@ -34,8 +34,10 @@ export default function Link({ uuid, ...rest }) {
   const [newLink, setNewLink] = useState(null);
 
   useEffect(() => {
+    if (isReady == false) return;
     if (!Actual_link) return;
     let linkSeg = Actual_link.node_route.split("/");
+
     const linkSegValue = {};
     Object.keys(rest)?.forEach((key) => {
       linkSegValue[":" + key] = rest[key];
@@ -49,18 +51,20 @@ export default function Link({ uuid, ...rest }) {
       })
       .join("/");
     setNewLink({ ...Actual_link, node_route: linkSeg });
-  }, []);
+  }, [isReady]);
 
-  return newLink ? (
-    <PermissionWrapper
-      uuid={uuid}
-      children={
-        <NavLink to={newLink?.node_route} {...rest}>
-          {!rest?.text ? newLink?.name : rest?.text}
-        </NavLink>
-      }
-    ></PermissionWrapper>
-  ) : (
-    ""
-  );
-}
+  useEffect(() => {
+    if (!newLink) return;
+    if (!Actual_link?.hasAccess) return;
+    navigate(newLink?.node_route);
+  }, [newLink]);
+
+  return {
+    setNavProperties: ({ ready, ...next }) => {
+      setProperties(next);
+      setIsReady(ready);
+    },
+  };
+};
+
+export default useNavigator;
