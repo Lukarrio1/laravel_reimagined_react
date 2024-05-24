@@ -7,12 +7,16 @@ import { setSettings } from "./React Base Stores/setting";
 import { setNodes } from "./React Base Stores/coreNodes";
 import { restClient } from "./restClient";
 import { setAuthProperties } from "./React Base Stores/auth";
+import View from "../Pages/Todo/View";
 
 const pages = {
   HomePage: Home,
   NotFound: NotFound,
   LoginPage: Login,
   NoPermission,
+  // todo edit happens on the same page as Todos
+  Todos: View,
+  EditTodo: View,
 };
 
 const generateRoutes = (pages_properties, pages, authUser) => {
@@ -50,7 +54,7 @@ const generateRoutes = (pages_properties, pages, authUser) => {
 };
 
 const assembleApp = async (dispatch) => {
-  let uuid = "";
+  let uuid = "8rHTiiM6KcJrpiidNm6DZLIxHMutYPghSA6llyDcz2IyraxvyS";
   try {
     const {
       data: { user },
@@ -59,7 +63,6 @@ const assembleApp = async (dispatch) => {
     dispatch(setAuthProperties(user));
   } catch (error) {}
 
-  uuid = "8rHTiiM6KcJrpiidNm6DZLIxHMutYPghSA6llyDcz2IyraxvyS";
   const { data: nodes } = await restClient(uuid);
   dispatch(setNodes(nodes));
 

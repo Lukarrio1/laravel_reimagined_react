@@ -24,10 +24,10 @@ import {
 import { assembleApp } from "./Laravel _Reimagined_Library/AppStructure";
 import Footer from "./Pages/Footer";
 
-// sessionStorage.setItem(
-//   "bearerToken",
-//   "2|jAdtGx3kHvNiPsPeQ3W96kymTb2VCnryVfQYkTtv1a753bc6"
-// );
+sessionStorage.setItem(
+  "bearerToken",
+  "1|FNXewFiBHip4xtmT79R6DsbRgNmPcFOl3VGo4gsj566fe99f"
+);
 
 function App() {
   const [pages_properties, setPagesProperties] = useState([]);
