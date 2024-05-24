@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import PermissionWrapper from "./PermissionWrapper";
 
-
 // use text from rest to override the text of the button
 export default function Link({ uuid, ...rest }) {
   const { Actual_link } = useSelector((state) => {
@@ -26,8 +25,6 @@ export default function Link({ uuid, ...rest }) {
         hasAccess: temp,
         ...currentNode?.properties?.value,
       },
-      authPermissions: state?.authentication.permissions ?? [],
-      authUser: state?.authentication.user,
     };
   });
 

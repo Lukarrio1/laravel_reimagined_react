@@ -10,16 +10,9 @@ import ReactDOM from "react-dom/client";
 import {
   BrowserRouter,
   Routes,
-  Route,
-  Navigate,
-  useLocation,
-  Router,
-  useParams,
 } from "react-router-dom";
-import Home from "./Pages/Home";
 import {
   generateRoutes,
-  pages,
 } from "./Laravel _Reimagined_Library/AppStructure";
 import { assembleApp } from "./Laravel _Reimagined_Library/AppStructure";
 import Footer from "./Pages/Footer";
@@ -53,7 +46,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {pages_properties.length > 0 &&
-            generateRoutes(pages_properties, pages, authUser)}
+            generateRoutes(pages_properties, authUser)}
         </Routes>
       </BrowserRouter>
       <Footer version={appVersion} />

@@ -15,7 +15,7 @@ const pages = {
   NoPermission,
 };
 
-const generateRoutes = (pages_properties, pages, authUser) => {
+const generateRoutes = (pages_properties, authUser) => {
   if (pages_properties.length === 0) {
     return null;
   }

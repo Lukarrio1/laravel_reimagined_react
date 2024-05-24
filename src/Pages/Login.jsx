@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import useNavigator from "../Laravel _Reimagined_Library/useNavigator";
 
 export default function Login() {
-  const navigator = useNavigator(
+  const HomePage = useNavigator(
     "nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"
   );
 
@@ -11,7 +11,7 @@ export default function Login() {
   return (
     <div
       onClick={() => {
-        navigator.setNavProperties({ ready: true,greeting:"Hello there" });
+        HomePage.setNavProperties({ ready: true });
       }}
     >
       This is the login Page
