@@ -7,12 +7,14 @@ import { setSettings } from "./React Base Stores/setting";
 import { setNodes } from "./React Base Stores/coreNodes";
 import { restClient } from "./restClient";
 import { setAuthProperties } from "./React Base Stores/auth";
+import Register from "../Pages/Register";
 
 const pages = {
   HomePage: Home,
   NotFound: NotFound,
   LoginPage: Login,
   NoPermission,
+  RegisterPage: Register,
 };
 
 const generateRoutes = (pages_properties, authUser) => {
@@ -30,21 +32,11 @@ const generateRoutes = (pages_properties, authUser) => {
       pages[
         page_props && page_props?.hasAccess === true && page_props.component
           ? page_props.component
-          : "NoPermission"
+          : "LoginPage"
       ];
 
     return (
-      <Route
-        key={path} // Add a key prop for better list handling
-        path={path}
-        element={
-          authUser !== -1 && [1, 2].includes(page_props?.isAuthenticated) ? (
-            <Component />
-          ) : (
-            <Login />
-          )
-        }
-      />
+      <Route key={path} path={path} element={<Component></Component>} />
     );
   });
 };

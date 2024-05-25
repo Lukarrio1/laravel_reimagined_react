@@ -35,7 +35,9 @@ const useNavigator = (UUID) => {
 
   useEffect(() => {
     if (isReady == false) return;
-    if (!Actual_link) return;
+    if (!Actual_link?.node_route) {
+      return;
+    }
     let linkSeg = Actual_link.node_route.split("/");
 
     const linkSegValue = {};
@@ -54,7 +56,7 @@ const useNavigator = (UUID) => {
   }, [isReady]);
 
   useEffect(() => {
-    if (!newLink) return;
+    if (!newLink?.name) return;
     if (!Actual_link?.hasAccess) return;
     navigate(newLink?.node_route);
   }, [newLink]);
