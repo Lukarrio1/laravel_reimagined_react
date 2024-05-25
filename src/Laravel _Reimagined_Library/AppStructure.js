@@ -35,14 +35,12 @@ const generateRoutes = (pages_properties, authUser) => {
           : "LoginPage"
       ];
 
-    return (
-      <Route key={path} path={path} element={<Component></Component>} />
-    );
+    return <Route key={path} path={path} element={<Component></Component>} />;
   });
 };
 
 const assembleApp = async (dispatch) => {
-  let uuid = "";
+  let uuid = "8rHTiiM6KcJrpiidNm6DZLIxHMutYPghSA6llyDcz2IyraxvyS";
   try {
     const {
       data: { user },
@@ -51,7 +49,6 @@ const assembleApp = async (dispatch) => {
     dispatch(setAuthProperties(user));
   } catch (error) {}
 
-  uuid = "8rHTiiM6KcJrpiidNm6DZLIxHMutYPghSA6llyDcz2IyraxvyS";
   const { data: nodes } = await restClient(uuid);
   dispatch(setNodes(nodes));
 
@@ -60,4 +57,5 @@ const assembleApp = async (dispatch) => {
   } = await restClient("xBULrpJXyMrElSIu6OhIlizi3WwrQnQTm7x6RloTyg4QzmOE3p");
   dispatch(setSettings(settings));
 };
+
 export { pages, generateRoutes, assembleApp };
