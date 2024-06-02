@@ -21,7 +21,14 @@ export default function Link({ uuid, text = "", ...rest }) {
       currentNode?.authentication_level?.value == 0
     )
       temp = false;
-
+    console.log(
+      {
+        name: currentNode?.name,
+        hasAccess: temp,
+        ...currentNode?.properties?.value,
+      },
+      "this is the current node"
+    );
     return {
       Actual_link: {
         name: currentNode?.name,
@@ -51,7 +58,7 @@ export default function Link({ uuid, text = "", ...rest }) {
     setNewLink({ ...Actual_link, node_route: linkSeg });
   }, []);
 
-  return newLink ? (
+  return newLink?.hasAccess ? (
     <PermissionWrapper
       uuid={uuid}
       children={

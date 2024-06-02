@@ -11,11 +11,7 @@ import { BrowserRouter, Routes } from "react-router-dom";
 import { generateRoutes } from "./Laravel _Reimagined_Library/AppStructure";
 import { assembleApp } from "./Laravel _Reimagined_Library/AppStructure";
 import Footer from "./Pages/Footer";
-
-// sessionStorage.setItem(
-//   "bearerToken",
-//   "2|Zx6vbBd9rSB3x2ZN7WvFAFEKupQTxczKMqHhtCP18ff82e97"
-// );
+import Navbar from "./Components/Navbar";
 
 function App() {
   const [pages_properties, setPagesProperties] = useState([]);

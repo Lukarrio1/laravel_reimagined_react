@@ -8,6 +8,7 @@ import { setNodes } from "./React Base Stores/coreNodes";
 import { restClient } from "./restClient";
 import auth, { setAuthProperties } from "./React Base Stores/auth";
 import Register from "../Pages/Register";
+import Layout from "../Components/Layout";
 
 const pages = {
   HomePage: Home,
@@ -36,7 +37,7 @@ const generateRoutes = (pages_properties, authUser) => {
         path={path}
         element={
           page_props?.hasAccess === true ? (
-            <Component></Component>
+            <Layout Component={<Component></Component>}></Layout>
           ) : (
             <NoPermission
               link_uuid={
