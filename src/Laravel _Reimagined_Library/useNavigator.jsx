@@ -35,9 +35,6 @@ const useNavigator = (UUID) => {
 
   useEffect(() => {
     if (isReady == false) return;
-    if (!Actual_link?.node_route) {
-      return;
-    }
     let linkSeg = Actual_link.node_route.split("/");
 
     const linkSegValue = {};

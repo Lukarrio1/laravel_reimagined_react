@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import PermissionWrapper from "./PermissionWrapper";
 
 // use text from rest to override the text of the button
-export default function Link({ uuid, ...rest }) {
+export default function Link({ uuid, text = "", ...rest }) {
   const { Actual_link } = useSelector((state) => {
     let temp = true;
     const currentNode = [
@@ -12,7 +12,10 @@ export default function Link({ uuid, ...rest }) {
       ...state?.coreNodes.components,
     ]?.filter((cl) => cl.uuid == uuid)[0];
 
-    if (!currentNode) temp = false;
+    if (!currentNode) {
+      return { Actual_link: {} };
+    }
+
     if (
       state?.authentication.user != null &&
       currentNode?.authentication_level?.value == 0
@@ -31,7 +34,7 @@ export default function Link({ uuid, ...rest }) {
   const [newLink, setNewLink] = useState(null);
 
   useEffect(() => {
-    if (!Actual_link) return;
+    if (!Actual_link?.node_route) return;
     let linkSeg = Actual_link.node_route.split("/");
     const linkSegValue = {};
     Object.keys(rest)?.forEach((key) => {
@@ -53,7 +56,7 @@ export default function Link({ uuid, ...rest }) {
       uuid={uuid}
       children={
         <NavLink to={newLink?.node_route} {...rest}>
-          {!rest?.text ? newLink?.name : rest?.text}
+          {!text ? newLink?.name : text}
         </NavLink>
       }
     ></PermissionWrapper>

@@ -6,7 +6,7 @@ import NotFound from "../Pages/NotFound";
 import { setSettings } from "./React Base Stores/setting";
 import { setNodes } from "./React Base Stores/coreNodes";
 import { restClient } from "./restClient";
-import { setAuthProperties } from "./React Base Stores/auth";
+import auth, { setAuthProperties } from "./React Base Stores/auth";
 import Register from "../Pages/Register";
 
 const pages = {
@@ -28,14 +28,27 @@ const generateRoutes = (pages_properties, authUser) => {
     )[0];
     page_props = page_props ? page_props : {};
     const path = page_props?.path ? page_props.path : "/";
-    const Component =
-      pages[
-        page_props && page_props?.hasAccess === true && page_props.component
-          ? page_props.component
-          : "LoginPage"
-      ];
+    const Component = pages[page_props.component ?? "LoginPage"];
 
-    return <Route key={path} path={path} element={<Component></Component>} />;
+    return (
+      <Route
+        key={path}
+        path={path}
+        element={
+          page_props?.hasAccess === true ? (
+            <Component></Component>
+          ) : (
+            <NoPermission
+              link_uuid={
+                authUser != null
+                  ? "nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"
+                  : "K7rMLEQkQjaUJOOOyXQIbhjssBvPTTpR7MtmLwoFS3TQxXpKLe"
+              }
+            ></NoPermission>
+          )
+        }
+      />
+    );
   });
 };
 

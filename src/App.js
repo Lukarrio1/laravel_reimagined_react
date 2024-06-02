@@ -7,19 +7,14 @@ import { setNodes } from "./Laravel _Reimagined_Library/React Base Stores/coreNo
 import { setSettings } from "./Laravel _Reimagined_Library/React Base Stores/setting";
 import { store } from "./store/store";
 import ReactDOM from "react-dom/client";
-import {
-  BrowserRouter,
-  Routes,
-} from "react-router-dom";
-import {
-  generateRoutes,
-} from "./Laravel _Reimagined_Library/AppStructure";
+import { BrowserRouter, Routes } from "react-router-dom";
+import { generateRoutes } from "./Laravel _Reimagined_Library/AppStructure";
 import { assembleApp } from "./Laravel _Reimagined_Library/AppStructure";
 import Footer from "./Pages/Footer";
 
 // sessionStorage.setItem(
 //   "bearerToken",
-//   "2|jAdtGx3kHvNiPsPeQ3W96kymTb2VCnryVfQYkTtv1a753bc6"
+//   "2|Zx6vbBd9rSB3x2ZN7WvFAFEKupQTxczKMqHhtCP18ff82e97"
 // );
 
 function App() {
