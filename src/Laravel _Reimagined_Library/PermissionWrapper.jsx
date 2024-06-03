@@ -20,8 +20,10 @@ const PermissionWrapper = ({ uuid, children }) => {
     children
   ) : !currentNode ? (
     <></>
-  ) : (
+  ) : currentNode?.node_type["value"] > 2 ? (
     <NoPermission></NoPermission>
+  ) : (
+    ""
   );
 };
 
