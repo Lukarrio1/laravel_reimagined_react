@@ -6,7 +6,7 @@ const coreNodes = createSlice({
     pages: [],
     links: [],
     components: [],
-    routes:[]
+    routes: [],
   },
   reducers: {
     setNodes: (state, { payload }) => {

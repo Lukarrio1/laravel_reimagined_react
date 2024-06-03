@@ -15,8 +15,12 @@ const Authentication = createSlice({
       localStorage.setItem("isLoggedIn", true);
       return state;
     },
+    logout: () => {
+      sessionStorage.removeItem("bearerToken");
+      window.location.href = "/";
+    },
   },
 });
 
-export const { setAuthProperties } = Authentication.actions;
+export const { setAuthProperties,logout } = Authentication.actions;
 export default Authentication.reducer;

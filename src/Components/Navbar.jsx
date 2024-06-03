@@ -1,6 +1,8 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Link from "../Laravel _Reimagined_Library/Link";
+import { logout } from "../Laravel _Reimagined_Library/React Base Stores/auth";
+import PermissionWrapper from "../Laravel _Reimagined_Library/PermissionWrapper";
 
 export default function Navbar() {
   const { app_name } = useSelector((state) => {
@@ -8,6 +10,7 @@ export default function Navbar() {
       app_name: state?.setting?.settings?.app_name,
     };
   });
+  const dispatch = useDispatch();
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <a className="navbar-brand" href="#">
@@ -41,6 +44,19 @@ export default function Navbar() {
               uuid={"K7rMLEQkQjaUJOOOyXQIbhjssBvPTTpR7MtmLwoFS3TQxXpKLe"}
               className="nav-link"
             ></Link>
+          </li>
+          <li className="nav-item">
+            <PermissionWrapper
+              uuid={"nJzGJ7fUwMill7xoaCjl3dBhm0z9vu6Nh50GdSyM5YDUDlRmOn"}
+            >
+              <a
+                href="#"
+                onClick={() => dispatch(logout())}
+                className="nav-link"
+              >
+                Logout
+              </a>
+            </PermissionWrapper>
           </li>
         </ul>
       </div>

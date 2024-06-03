@@ -29,7 +29,7 @@ const generateRoutes = (pages_properties, authUser) => {
     )[0];
     page_props = page_props ? page_props : {};
     const path = page_props?.path ? page_props.path : "/";
-    const Component = pages[page_props.component ?? "LoginPage"];
+    const Component = pages[page_props.component ?? "NoFound"];
 
     return (
       <Route
@@ -37,7 +37,10 @@ const generateRoutes = (pages_properties, authUser) => {
         path={path}
         element={
           page_props?.hasAccess === true ? (
-            <Layout Component={<Component></Component>}></Layout>
+            <Layout
+              page={{ ...page_props }}
+              Component={<Component></Component>}
+            ></Layout>
           ) : (
             <NoPermission
               link_uuid={
@@ -54,22 +57,24 @@ const generateRoutes = (pages_properties, authUser) => {
 };
 
 const assembleApp = async (dispatch) => {
-  let uuid = "8rHTiiM6KcJrpiidNm6DZLIxHMutYPghSA6llyDcz2IyraxvyS";
-  try {
-    const {
-      data: { user },
-    } = await restClient("kZ5ZSVmv6BWUYWbPI0is2N3kiy6agWIm4fZw4LUBUbx2xi2Reo");
-    uuid = "QGXWjhKGG4odx9O6zOcy7MSKyjYO3KW9nw9orosCQD6vEEHMnk";
-    dispatch(setAuthProperties(user));
-  } catch (error) {}
-
-  const { data: nodes } = await restClient(uuid);
-  dispatch(setNodes(nodes));
-
   const {
     data: { settings },
   } = await restClient("xBULrpJXyMrElSIu6OhIlizi3WwrQnQTm7x6RloTyg4QzmOE3p");
   dispatch(setSettings(settings));
+  try {
+    const {
+      data: { user },
+    } = await restClient("kZ5ZSVmv6BWUYWbPI0is2N3kiy6agWIm4fZw4LUBUbx2xi2Reo");
+    setUpNodes("QGXWjhKGG4odx9O6zOcy7MSKyjYO3KW9nw9orosCQD6vEEHMnk", dispatch);
+    dispatch(setAuthProperties(user));
+    return;
+  } catch (error) {}
+  setUpNodes("0zFz4RFZqQXIggfj4fbMhWnCCiM4qThLyhbGYpumdo3xkAdB2H", dispatch);
+};
+
+const setUpNodes = async (uuid, dispatch) => {
+  const { data: nodes } = await restClient(uuid);
+  dispatch(setNodes(nodes));
 };
 
 export { pages, generateRoutes, assembleApp };

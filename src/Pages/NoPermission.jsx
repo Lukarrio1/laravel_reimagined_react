@@ -26,8 +26,9 @@ export default function NoPermission({ link_uuid }) {
     <div style={styles.container}>
       <h1 style={styles.heading}>Permission Required</h1>
       <p style={styles.message}>
-        You do not have the necessary permissions to access this page. Please
-        contact your administrator or visit <Link uuid={link_uuid} className="btn btn-sm btn-default"></Link>.
+        You do not have the necessary permissions to access this page. <br />
+        Please contact your administrator or visit{" "}
+        <Link uuid={link_uuid} className="btn btn-sm btn-default"></Link>.
       </p>
     </div>
   );

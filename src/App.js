@@ -40,7 +40,6 @@ function App() {
             generateRoutes(pages_properties, authUser)}
         </Routes>
       </BrowserRouter>
-      <Footer version={appVersion} />
     </>
   );
 }

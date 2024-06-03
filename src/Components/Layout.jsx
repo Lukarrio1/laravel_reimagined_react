@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./Navbar";
+import Footer from "../Pages/Footer";
+import { useSelector } from "react-redux";
 
-export default function Layout({ Component }) {
+export default function Layout({ Component, page }) {
+  const { app_version, app_animation } = useSelector((state) => {
+    return {
+      app_version: state?.setting?.settings?.app_version,
+      app_animation: state?.setting?.settings?.app_animation,
+    };
+  });
+
+  useEffect(() => {
+
+  }, []);
+
   return (
     <>
       <Navbar></Navbar>
-      {Component}
+      <div className={"container " + app_animation}>{Component}</div>
+      <Footer version={app_version} />
     </>
   );
 }
