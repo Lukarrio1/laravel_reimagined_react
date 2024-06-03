@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import Link from "../Laravel _Reimagined_Library/Link";
 import restClient from "../Laravel _Reimagined_Library";
+import useNavigator from "../Laravel _Reimagined_Library/useNavigator";
+import { setUpNodes } from "../Laravel _Reimagined_Library/AppStructure";
+import { useDispatch } from "react-redux";
+import { setAuthProperties } from "../Laravel _Reimagined_Library/React Base Stores/auth";
 
 export default function Register() {
   const [error, setError] = useState(null);
+  const HomePageLink = useNavigator(
+    "nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"
+  );
   const [creds, setCredentials] = useState({
     email: "",
     password: "",
@@ -19,9 +26,8 @@ export default function Register() {
         { ...creds }
       );
       sessionStorage.setItem("bearerToken", data?.token);
-      window.location.href = "/";
+      window.location.href = HomePageLink?.node?.node_route
     } catch (error) {
-      console.log(error?.response?.data?.errors);
       setError(error?.response?.data?.errors);
     }
   };

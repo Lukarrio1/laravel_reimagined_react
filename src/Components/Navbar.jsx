@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "../Laravel _Reimagined_Library/Link";
 import { logout } from "../Laravel _Reimagined_Library/React Base Stores/auth";
 import PermissionWrapper from "../Laravel _Reimagined_Library/PermissionWrapper";
+import useNavigator from "../Laravel _Reimagined_Library/useNavigator";
+import { setUpNodes } from "../Laravel _Reimagined_Library/AppStructure";
 
 export default function Navbar() {
   const { app_name } = useSelector((state) => {
@@ -10,6 +12,10 @@ export default function Navbar() {
       app_name: state?.setting?.settings?.app_name,
     };
   });
+  const LoginPageLink = useNavigator(
+    "K7rMLEQkQjaUJOOOyXQIbhjssBvPTTpR7MtmLwoFS3TQxXpKLe"
+  );
+
   const dispatch = useDispatch();
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -51,7 +57,14 @@ export default function Navbar() {
             >
               <a
                 href="#"
-                onClick={() => dispatch(logout())}
+                onClick={() => {
+                  dispatch(logout());
+                  setUpNodes(
+                    "0zFz4RFZqQXIggfj4fbMhWnCCiM4qThLyhbGYpumdo3xkAdB2H",
+                    dispatch
+                  );
+                  LoginPageLink.setNavProperties({ ready: true });
+                }}
                 className="nav-link"
               >
                 Logout

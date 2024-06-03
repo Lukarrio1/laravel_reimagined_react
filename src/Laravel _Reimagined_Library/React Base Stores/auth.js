@@ -15,12 +15,15 @@ const Authentication = createSlice({
       localStorage.setItem("isLoggedIn", true);
       return state;
     },
-    logout: () => {
+    logout: (state) => {
       sessionStorage.removeItem("bearerToken");
-      window.location.href = "/";
+      state.permissions = [];
+      state.user = null;
+      state.is_logged_in = false;
+      return state;
     },
   },
 });
 
-export const { setAuthProperties,logout } = Authentication.actions;
+export const { setAuthProperties, logout } = Authentication.actions;
 export default Authentication.reducer;

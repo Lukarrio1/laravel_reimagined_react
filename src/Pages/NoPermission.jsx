@@ -23,13 +23,22 @@ const styles = {
 
 export default function NoPermission({ link_uuid }) {
   return (
-    <div style={styles.container}>
-      <h1 style={styles.heading}>Permission Required</h1>
-      <p style={styles.message}>
-        You do not have the necessary permissions to access this page. <br />
-        Please contact your administrator or visit{" "}
-        <Link uuid={link_uuid} className="btn btn-sm btn-default"></Link>.
-      </p>
+    <div className="row justify-content-center">
+      <div className="col-md-auto m-4">
+        <div className="card text-center">
+          <div className="card-header bg-warning text-dark">
+            <h4>Permission Required</h4>
+          </div>
+          <div className="card-body">
+            <p className="card-text">
+              You do not have the necessary permissions to access this page.{" "}
+              <br />
+              Please contact your administrator or visit{" "}
+            </p>
+            <Link uuid={link_uuid} className="btn btn-sm btn-default"></Link>.
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

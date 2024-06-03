@@ -10,6 +10,9 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const HomePageLink = useNavigator(
+    "nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"
+  );
 
   const login = async () => {
     try {
@@ -20,7 +23,7 @@ export default function Login() {
       );
       setError(null);
       sessionStorage.setItem("bearerToken", data?.token);
-      window.location.href = "/";
+      window.location.href = HomePageLink?.node?.node_route;
     } catch (error) {
       setError(error?.response?.data?.message);
     }

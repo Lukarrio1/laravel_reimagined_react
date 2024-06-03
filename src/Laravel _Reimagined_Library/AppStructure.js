@@ -72,7 +72,7 @@ const assembleApp = async (dispatch) => {
   setUpNodes("0zFz4RFZqQXIggfj4fbMhWnCCiM4qThLyhbGYpumdo3xkAdB2H", dispatch);
 };
 
-const setUpNodes = async (uuid, dispatch) => {
+export const setUpNodes = async (uuid, dispatch) => {
   const { data: nodes } = await restClient(uuid);
   dispatch(setNodes(nodes));
 };

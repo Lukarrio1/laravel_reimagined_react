@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Link from "../Laravel _Reimagined_Library/Link";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import PermissionWrapper from "../Laravel _Reimagined_Library/PermissionWrapper";
 
 export default function Home() {
   const styles = {
@@ -23,13 +24,14 @@ export default function Home() {
   const params = useParams();
   return (
     <div>
-
-
-      {/* Welcome Message */}
-      <div className="container text-center" style={styles.welcomeSection}>
-        <h1>Welcome to {app_name ?? ""}</h1>
-        <p className="lead">We are happy to see you {user?.name}.</p>
-      </div>
+      <PermissionWrapper
+        uuid={"gXsFmy8Y8b5WC56p7kDyPIeSMQFGRdAXWASo2srj6ci60hv5Wd"}
+      >
+        <div className="container-fluid text-center" style={styles.welcomeSection}>
+          <h1>Welcome to {app_name ?? ""}</h1>
+          <p className="lead">We are happy to see you {user?.name}.</p>
+        </div>
+      </PermissionWrapper>
     </div>
   );
 }

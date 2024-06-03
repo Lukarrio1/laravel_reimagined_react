@@ -12,7 +12,7 @@ export default function Layout({ Component, page }) {
   });
 
   useEffect(() => {
-
+    console.log(page, "this is the current page");
   }, []);
 
   return (
