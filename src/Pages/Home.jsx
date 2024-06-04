@@ -25,9 +25,12 @@ export default function Home() {
   return (
     <div>
       <PermissionWrapper
-        uuid={"gXsFmy8Y8b5WC56p7kDyPIeSMQFGRdAXWASo2srj6ci60hv5Wd"}
+        uuid={"IYUhLzLdfYToLMg4YY46dxsXVvIwA90fLLew0vOoFXbBnrfn51"}
       >
-        <div className="container-fluid text-center" style={styles.welcomeSection}>
+        <div
+          className="container-fluid text-center"
+          style={styles.welcomeSection}
+        >
           <h1>Welcome to {app_name ?? ""}</h1>
           <p className="lead">We are happy to see you {user?.name}.</p>
         </div>

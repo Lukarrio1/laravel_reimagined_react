@@ -4,7 +4,6 @@ import NoPermission from "../Pages/NoPermission";
 const PermissionWrapper = ({ uuid, children }) => {
   const { hasAccess, currentNode } = useSelector((state) => {
     const temp = [...state?.authentication.permissions.map((p) => p.id), 0];
-    const auth_user = state.authentication.user;
     const currentNode = [
       ...state?.coreNodes.links,
       ...state?.coreNodes.components,

@@ -30,7 +30,7 @@ export default function NoPermission({ link_uuid }) {
             <h4>Permission Required</h4>
           </div>
           <div className="card-body">
-            <p className="card-text">
+            <p className="card-text" style={styles.message}>
               You do not have the necessary permissions to access this page.{" "}
               <br />
               Please contact your administrator or visit{" "}

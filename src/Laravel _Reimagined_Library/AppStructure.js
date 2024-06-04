@@ -69,7 +69,7 @@ const assembleApp = async (dispatch) => {
     dispatch(setAuthProperties(user));
     return;
   } catch (error) {}
-  setUpNodes("0zFz4RFZqQXIggfj4fbMhWnCCiM4qThLyhbGYpumdo3xkAdB2H", dispatch);
+  setUpNodes("ITD2Dj5t8NFdl8FCjsQxldnMPwdSnq1iuAYh7qpmjMbSZktUUF", dispatch);
 };
 
 export const setUpNodes = async (uuid, dispatch) => {

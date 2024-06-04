@@ -53,7 +53,7 @@ export default function Navbar() {
           </li>
           <li className="nav-item">
             <PermissionWrapper
-              uuid={"nJzGJ7fUwMill7xoaCjl3dBhm0z9vu6Nh50GdSyM5YDUDlRmOn"}
+              uuid={"YiNfpDugNwyu1yTlOsGGvPAj2YZpoitcuEgEGphxrQxcK1HT0t"}
             >
               <a
                 href="#"
