@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import Link from "../Laravel _Reimagined_Library/Link";
-import restClient from "../Laravel _Reimagined_Library";
 import useNavigator from "../Laravel _Reimagined_Library/useNavigator";
-import { setUpNodes } from "../Laravel _Reimagined_Library/AppStructure";
-import { useDispatch } from "react-redux";
-import { setAuthProperties } from "../Laravel _Reimagined_Library/React Base Stores/auth";
+import useRest from "../Laravel _Reimagined_Library/useRest";
 
 export default function Register() {
   const [error, setError] = useState(null);
@@ -17,6 +14,7 @@ export default function Register() {
     name: "",
     confirm_password: "",
   });
+  const { restClient } = useRest();
 
   const register = async () => {
     try {
@@ -26,7 +24,7 @@ export default function Register() {
         { ...creds }
       );
       sessionStorage.setItem("bearerToken", data?.token);
-      window.location.href = HomePageLink?.node?.node_route
+      window.location.href = HomePageLink?.node?.node_route;
     } catch (error) {
       setError(error?.response?.data?.errors);
     }

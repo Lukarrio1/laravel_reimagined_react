@@ -1,26 +1,34 @@
 import { useSelector } from "react-redux";
 import NoPermission from "../Pages/NoPermission";
+import { useEffect } from "react";
 
 const PermissionWrapper = ({ uuid, children }) => {
-  const { hasAccess, currentNode } = useSelector((state) => {
-    const temp = [...state?.authentication.permissions.map((p) => p.id), 0];
-    const currentNode = [
-      ...state?.coreNodes.links,
-      ...state?.coreNodes.components,
-    ]?.filter((cl) => cl.uuid == uuid)[0];
-    return {
-      currentNode,
-      hasAccess:
-        temp.includes(currentNode?.permission_id) && currentNode?.hasAccess,
-    };
-  });
+  const { hasAccess, currentNode, site_email_address } = useSelector(
+    (state) => {
+      const temp = [...state?.authentication.permissions.map((p) => p.id), 0];
+      const currentNode = [
+        ...state?.coreNodes.links,
+        ...state?.coreNodes.components,
+      ]?.filter((cl) => cl.uuid == uuid)[0];
+      return {
+        currentNode,
+        site_email_address: state?.setting?.settings?.site_email_address,
+        hasAccess:
+          temp.includes(currentNode?.permission_id) && currentNode?.hasAccess,
+      };
+    }
+  );
 
   return hasAccess ? (
     children
   ) : !currentNode ? (
     <></>
   ) : currentNode?.node_type["value"] > 2 ? (
-    <NoPermission></NoPermission>
+    <NoPermission
+      className={children.props.className}
+      Node={currentNode}
+      site_email_address={site_email_address}
+    ></NoPermission>
   ) : (
     ""
   );

@@ -20,7 +20,7 @@ const Authentication = createSlice({
       state.permissions = [];
       state.user = null;
       state.is_logged_in = false;
-      return state;
+      window.location.reload()
     },
   },
 });

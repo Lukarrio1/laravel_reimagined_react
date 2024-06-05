@@ -21,9 +21,15 @@ const styles = {
   },
 };
 
-export default function NoPermission({ link_uuid }) {
+export default function NoPermission({
+  link_uuid,
+  className,
+  Node,
+  site_email_address,
+}) {
+  console.log(link_uuid, " link uuid ");
   return (
-    <div className="row justify-content-center">
+    <div className={className}>
       <div className="col-md-auto m-4">
         <div className="card text-center">
           <div className="card-header bg-warning text-dark">
@@ -31,11 +37,18 @@ export default function NoPermission({ link_uuid }) {
           </div>
           <div className="card-body">
             <p className="card-text" style={styles.message}>
-              You do not have the necessary permissions to access this page.{" "}
+              You do not have the necessary permissions to access{" "}
+              <strong>{Node?.name ?? "this page"}</strong>
               <br />
-              Please contact your administrator or visit{" "}
+              Please contact your administrator at ({site_email_address}){" "}
+              {link_uuid && `or visit  `}
+              {link_uuid && (
+                <Link
+                  uuid={link_uuid}
+                  className="btn btn-sm btn-default"
+                ></Link>
+              )}
             </p>
-            <Link uuid={link_uuid} className="btn btn-sm btn-default"></Link>.
           </div>
         </div>
       </div>

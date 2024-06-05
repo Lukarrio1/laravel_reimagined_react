@@ -69,6 +69,7 @@ const assembleApp = async (dispatch) => {
     dispatch(setAuthProperties(user));
     return;
   } catch (error) {}
+
   setUpNodes("ITD2Dj5t8NFdl8FCjsQxldnMPwdSnq1iuAYh7qpmjMbSZktUUF", dispatch);
 };
 

@@ -30,6 +30,12 @@ const coreNodes = createSlice({
         });
       state.links = nodes?.filter((node) => node?.node_type?.value == 2);
       state.components = nodes?.filter((node) => node?.node_type?.value == 4);
+      state.routes = nodes?.filter((node) => node?.node_type?.value == 1).map(function(node){
+        node.properties.html_value =null;
+        node.properties.value.route_function = null;
+        node.properties.value.node_audit_message = null;
+        return node
+      });
       return state;
     },
   },

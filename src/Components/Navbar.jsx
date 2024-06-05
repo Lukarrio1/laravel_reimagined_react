@@ -59,11 +59,11 @@ export default function Navbar() {
                 href="#"
                 onClick={() => {
                   dispatch(logout());
-                  setUpNodes(
-                    "0zFz4RFZqQXIggfj4fbMhWnCCiM4qThLyhbGYpumdo3xkAdB2H",
-                    dispatch
-                  );
-                  LoginPageLink.setNavProperties({ ready: true });
+                  // setUpNodes(
+                  //   "0zFz4RFZqQXIggfj4fbMhWnCCiM4qThLyhbGYpumdo3xkAdB2H",
+                  //   dispatch
+                  // );
+                  // LoginPageLink.setNavProperties({ ready: true });
                 }}
                 className="nav-link"
               >

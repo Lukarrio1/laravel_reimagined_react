@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import useNavigator from "../Laravel _Reimagined_Library/useNavigator";
 import Link from "../Laravel _Reimagined_Library/Link";
-import restClient from "../Laravel _Reimagined_Library";
+// import restClient from "../Laravel _Reimagined_Library";
 import { useDispatch } from "react-redux";
+import useRest from "../Laravel _Reimagined_Library/useRest";
 
 export default function Login() {
   const [error, setError] = useState(null);
@@ -13,6 +14,8 @@ export default function Login() {
   const HomePageLink = useNavigator(
     "nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"
   );
+  const { restClient } = useRest();
+
 
   const login = async () => {
     try {
