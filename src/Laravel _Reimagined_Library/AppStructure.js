@@ -9,6 +9,7 @@ import { restClient } from "./restClient";
 import auth, { setAuthProperties } from "./React Base Stores/auth";
 import Register from "../Pages/Register";
 import Layout from "../Components/Layout";
+import Redirect from "../Components/Redirect";
 
 const pages = {
   HomePage: Home,
@@ -34,10 +35,12 @@ const generateRoutes = (pages_properties, authUser) => {
         key={path}
         path={path}
         element={
-          <Layout
-            page={{ ...page_props }}
-            Component={<Component></Component>}
-          ></Layout>
+          <Redirect page={{ ...page_props }}>
+            <Layout
+              page={{ ...page_props }}
+              Component={<Component></Component>}
+            ></Layout>
+          </Redirect>
         }
       />
     );

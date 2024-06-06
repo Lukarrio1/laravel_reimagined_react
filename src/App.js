@@ -1,17 +1,13 @@
-import logo from "./logo.svg";
+
 import "./App.css";
-import { restClient } from "./Laravel _Reimagined_Library/restClient";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setNodes } from "./Laravel _Reimagined_Library/React Base Stores/coreNodes";
-import { setSettings } from "./Laravel _Reimagined_Library/React Base Stores/setting";
 import { store } from "./store/store";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes } from "react-router-dom";
 import { generateRoutes } from "./Laravel _Reimagined_Library/AppStructure";
 import { assembleApp } from "./Laravel _Reimagined_Library/AppStructure";
-import Footer from "./Pages/Footer";
-import Navbar from "./Components/Navbar";
+
 
 function App() {
   const [pages_properties, setPagesProperties] = useState([]);

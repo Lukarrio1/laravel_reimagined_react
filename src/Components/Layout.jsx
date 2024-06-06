@@ -12,34 +12,12 @@ export default function Layout({ Component, page }) {
       auth_user: state?.authentication?.user,
     };
   });
-  const [isReady, setIsReady] = useState(false);
-  const HomePageLink = useNavigator(
-    "nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"
-  );
-  const LoginPageLink = useNavigator(
-    "K7rMLEQkQjaUJOOOyXQIbhjssBvPTTpR7MtmLwoFS3TQxXpKLe"
-  );
-
-  useEffect(() => {
-    if (auth_user && page?.hasAccess == false) {
-      window.location.href = HomePageLink?.node?.node_route;
-      return;
-    }
-
-    if (!auth_user && page?.hasAccess == false) {
-      window.location.href = LoginPageLink?.node?.node_route;
-      return;
-    }
-    setIsReady(true);
-  }, [page]);
 
   return (
     page && (
       <>
         <Navbar></Navbar>
-        <div className={"container " + app_animation}>
-          {isReady == false ? "" : Component}
-        </div>
+        <div className={"container " + app_animation}>{Component}</div>
         <Footer version={app_version} />
       </>
     )
