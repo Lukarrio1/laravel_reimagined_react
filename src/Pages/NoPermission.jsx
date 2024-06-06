@@ -28,7 +28,6 @@ export default function NoPermission({ link_uuid, className, Node }) {
       site_email_address: state?.setting?.settings?.site_email_address,
     };
   });
-  console.log(link_uuid, " link uuid ");
   return (
     <div className={className}>
       <div className="col-md-auto m-4">

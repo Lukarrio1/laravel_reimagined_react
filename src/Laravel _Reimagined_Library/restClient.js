@@ -7,9 +7,6 @@ export const restClient = async (
   data_to_send = {},
   route_data = null
 ) => {
-  // gets the node from server side cache .
-
-  console.log(route_data,"current route")
   let node = !route_data ? await getNodeData(route_uuid) : route_data;
   if (!node) {
     return -1;

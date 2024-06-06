@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "../Pages/Footer";
 import { useSelector } from "react-redux";
@@ -12,7 +12,7 @@ export default function Layout({ Component, page }) {
       auth_user: state?.authentication?.user,
     };
   });
-
+  const [isReady, setIsReady] = useState(false);
   const HomePageLink = useNavigator(
     "nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"
   );
@@ -21,20 +21,27 @@ export default function Layout({ Component, page }) {
   );
 
   useEffect(() => {
-    if (page?.isAuthenticated == 0 && auth_user) {
-      HomePageLink.setNavProperties({ ready: true });
+    if (auth_user && page?.hasAccess == false) {
+      window.location.href = HomePageLink?.node?.node_route;
+      return;
     }
 
-    if (page?.isAuthenticated == 1 && !auth_user) {
-      LoginPageLink.setNavProperties({ ready: true });
+    if (!auth_user && page?.hasAccess == false) {
+      window.location.href = LoginPageLink?.node?.node_route;
+      return;
     }
-  }, []);
+    setIsReady(true);
+  }, [page]);
 
   return (
-    <>
-      <Navbar></Navbar>
-      <div className={"container " + app_animation}>{Component}</div>
-      <Footer version={app_version} />
-    </>
+    page && (
+      <>
+        <Navbar></Navbar>
+        <div className={"container " + app_animation}>
+          {isReady == false ? "" : Component}
+        </div>
+        <Footer version={app_version} />
+      </>
+    )
   );
 }

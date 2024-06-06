@@ -22,7 +22,6 @@ const generateRoutes = (pages_properties, authUser) => {
   if (pages_properties.length === 0) {
     return null;
   }
-
   return Object.keys(pages).map((page) => {
     let page_props = pages_properties.filter(
       (p) => p.component && p.component === page
@@ -30,27 +29,10 @@ const generateRoutes = (pages_properties, authUser) => {
     page_props = page_props ? page_props : {};
     const path = page_props?.path ? page_props.path : "/";
     const Component = pages[page_props.component ?? "NoFound"];
-
     return (
       <Route
         key={path}
         path={path}
-        // element={
-        //   page_props?.hasAccess === true ? (
-        //     <Layout
-        //       page={{ ...page_props }}
-        //       Component={<Component></Component>}
-        //     ></Layout>
-        //   ) : (
-        //     <NoPermission
-        //       link_uuid={
-        //         authUser != null
-        //           ? "nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"
-        //           : "K7rMLEQkQjaUJOOOyXQIbhjssBvPTTpR7MtmLwoFS3TQxXpKLe"
-        //       }
-        //     ></NoPermission>
-        //   )
-        // }
         element={
           <Layout
             page={{ ...page_props }}
@@ -75,8 +57,8 @@ const assembleApp = async (dispatch) => {
     dispatch(setAuthProperties(user));
     return;
   } catch (error) {}
-
   setUpNodes("ITD2Dj5t8NFdl8FCjsQxldnMPwdSnq1iuAYh7qpmjMbSZktUUF", dispatch);
+  return true;
 };
 
 export const setUpNodes = async (uuid, dispatch) => {

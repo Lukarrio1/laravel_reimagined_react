@@ -11,28 +11,10 @@ export default function Link({ uuid, text = "", ...rest }) {
       ...state?.coreNodes.links,
       ...state?.coreNodes.components,
     ]?.filter((cl) => cl.uuid == uuid)[0];
-
-    if (!currentNode) {
-      return { Actual_link: {} };
-    }
-
-    if (
-      state?.authentication.user != null &&
-      currentNode?.authentication_level?.value == 0
-    )
-      temp = false;
-    console.log(
-      {
-        name: currentNode?.name,
-        hasAccess: temp,
-        ...currentNode?.properties?.value,
-      },
-      "this is the current node"
-    );
     return {
       Actual_link: {
         name: currentNode?.name,
-        hasAccess: temp,
+        hasAccess: currentNode?.hasAccess,
         ...currentNode?.properties?.value,
       },
     };
