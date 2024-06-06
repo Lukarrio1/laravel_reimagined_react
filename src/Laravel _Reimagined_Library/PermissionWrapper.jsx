@@ -13,8 +13,7 @@ const PermissionWrapper = ({ uuid, children }) => {
       return {
         currentNode,
         site_email_address: state?.setting?.settings?.site_email_address,
-        hasAccess:
-          temp.includes(currentNode?.permission_id) && currentNode?.hasAccess,
+        hasAccess:currentNode?.hasAccess
       };
     }
   );

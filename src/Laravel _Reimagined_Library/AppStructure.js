@@ -35,21 +35,27 @@ const generateRoutes = (pages_properties, authUser) => {
       <Route
         key={path}
         path={path}
+        // element={
+        //   page_props?.hasAccess === true ? (
+        //     <Layout
+        //       page={{ ...page_props }}
+        //       Component={<Component></Component>}
+        //     ></Layout>
+        //   ) : (
+        //     <NoPermission
+        //       link_uuid={
+        //         authUser != null
+        //           ? "nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"
+        //           : "K7rMLEQkQjaUJOOOyXQIbhjssBvPTTpR7MtmLwoFS3TQxXpKLe"
+        //       }
+        //     ></NoPermission>
+        //   )
+        // }
         element={
-          page_props?.hasAccess === true ? (
-            <Layout
-              page={{ ...page_props }}
-              Component={<Component></Component>}
-            ></Layout>
-          ) : (
-            <NoPermission
-              link_uuid={
-                authUser != null
-                  ? "nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"
-                  : "K7rMLEQkQjaUJOOOyXQIbhjssBvPTTpR7MtmLwoFS3TQxXpKLe"
-              }
-            ></NoPermission>
-          )
+          <Layout
+            page={{ ...page_props }}
+            Component={<Component></Component>}
+          ></Layout>
         }
       />
     );
