@@ -2,20 +2,24 @@ import React, { useEffect, useState } from "react";
 import useNavigator from "../Laravel _Reimagined_Library/useNavigator";
 import Link from "../Laravel _Reimagined_Library/Link";
 // import restClient from "../Laravel _Reimagined_Library";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useRest from "../Laravel _Reimagined_Library/useRest";
 
 export default function Login() {
+  const { redirect_to_after_login } = useSelector((state) => {
+    return {
+      redirect_to_after_login:
+        state?.setting?.settings?.redirect_to_after_login,
+    };
+  });
+
   const [error, setError] = useState(null);
   const [{ email, password }, setCredentials] = useState({
     email: "",
     password: "",
   });
-  const HomePageLink = useNavigator(
-    "nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"
-  );
-  const { restClient } = useRest();
 
+  const { restClient } = useRest();
 
   const login = async () => {
     try {
@@ -26,7 +30,7 @@ export default function Login() {
       );
       setError(null);
       sessionStorage.setItem("bearerToken", data?.token);
-      window.location.href = HomePageLink?.node?.node_route;
+      window.location.href = redirect_to_after_login;
     } catch (error) {
       setError(error?.response?.data?.message);
     }

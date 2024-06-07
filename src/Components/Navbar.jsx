@@ -7,14 +7,13 @@ import useNavigator from "../Laravel _Reimagined_Library/useNavigator";
 import { setUpNodes } from "../Laravel _Reimagined_Library/AppStructure";
 
 export default function Navbar() {
-  const { app_name } = useSelector((state) => {
+  const { app_name, redirect_to_after_logout } = useSelector((state) => {
     return {
       app_name: state?.setting?.settings?.app_name,
+      redirect_to_after_logout:
+        state?.setting?.settings?.redirect_to_after_logout,
     };
   });
-  const LoginPageLink = useNavigator(
-    "K7rMLEQkQjaUJOOOyXQIbhjssBvPTTpR7MtmLwoFS3TQxXpKLe"
-  );
 
   const dispatch = useDispatch();
   return (
@@ -56,7 +55,7 @@ export default function Navbar() {
               uuid={"YiNfpDugNwyu1yTlOsGGvPAj2YZpoitcuEgEGphxrQxcK1HT0t"}
             >
               <a
-                href="#"
+                href={redirect_to_after_logout}
                 onClick={() => {
                   dispatch(logout());
                   // setUpNodes(

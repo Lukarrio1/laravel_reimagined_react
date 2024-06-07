@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import Link from "../Laravel _Reimagined_Library/Link";
 import useNavigator from "../Laravel _Reimagined_Library/useNavigator";
 import useRest from "../Laravel _Reimagined_Library/useRest";
+import { useSelector } from "react-redux";
 
 export default function Register() {
+  const { redirect_to_after_register } = useSelector((state) => {
+    return {
+      redirect_to_after_register:
+        state?.setting?.settings?.redirect_to_after_register,
+    };
+  });
   const [error, setError] = useState(null);
-  const HomePageLink = useNavigator(
-    "nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"
-  );
+
   const [creds, setCredentials] = useState({
     email: "",
     password: "",
@@ -24,7 +29,7 @@ export default function Register() {
         { ...creds }
       );
       sessionStorage.setItem("bearerToken", data?.token);
-      window.location.href = HomePageLink?.node?.node_route;
+      window.location.href = redirect_to_after_register;
     } catch (error) {
       setError(error?.response?.data?.errors);
     }
