@@ -15,15 +15,17 @@ export default function Redirect({ children, page }) {
     "K7rMLEQkQjaUJOOOyXQIbhjssBvPTTpR7MtmLwoFS3TQxXpKLe"
   );
   useEffect(() => {
-    if (auth_user && page?.hasAccess == false) {
-      window.location.href = HomePageLink?.node?.node_route;
-      return;
-    }
-
-    if (!auth_user && page?.hasAccess == false) {
-      window.location.href = LoginPageLink?.node?.node_route;
-      return;
-    }
+    const timeout = setTimeout(() => {
+      if (auth_user && page?.hasAccess == false) {
+        window.location.href = HomePageLink?.node?.node_route;
+        return;
+      }
+      if (!auth_user && page?.hasAccess == false) {
+        window.location.href = LoginPageLink?.node?.node_route;
+        return;
+      }
+    }, 1500);
+    return () => clearTimeout(timeout);
   }, [page]);
 
   return (
@@ -31,7 +33,10 @@ export default function Redirect({ children, page }) {
       {page?.hasAccess == false ? (
         <div className="row">
           <div className="col-sm-6 offset-sm-3 h4 mt-5 text-center">
-            I'm not sure where you're heading but its not to the {page?.name}.
+            <div class="alert alert-warning" role="alert">
+              Access denied redirecting to{"  "}
+              {auth_user ? HomePageLink?.node?.name : LoginPageLink?.node?.name}
+            </div>
           </div>
         </div>
       ) : (
