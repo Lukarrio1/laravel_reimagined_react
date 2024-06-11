@@ -25,7 +25,7 @@ const styles = {
 export default function NoPermission({ link_uuid, className, Node }) {
   const { site_email_address } = useSelector((state) => {
     return {
-      site_email_address: state?.setting?.settings?.site_email_address,
+      site_email_address: state?.setting?.settings?.site_email_address?.value,
     };
   });
   return (

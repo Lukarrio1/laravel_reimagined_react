@@ -10,7 +10,11 @@ const Authentication = createSlice({
   reducers: {
     setAuthProperties: (state, { payload }) => {
       state.user = payload;
-      state.permissions = [...payload.roles[0].permissions];
+      state.permissions = [
+        ...(payload.roles[0]?.permissions?.length > 0
+          ? payload.roles[0].permissions
+          : []),
+      ];
       state.is_logged_in = true;
       localStorage.setItem("isLoggedIn", true);
       return state;

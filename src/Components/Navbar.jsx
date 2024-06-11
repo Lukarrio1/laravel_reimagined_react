@@ -9,7 +9,7 @@ import { setUpNodes } from "../Laravel _Reimagined_Library/AppStructure";
 export default function Navbar() {
   const { app_name, redirect_to_after_logout } = useSelector((state) => {
     return {
-      app_name: state?.setting?.settings?.app_name,
+      app_name: state?.setting?.settings?.app_name?.value,
       redirect_to_after_logout:
         state?.setting?.settings?.redirect_to_after_logout,
     };
@@ -55,7 +55,7 @@ export default function Navbar() {
               uuid={"YiNfpDugNwyu1yTlOsGGvPAj2YZpoitcuEgEGphxrQxcK1HT0t"}
             >
               <a
-                href={redirect_to_after_logout}
+                href={redirect_to_after_logout?.value}
                 onClick={() => {
                   dispatch(logout());
                   // setUpNodes(

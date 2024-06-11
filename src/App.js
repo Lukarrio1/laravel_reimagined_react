@@ -21,8 +21,8 @@ function App() {
 
   useEffect(() => {
     store.subscribe(() => {
-      document.title = store.getState().setting?.settings?.app_name;
-      setAppVersion(store.getState().setting?.settings?.app_version);
+      document.title = store.getState().setting?.settings?.app_name?.value;
+      setAppVersion(store.getState().setting?.settings?.app_version?.value);
       setPagesProperties(store.getState().coreNodes.pages);
       setUser(store.getState().authentication.user);
     });

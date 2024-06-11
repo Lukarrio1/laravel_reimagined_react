@@ -9,7 +9,7 @@ export default function Login() {
   const { redirect_to_after_login } = useSelector((state) => {
     return {
       redirect_to_after_login:
-        state?.setting?.settings?.redirect_to_after_login,
+        state?.setting?.settings?.redirect_to_after_login?.value,
     };
   });
 

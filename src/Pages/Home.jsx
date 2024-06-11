@@ -18,7 +18,7 @@ export default function Home() {
   const { user, app_name } = useSelector((state) => {
     return {
       user: state?.authentication?.user,
-      app_name: state?.setting?.settings?.app_name,
+      app_name: state?.setting?.settings?.app_name?.value,
     };
   });
   const params = useParams();

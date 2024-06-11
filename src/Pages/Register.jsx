@@ -8,7 +8,7 @@ export default function Register() {
   const { redirect_to_after_register } = useSelector((state) => {
     return {
       redirect_to_after_register:
-        state?.setting?.settings?.redirect_to_after_register,
+        state?.setting?.settings?.redirect_to_after_register?.value,
     };
   });
   const [error, setError] = useState(null);

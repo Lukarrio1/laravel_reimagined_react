@@ -7,8 +7,8 @@ import useNavigator from "../Laravel _Reimagined_Library/useNavigator";
 export default function Layout({ Component, page }) {
   const { app_version, app_animation, auth_user } = useSelector((state) => {
     return {
-      app_version: state?.setting?.settings?.app_version,
-      app_animation: state?.setting?.settings?.app_animation,
+      app_version: state?.setting?.settings?.app_version?.value,
+      app_animation: state?.setting?.settings?.app_animation?.value,
       auth_user: state?.authentication?.user,
     };
   });

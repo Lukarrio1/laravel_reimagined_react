@@ -17,11 +17,11 @@ export default function Redirect({ children, page }) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (auth_user && page?.hasAccess == false) {
-        window.location.href = redirect_to_after_login;
+        window.location.href = redirect_to_after_login?.value;
         return;
       }
       if (!auth_user && page?.hasAccess == false) {
-        window.location.href = redirect_to_after_logout;
+        window.location.href = redirect_to_after_logout?.value;
         return;
       }
     }, 1500);
@@ -35,7 +35,9 @@ export default function Redirect({ children, page }) {
           <div className="col-sm-6 offset-sm-3 h4 mt-5 text-center">
             <div class="alert alert-warning" role="alert">
               Access denied redirecting to{"  "}
-              {auth_user ? redirect_to_after_login : redirect_to_after_logout}
+              {auth_user
+                ? redirect_to_after_login?.key
+                : redirect_to_after_logout?.key}
             </div>
           </div>
         </div>
