@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import Link from "../Laravel _Reimagined_Library/Link";
+import React, { useEffect, useState } from "react";
+import Link from "../Laravel _Reimagined_Library/Components/Link";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import PermissionWrapper from "../Laravel _Reimagined_Library/PermissionWrapper";
+import PermissionWrapper from "../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
 
-export default function Home() {
+const Home = ({ animation_class }) => {
   const styles = {
     welcomeSection: {
       display: "flex",
@@ -21,20 +21,21 @@ export default function Home() {
       app_name: state?.setting?.settings?.app_name?.value,
     };
   });
-  const params = useParams();
+
   return (
-    <div>
-      <PermissionWrapper
-        uuid={"IYUhLzLdfYToLMg4YY46dxsXVvIwA90fLLew0vOoFXbBnrfn51"}
+    <div className={animation_class}>
+      <div
+        className="container-fluid text-center"
+        style={styles.welcomeSection}
       >
-        <div
-          className="container-fluid text-center"
-          style={styles.welcomeSection}
+        <PermissionWrapper
+          uuid={"IYUhLzLdfYToLMg4YY46dxsXVvIwA90fLLew0vOoFXbBnrfn51"}
         >
           <h1>Welcome to {app_name ?? ""}</h1>
           <p className="lead">We are happy to see you {user?.name}.</p>
-        </div>
-      </PermissionWrapper>
+        </PermissionWrapper>
+      </div>
     </div>
   );
-}
+};
+export default Home;

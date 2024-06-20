@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import useNavigator from "../Laravel _Reimagined_Library/useNavigator";
-import Link from "../Laravel _Reimagined_Library/Link";
+import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
+import Link from "../Laravel _Reimagined_Library/Components/Link";
 // import restClient from "../Laravel _Reimagined_Library";
 import { useDispatch, useSelector } from "react-redux";
-import useRest from "../Laravel _Reimagined_Library/useRest";
+import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 
-export default function Login() {
+const Login = ({ animation_class }) => {
   const { redirect_to_after_login } = useSelector((state) => {
     return {
       redirect_to_after_login:
@@ -37,7 +37,7 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <div className={animation_class}>
       <div className="row">
         <div className="col-sm-8 offset-sm-2 mt-5">
           <div className="card">
@@ -93,4 +93,5 @@ export default function Login() {
       </div>
     </div>
   );
-}
+};
+export default Login;

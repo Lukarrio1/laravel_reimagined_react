@@ -1,6 +1,6 @@
 import React from "react";
-import Link from "../Laravel _Reimagined_Library/Link";
-import { useSelector } from 'react-redux'
+import Link from "../Laravel _Reimagined_Library/Components/Link";
+import { useSelector } from "react-redux";
 
 const styles = {
   container: {
@@ -22,7 +22,7 @@ const styles = {
   },
 };
 
-export default function NoPermission({ link_uuid, className, Node }) {
+const NoPermission = ({ link_uuid, className, Node }) => {
   const { site_email_address } = useSelector((state) => {
     return {
       site_email_address: state?.setting?.settings?.site_email_address?.value,
@@ -54,4 +54,5 @@ export default function NoPermission({ link_uuid, className, Node }) {
       </div>
     </div>
   );
-}
+};
+export default NoPermission;

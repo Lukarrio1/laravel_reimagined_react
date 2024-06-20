@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Link from "../Laravel _Reimagined_Library/Link";
+import Link from "../Laravel _Reimagined_Library/Components/Link";
 import { logout } from "../Laravel _Reimagined_Library/React Base Stores/auth";
-import PermissionWrapper from "../Laravel _Reimagined_Library/PermissionWrapper";
-import useNavigator from "../Laravel _Reimagined_Library/useNavigator";
-import { setUpNodes } from "../Laravel _Reimagined_Library/AppStructure";
+import PermissionWrapper from "../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
+import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
+import { setUpNodes } from "../Laravel _Reimagined_Library/Abstract/AppStructure";
 
 export default function Navbar() {
   const { app_name, redirect_to_after_logout } = useSelector((state) => {

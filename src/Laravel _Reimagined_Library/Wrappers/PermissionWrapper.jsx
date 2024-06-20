@@ -1,8 +1,12 @@
 import { useSelector } from "react-redux";
-import NoPermission from "../Pages/NoPermission";
+import NoPermission from "../../Pages/NoPermission";
 import { useEffect } from "react";
 
-const PermissionWrapper = ({ uuid, children, Alternative = null }) => {
+const PermissionWrapper = ({
+  uuid,
+  children,
+  Alternative = null,
+}) => {
   const { hasAccess, currentNode, site_email_address } = useSelector(
     (state) => {
       const temp = [...state?.authentication.permissions.map((p) => p.id), 0];
@@ -27,7 +31,7 @@ const PermissionWrapper = ({ uuid, children, Alternative = null }) => {
       Alternative
     ) : (
       <NoPermission
-        className={children.props.className}
+        className={children?.props?.className}
         Node={currentNode}
         site_email_address={site_email_address}
       ></NoPermission>

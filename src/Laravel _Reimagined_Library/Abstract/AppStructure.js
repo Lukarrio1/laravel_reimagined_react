@@ -1,25 +1,17 @@
 import { Route } from "react-router-dom";
-import Home from "../Pages/Home";
-import Login from "../Pages/Login";
-import NoPermission from "../Pages/NoPermission";
-import NotFound from "../Pages/NotFound";
-import { setSettings } from "./React Base Stores/setting";
-import { setNodes } from "./React Base Stores/coreNodes";
+import { setSettings } from "../React Base Stores/setting";
+import { setNodes } from "../React Base Stores/coreNodes";
 import { restClient } from "./restClient";
-import auth, { setAuthProperties } from "./React Base Stores/auth";
-import Register from "../Pages/Register";
-import Layout from "../Components/Layout";
-import Redirect from "../Components/Redirect";
+import { setAuthProperties } from "../React Base Stores/auth";
+import Layout from "../Wrappers/LayoutWrapper";
+import Redirect from "../Wrappers/RedirectWrapper";
+import { Suspense, lazy } from "react";
+import Loading from "../../Components/Loading";
+import { pages } from "./PagesAndLayouts";
+import LayoutWrapper from "../Wrappers/LayoutWrapper";
+import RedirectWrapper from "../Wrappers/RedirectWrapper";
 
-const pages = {
-  HomePage: Home,
-  NotFound: NotFound,
-  LoginPage: Login,
-  NoPermission,
-  RegisterPage: Register,
-};
-
-const generateRoutes = (pages_properties, authUser) => {
+const generateRoutes = (pages_properties, authUser, app_animation) => {
   if (pages_properties.length === 0) {
     return null;
   }
@@ -35,12 +27,16 @@ const generateRoutes = (pages_properties, authUser) => {
         key={path}
         path={path}
         element={
-          <Redirect page={{ ...page_props }}>
-            <Layout
+          <RedirectWrapper page={{ ...page_props }}>
+            <LayoutWrapper
               page={{ ...page_props }}
-              Component={<Component></Component>}
-            ></Layout>
-          </Redirect>
+              Component={
+                <Suspense fallback={<Loading></Loading>}>
+                  <Component animation_class={app_animation}></Component>
+                </Suspense>
+              }
+            ></LayoutWrapper>
+          </RedirectWrapper>
         }
       />
     );

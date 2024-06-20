@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Route } from "react-router-dom";
-import { restClient } from "./restClient";
+import { restClient } from "../Abstract/restClient";
 
 export default function useRest() {
   const { Routes } = useSelector((state) => {

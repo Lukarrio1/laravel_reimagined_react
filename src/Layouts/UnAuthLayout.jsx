@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "./Navbar";
+import Navbar from "../Components/Navbar";
 import Footer from "../Pages/Footer";
 import { useSelector } from "react-redux";
-import useNavigator from "../Laravel _Reimagined_Library/useNavigator";
+import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
 
-export default function Layout({ Component, page }) {
+export default function UnAuthLayout({ Component, page }) {
   const { app_version, app_animation, auth_user } = useSelector((state) => {
     return {
       app_version: state?.setting?.settings?.app_version?.value,
@@ -17,7 +17,8 @@ export default function Layout({ Component, page }) {
     page && (
       <>
         <Navbar></Navbar>
-        <div className={"container " + app_animation}>{Component}</div>
+        un auth layout
+        <div className={"container"}>{Component}</div>
         <Footer version={app_version} />
       </>
     )

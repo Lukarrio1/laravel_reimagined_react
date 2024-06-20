@@ -7,6 +7,7 @@ const coreNodes = createSlice({
     links: [],
     components: [],
     routes: [],
+    layouts: [],
   },
   reducers: {
     setNodes: (state, { payload }) => {
@@ -25,17 +26,21 @@ const coreNodes = createSlice({
             ? currentLink?.properties?.value?.node_route
             : "";
           temp["hasAccess"] = page.hasAccess;
+          temp["layout_id"] = page.properties.value.layout_id;
           temp["isAuthenticated"] = page.authentication_level["value"];
           return temp;
         });
       state.links = nodes?.filter((node) => node?.node_type?.value == 2);
       state.components = nodes?.filter((node) => node?.node_type?.value == 4);
-      state.routes = nodes?.filter((node) => node?.node_type?.value == 1).map(function(node){
-        node.properties.html_value =null;
-        node.properties.value.route_function = null;
-        node.properties.value.node_audit_message = null;
-        return node
-      });
+      state.layouts = nodes?.filter((node) => node?.node_type?.value == 5);
+      state.routes = nodes
+        ?.filter((node) => node?.node_type?.value == 1)
+        .map(function (node) {
+          node.properties.html_value = null;
+          node.properties.value.route_function = null;
+          node.properties.value.node_audit_message = null;
+          return node;
+        });
       return state;
     },
   },

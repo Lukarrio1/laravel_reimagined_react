@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import PermissionWrapper from "./PermissionWrapper";
+import PermissionWrapper from "../Wrappers/PermissionWrapper";
 
 // use text from rest to override the text of the button
 export default function Link({ uuid, text = "", ...rest }) {

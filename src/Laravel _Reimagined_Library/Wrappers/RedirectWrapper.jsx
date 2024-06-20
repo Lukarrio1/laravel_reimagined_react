@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import useNavigator from "../Laravel _Reimagined_Library/useNavigator";
+import useNavigator from "../Custom Hooks/useNavigator";
 import { useSelector } from "react-redux";
 
-export default function Redirect({ children, page }) {
+export default function RedirectWrapper({ children, page }) {
   const { auth_user, redirect_to_after_login, redirect_to_after_logout } =
     useSelector((state) => {
       return {
@@ -24,7 +24,7 @@ export default function Redirect({ children, page }) {
         window.location.href = redirect_to_after_logout?.value;
         return;
       }
-    }, 1500);
+    }, 1100);
     return () => clearTimeout(timeout);
   }, [page]);
 
