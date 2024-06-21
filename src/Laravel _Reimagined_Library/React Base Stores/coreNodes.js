@@ -19,13 +19,14 @@ const coreNodes = createSlice({
           const currentLink = nodes?.filter(
             (n) => n?.properties?.value?.node_page == page.id
           )[0];
-
           temp["name"] = page.name;
+          temp["uuid"] = page.uuid;
           temp["component"] = page.properties.value.actual_component;
           temp["path"] = currentLink
             ? currentLink?.properties?.value?.node_route
             : "";
           temp["hasAccess"] = page.hasAccess;
+          temp["verbiage"] = page.verbiage.human_value;
           temp["layout_id"] = page.properties.value.layout_id;
           temp["isAuthenticated"] = page.authentication_level["value"];
           return temp;

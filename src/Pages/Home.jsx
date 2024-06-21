@@ -3,6 +3,7 @@ import Link from "../Laravel _Reimagined_Library/Components/Link";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PermissionWrapper from "../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
+import usePageVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/usePageVerbiage";
 
 const Home = ({ animation_class }) => {
   const styles = {
@@ -22,6 +23,10 @@ const Home = ({ animation_class }) => {
     };
   });
 
+  const { getVerbiage } = usePageVerbiage(
+    "kmg9uKHV1VR9eoF1mdl3nahG8CCpSduNdL55C26uvwG6c9ldsH"
+  );
+
   return (
     <div className={animation_class}>
       <div
@@ -31,8 +36,10 @@ const Home = ({ animation_class }) => {
         <PermissionWrapper
           uuid={"IYUhLzLdfYToLMg4YY46dxsXVvIwA90fLLew0vOoFXbBnrfn51"}
         >
-          <h1>Welcome to {app_name ?? ""}</h1>
-          <p className="lead">We are happy to see you {user?.name}.</p>
+          <h1>{getVerbiage("title", { app_name: app_name })}</h1>
+          <p className="lead">
+            {getVerbiage("welcome_message", { user_name: user?.name })}
+          </p>
         </PermissionWrapper>
       </div>
     </div>

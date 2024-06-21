@@ -4,6 +4,7 @@ import Link from "../Laravel _Reimagined_Library/Components/Link";
 // import restClient from "../Laravel _Reimagined_Library";
 import { useDispatch, useSelector } from "react-redux";
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
+import usePageVerbiage from '../Laravel _Reimagined_Library/Custom Hooks/usePageVerbiage'
 
 const Login = ({ animation_class }) => {
   const { redirect_to_after_login } = useSelector((state) => {
@@ -12,6 +13,9 @@ const Login = ({ animation_class }) => {
         state?.setting?.settings?.redirect_to_after_login?.value,
     };
   });
+   const { getVerbiage } = usePageVerbiage(
+     "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5"
+   );
 
   const [error, setError] = useState(null);
   const [{ email, password }, setCredentials] = useState({
@@ -41,7 +45,9 @@ const Login = ({ animation_class }) => {
       <div className="row">
         <div className="col-sm-8 offset-sm-2 mt-5">
           <div className="card">
-            <div className="card-header text-center h4 bg-white">Login</div>
+            <div className="card-header text-center h4 bg-white">
+              {getVerbiage("title")}
+            </div>
             <div className="card-body">
               <div className="text-center text-danger">{error}</div>
               <form
@@ -52,7 +58,7 @@ const Login = ({ animation_class }) => {
               >
                 <div className="mb-3">
                   <label for="exampleInputEmail1" className="form-label">
-                    Email address
+                    {getVerbiage("email_field_title")}
                   </label>
                   <input
                     type="email"
@@ -64,7 +70,7 @@ const Login = ({ animation_class }) => {
                 </div>
                 <div className="mb-3">
                   <label for="exampleInputPassword1" className="form-label">
-                    Password
+                    {getVerbiage("password_field_title")}
                   </label>
                   <input
                     type="password"

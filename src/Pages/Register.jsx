@@ -3,6 +3,7 @@ import Link from "../Laravel _Reimagined_Library/Components/Link";
 import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 import { useSelector } from "react-redux";
+import usePageVerbiage from '../Laravel _Reimagined_Library/Custom Hooks/usePageVerbiage'
 
 const Register = ({ animation_class }) => {
   const { redirect_to_after_register } = useSelector((state) => {
@@ -11,6 +12,11 @@ const Register = ({ animation_class }) => {
         state?.setting?.settings?.redirect_to_after_register?.value,
     };
   });
+
+   const { getVerbiage } = usePageVerbiage(
+     "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP"
+   );
+
   const [error, setError] = useState(null);
 
   const [creds, setCredentials] = useState({
@@ -40,7 +46,9 @@ const Register = ({ animation_class }) => {
       <div className="row">
         <div className="col-sm-8 offset-sm-2 mt-5">
           <div className="card">
-            <div className="card-header text-center h4 bg-white">Register</div>
+            <div className="card-header text-center h4 bg-white">
+              {getVerbiage("title")}
+            </div>
             <div className="card-body">
               <form
                 onSubmit={(e) => {
@@ -50,7 +58,7 @@ const Register = ({ animation_class }) => {
               >
                 <div className="mb-3">
                   <label for="exampleInputEmail1" className="form-label">
-                    Full Name
+                    {getVerbiage("full_name_field_title")}
                   </label>
                   <input
                     type="text"
@@ -69,7 +77,7 @@ const Register = ({ animation_class }) => {
                 </div>
                 <div className="mb-3">
                   <label for="exampleInputEmail1" className="form-label">
-                    Email address
+                    {getVerbiage("email_field_title")}
                   </label>
                   <input
                     type="email"
@@ -88,7 +96,7 @@ const Register = ({ animation_class }) => {
                 </div>
                 <div className="mb-3">
                   <label for="exampleInputPassword1" className="form-label">
-                    Password
+                    {getVerbiage("password_field_title")}
                   </label>
                   <input
                     type="password"
@@ -107,7 +115,7 @@ const Register = ({ animation_class }) => {
                 </div>
                 <div className="mb-3">
                   <label for="exampleInputPassword1" className="form-label">
-                    Confirm Password
+                    {getVerbiage("confirm_password_field_title")}
                   </label>
                   <input
                     type="password"

@@ -17,7 +17,6 @@ export default function AuthLayout({ Component, page }) {
     page && (
       <>
         <Navbar></Navbar>
- auth layout
         <div className={"container"}>{Component}</div>
         <Footer version={app_version} />
       </>

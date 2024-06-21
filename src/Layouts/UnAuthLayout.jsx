@@ -17,7 +17,6 @@ export default function UnAuthLayout({ Component, page }) {
     page && (
       <>
         <Navbar></Navbar>
-        un auth layout
         <div className={"container"}>{Component}</div>
         <Footer version={app_version} />
       </>
