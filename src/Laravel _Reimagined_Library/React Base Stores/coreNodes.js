@@ -31,9 +31,21 @@ const coreNodes = createSlice({
           temp["isAuthenticated"] = page.authentication_level["value"];
           return temp;
         });
-      state.links = nodes?.filter((node) => node?.node_type?.value == 2);
-      state.components = nodes?.filter((node) => node?.node_type?.value == 4);
-      state.layouts = nodes?.filter((node) => node?.node_type?.value == 5);
+      state.links = nodes
+        ?.filter((node) => node?.node_type?.value == 2)
+        ?.map((item) => {
+          return { ...item, verbiage: item?.verbiage.human_value };
+        });
+      state.components = nodes
+        ?.filter((node) => node?.node_type?.value == 4)
+        ?.map((item) => {
+          return { ...item, verbiage: item?.verbiage.human_value };
+        });
+      state.layouts = nodes
+        ?.filter((node) => node?.node_type?.value == 5)
+        ?.map((item) => {
+          return { ...item, verbiage: item?.verbiage.human_value };
+        });
       state.routes = nodes
         ?.filter((node) => node?.node_type?.value == 1)
         .map(function (node) {

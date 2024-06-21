@@ -3,7 +3,7 @@ import Link from "../Laravel _Reimagined_Library/Components/Link";
 import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 import { useSelector } from "react-redux";
-import usePageVerbiage from '../Laravel _Reimagined_Library/Custom Hooks/usePageVerbiage'
+import useVerbiage from '../Laravel _Reimagined_Library/Custom Hooks/useVerbiage'
 
 const Register = ({ animation_class }) => {
   const { redirect_to_after_register } = useSelector((state) => {
@@ -13,7 +13,7 @@ const Register = ({ animation_class }) => {
     };
   });
 
-   const { getVerbiage } = usePageVerbiage(
+   const { getVerbiage } = useVerbiage(
      "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP"
    );
 
@@ -137,7 +137,7 @@ const Register = ({ animation_class }) => {
                 </div>
                 <div className="text-center">
                   <button type="submit" className="btn btn-primary">
-                    Submit
+                    {getVerbiage("register_button")}
                   </button>
                 </div>
               </form>

@@ -5,15 +5,25 @@ import { logout } from "../Laravel _Reimagined_Library/React Base Stores/auth";
 import PermissionWrapper from "../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
 import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
 import { setUpNodes } from "../Laravel _Reimagined_Library/Abstract/AppStructure";
+import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
 
 export default function Navbar() {
-  const { app_name, redirect_to_after_logout } = useSelector((state) => {
-    return {
-      app_name: state?.setting?.settings?.app_name?.value,
-      redirect_to_after_logout:
-        state?.setting?.settings?.redirect_to_after_logout,
-    };
-  });
+  const { app_name, redirect_to_after_logout, app_version } = useSelector(
+    (state) => {
+      return {
+        app_name: state?.setting?.settings?.app_name?.value,
+        app_version: state?.setting?.settings?.app_version?.value,
+        redirect_to_after_logout:
+          state?.setting?.settings?.redirect_to_after_logout,
+      };
+    }
+  );
+  const { getVerbiage: getLogoutVerbiage } = useVerbiage(
+    "YiNfpDugNwyu1yTlOsGGvPAj2YZpoitcuEgEGphxrQxcK1HT0t"
+  );
+  const { getVerbiage: getNavbarVerbiage } = useVerbiage(
+    "LLxd0liIRPhXMHHcms8Kcmih37q2SpptA7rabOBVewQqhP8TNY"
+  );
 
   const dispatch = useDispatch();
   return (
@@ -22,7 +32,20 @@ export default function Navbar() {
         <Link
           uuid={"nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"}
           className="nav-link"
-          text={app_name ?? ""}
+          text={getNavbarVerbiage(
+            "navbar_root_nav_text",
+            {
+              app_name,
+              app_version,
+            },
+            [
+              {
+                variable_name: "app_version",
+                value_to_attach: "v",
+                addPrefixOrSuffix: true, // true to prepend, false to append,
+              },
+            ]
+          )}
         ></Link>
       </a>
       <button
@@ -66,7 +89,7 @@ export default function Navbar() {
                 }}
                 className="nav-link"
               >
-                Logout
+                {getLogoutVerbiage("logout_button")}
               </a>
             </PermissionWrapper>
           </li>

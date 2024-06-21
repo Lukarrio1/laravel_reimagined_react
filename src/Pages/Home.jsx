@@ -3,7 +3,7 @@ import Link from "../Laravel _Reimagined_Library/Components/Link";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PermissionWrapper from "../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
-import usePageVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/usePageVerbiage";
+import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
 
 const Home = ({ animation_class }) => {
   const styles = {
@@ -23,7 +23,7 @@ const Home = ({ animation_class }) => {
     };
   });
 
-  const { getVerbiage } = usePageVerbiage(
+  const { getVerbiage } = useVerbiage(
     "kmg9uKHV1VR9eoF1mdl3nahG8CCpSduNdL55C26uvwG6c9ldsH"
   );
 

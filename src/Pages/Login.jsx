@@ -4,7 +4,7 @@ import Link from "../Laravel _Reimagined_Library/Components/Link";
 // import restClient from "../Laravel _Reimagined_Library";
 import { useDispatch, useSelector } from "react-redux";
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
-import usePageVerbiage from '../Laravel _Reimagined_Library/Custom Hooks/usePageVerbiage'
+import useVerbiage from '../Laravel _Reimagined_Library/Custom Hooks/useVerbiage'
 
 const Login = ({ animation_class }) => {
   const { redirect_to_after_login } = useSelector((state) => {
@@ -13,7 +13,7 @@ const Login = ({ animation_class }) => {
         state?.setting?.settings?.redirect_to_after_login?.value,
     };
   });
-   const { getVerbiage } = usePageVerbiage(
+   const { getVerbiage } = useVerbiage(
      "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5"
    );
 
@@ -82,7 +82,7 @@ const Login = ({ animation_class }) => {
                 </div>
                 <div className="text-center">
                   <button type="submit" className="btn btn-primary">
-                    Submit
+                    {getVerbiage("login_button")}
                   </button>
                 </div>
               </form>
