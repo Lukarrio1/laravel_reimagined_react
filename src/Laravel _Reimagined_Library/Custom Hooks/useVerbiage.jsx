@@ -36,7 +36,7 @@ export default function useVerbiage(uuid) {
         // { variable_name: "", value_to_attach: "", addPrefixOrSuffix: true  //true to prepend, false to append },
       ]
     ) => {
-      return PageVerbiage[key] != undefined
+      return PageVerbiage[key] != undefined && PageVerbiage[key] != null
         ? PageVerbiage[key]
             ?.split(" ")
             .map((item) => {

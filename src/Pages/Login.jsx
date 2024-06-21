@@ -92,6 +92,12 @@ const Login = ({ animation_class }) => {
               <Link
                 uuid={"FJisFM6Ur8GMDW5PDjM2lLO9KIzyW9LhRNGLGBwS6vxCI38Q7B"}
                 className="btn btn-sm btn-default"
+                enable_verbiage={{
+                  enable: true,
+                  verbiage_key: "register_nav_text",
+                  verbiage_properties: {},
+                  addPrefixOrSuffix: [],
+                }}
               ></Link>
             </div>
           </div>

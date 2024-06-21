@@ -2,9 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import PermissionWrapper from "../Wrappers/PermissionWrapper";
+import useVerbiage from "../Custom Hooks/useVerbiage";
 
 // use text from rest to override the text of the button
-export default function Link({ uuid, text = "", ...rest }) {
+export default function Link({
+  uuid,
+  text = "",
+  enable_verbiage = {
+    enable: false,
+    verbiage_key: "",
+    verbiage_properties: {},
+    addPrefixOrSuffix: [
+      // { variable_name: "", value_to_attach: "", addPrefixOrSuffix: true  //true to prepend, false to append },
+    ],
+  },
+  ...rest
+}) {
   const { Actual_link } = useSelector((state) => {
     let temp = true;
     const currentNode = [
@@ -21,7 +34,7 @@ export default function Link({ uuid, text = "", ...rest }) {
   });
 
   const [newLink, setNewLink] = useState(null);
-
+  const { getVerbiage } = useVerbiage(uuid);
   useEffect(() => {
     if (!Actual_link?.node_route) return;
     let linkSeg = Actual_link.node_route.split("/");
@@ -45,7 +58,15 @@ export default function Link({ uuid, text = "", ...rest }) {
       uuid={uuid}
       children={
         <NavLink to={newLink?.node_route} {...rest}>
-          {!text ? newLink?.name : text}
+          {!text
+            ? enable_verbiage?.enable == true
+              ? getVerbiage(
+                  enable_verbiage?.verbiage_key,
+                  enable_verbiage?.verbiage_properties,
+                  enable_verbiage?.addPrefixOrSuffix
+                )
+              : newLink?.name
+            : text}
         </NavLink>
       }
     ></PermissionWrapper>
