@@ -4,8 +4,9 @@ import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigat
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 import { useSelector } from "react-redux";
 import useVerbiage from '../Laravel _Reimagined_Library/Custom Hooks/useVerbiage'
+import AnimationWrapper from '../Laravel _Reimagined_Library/Wrappers/AnimationWrapper'
 
-const Register = ({ animation_class }) => {
+const Register = () => {
   const { redirect_to_after_register } = useSelector((state) => {
     return {
       redirect_to_after_register:
@@ -42,7 +43,7 @@ const Register = ({ animation_class }) => {
   };
 
   return (
-    <div className={animation_class}>
+    <AnimationWrapper>
       <div className="row">
         <div className="col-sm-8 offset-sm-2 mt-5">
           <div className="card">
@@ -158,7 +159,7 @@ const Register = ({ animation_class }) => {
           </div>
         </div>
       </div>
-    </div>
+    </AnimationWrapper>
   );
 };
 export default Register;

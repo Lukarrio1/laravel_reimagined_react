@@ -5,8 +5,9 @@ import Link from "../Laravel _Reimagined_Library/Components/Link";
 import { useDispatch, useSelector } from "react-redux";
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 import useVerbiage from '../Laravel _Reimagined_Library/Custom Hooks/useVerbiage'
+import AnimationWrapper from '../Laravel _Reimagined_Library/Wrappers/AnimationWrapper'
 
-const Login = ({ animation_class }) => {
+const Login = () => {
   const { redirect_to_after_login } = useSelector((state) => {
     return {
       redirect_to_after_login:
@@ -41,7 +42,7 @@ const Login = ({ animation_class }) => {
   };
 
   return (
-    <div className={animation_class}>
+    <AnimationWrapper>
       <div className="row">
         <div className="col-sm-8 offset-sm-2 mt-5">
           <div className="card">
@@ -103,7 +104,7 @@ const Login = ({ animation_class }) => {
           </div>
         </div>
       </div>
-    </div>
+    </AnimationWrapper>
   );
 };
 export default Login;

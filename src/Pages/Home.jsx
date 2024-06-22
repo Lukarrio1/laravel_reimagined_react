@@ -4,8 +4,9 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PermissionWrapper from "../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
 import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
+import AnimationWrapper from '../Laravel _Reimagined_Library/Wrappers/AnimationWrapper'
 
-const Home = ({ animation_class }) => {
+const Home = () => {
   const styles = {
     welcomeSection: {
       display: "flex",
@@ -28,7 +29,7 @@ const Home = ({ animation_class }) => {
   );
 
   return (
-    <div className={animation_class}>
+    <AnimationWrapper>
       <div
         className="container-fluid text-center"
         style={styles.welcomeSection}
@@ -42,7 +43,7 @@ const Home = ({ animation_class }) => {
           </p>
         </PermissionWrapper>
       </div>
-    </div>
+    </AnimationWrapper>
   );
 };
 export default Home;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
-import Footer from "../Pages/Footer";
+import Footer from "../Components/Footer";
 import { useSelector } from "react-redux";
 import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
 

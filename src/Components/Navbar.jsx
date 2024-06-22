@@ -32,14 +32,7 @@ export default function Navbar() {
           enable_verbiage={{
             enable: true,
             verbiage_key: "home_nav_text",
-            verbiage_properties: { app_name, app_version },
-            addPrefixOrSuffix: [
-              {
-                variable_name: "app_version",
-                value_to_attach: "v",
-                addPrefixOrSuffix: true,
-              },
-            ],
+            verbiage_properties: { app_name, app_version: `v${app_version}`},
           }}
         ></Link>
       </a>
