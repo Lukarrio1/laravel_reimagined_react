@@ -36,28 +36,34 @@ export default function useVerbiage(uuid) {
         // { variable_name: "", value_to_attach: "", addPrefixOrSuffix: true  //true to prepend, false to append },
       ]
     ) => {
-      return PageVerbiage[key] != undefined && PageVerbiage[key] != null
-        ? PageVerbiage[key]
-            ?.split(" ")
-            .map((item) => {
-              if (item.split("{-").length > 1) {
-                const variable = item
-                  .split("{-")
-                  .filter((new_item) => new_item.length > 0)[0]
-                  ?.split("-}")
-                  .filter((new_item) => new_item.length > 0)[0];
-                return properties[variable] != undefined
-                  ? updateValues(
-                      variable,
-                      properties[variable] ?? "",
-                      addPrefixOrSuffix
-                    )
-                  : "";
-              }
-              return item;
-            })
-            .join(" ")
-        : "";
+      return PageVerbiage[key] != undefined && PageVerbiage[key] != null ? (
+        <span
+          dangerouslySetInnerHTML={{
+            __html: PageVerbiage[key]
+              ?.split(" ")
+              .map((item) => {
+                if (item.split("{-").length > 1) {
+                  const variable = item
+                    .split("{-")
+                    .filter((new_item) => new_item.length > 0)[0]
+                    ?.split("-}")
+                    .filter((new_item) => new_item.length > 0)[0];
+                  return properties[variable] != undefined
+                    ? updateValues(
+                        variable,
+                        properties[variable] ?? "",
+                        addPrefixOrSuffix
+                      )
+                    : "";
+                }
+                return item;
+              })
+              .join(" "),
+          }}
+        ></span>
+      ) : (
+        ""
+      );
     },
   };
 }

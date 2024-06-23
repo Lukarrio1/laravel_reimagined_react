@@ -1,7 +1,8 @@
 import React from "react";
 
-import { useSelector } from 'react-redux'
-import Link from '../Laravel _Reimagined_Library/Components/Link'
+import { useSelector } from "react-redux";
+import Link from "../Laravel _Reimagined_Library/Components/Link";
+import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
 
 const styles = {
   container: {
@@ -29,26 +30,26 @@ export default function NoPermission({ link_uuid, className, Node }) {
       site_email_address: state?.setting?.settings?.site_email_address?.value,
     };
   });
+  const { getVerbiage } = useVerbiage(
+    "Ozmr5U5M7Wvd1FBiU4oIi1ZHhCKIrkiQNGFjbZofuo9oiqLbJQ"
+  );
+
   return (
     <div className={className}>
       <div className="col-md-auto m-4">
         <div className="card text-center">
           <div className="card-header bg-warning text-dark">
-            <h4>Permission Required</h4>
+            <h4>{getVerbiage("title")}</h4>
           </div>
           <div className="card-body">
             <p className="card-text" style={styles.message}>
-              You do not have the necessary permissions to access{" "}
-              <strong>{Node?.name ?? "this page"}</strong>
+              {getVerbiage("first_message", {
+                component_name: Node?.name ?? "this page",
+              })}
               <br />
-              Please contact your administrator at ({site_email_address}){" "}
-              {link_uuid && `or visit  `}
-              {link_uuid && (
-                <Link
-                  uuid={link_uuid}
-                  className="btn btn-sm btn-default"
-                ></Link>
-              )}
+              {getVerbiage("second_message", {
+                site_email: site_email_address,
+              })}
             </p>
           </div>
         </div>
