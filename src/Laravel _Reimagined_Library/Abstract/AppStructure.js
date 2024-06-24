@@ -10,37 +10,41 @@ import Loading from "../../Pages/Components/Loading";
 import { pages } from "./PagesAndLayouts";
 import LayoutWrapper from "../Wrappers/LayoutWrapper";
 import RedirectWrapper from "../Wrappers/RedirectWrapper";
+import NotFound from "../../Pages/NotFound";
 
 const generateRoutes = (pages_properties, authUser, app_animation) => {
   if (pages_properties.length === 0) {
     return null;
   }
-  return Object.keys(pages).map((page) => {
-    let page_props = pages_properties.filter(
-      (p) => p.component && p.component === page
-    )[0];
-    page_props = page_props ? page_props : {};
-    const path = page_props?.path ? page_props.path : "/";
-    const Component = pages[page_props.component ?? "NoFound"];
-    return (
-      <Route
-        key={path}
-        path={path}
-        element={
-          <RedirectWrapper page={{ ...page_props }}>
-            <LayoutWrapper
-              page={{ ...page_props }}
-              Component={
-                <Suspense fallback={<Loading></Loading>}>
-                  <Component animation_class={app_animation}></Component>
-                </Suspense>
-              }
-            ></LayoutWrapper>
-          </RedirectWrapper>
-        }
-      />
-    );
-  });
+  return [
+    ...Object.keys(pages).map((page) => {
+      let page_props = pages_properties.filter(
+        (p) => p.component && p.component === page
+      )[0];
+      page_props = page_props ? page_props : {};
+      const path = page_props?.path ? page_props.path : "/";
+      const Component = pages[page_props.component ?? "NoFound"];
+      return (
+        <Route
+          key={path}
+          path={path}
+          element={
+            <RedirectWrapper page={{ ...page_props }}>
+              <LayoutWrapper
+                page={{ ...page_props }}
+                Component={
+                  <Suspense fallback={<Loading></Loading>}>
+                    <Component animation_class={app_animation}></Component>
+                  </Suspense>
+                }
+              ></LayoutWrapper>
+            </RedirectWrapper>
+          }
+        />
+      );
+    }),
+    // <Route component={NotFound} />,
+  ];
 };
 
 const assembleApp = async (dispatch) => {

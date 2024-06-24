@@ -39,7 +39,6 @@ function App() {
           <Routes>
             {pages_properties.length > 0 &&
               generateRoutes(pages_properties, authUser, app_animation)}
-            <Route component={NotFound} />
           </Routes>
         </BrowserRouter>
       </>
