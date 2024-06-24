@@ -54,7 +54,6 @@ const useNavigator = (UUID) => {
 
   useEffect(() => {
     if (!newLink?.name) return;
-    // if (!Actual_link?.hasAccess) return;
     navigate(newLink?.node_route);
   }, [newLink]);
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../Components/Navbar";
-import Footer from "../../Components/Footer";
+import Navbar from "../../Pages/Components/Navbar";
+import Footer from "../../Pages/Components/Footer";
 import { useSelector } from "react-redux";
 import useNavigator from "../Custom Hooks/useNavigator";
 import { layouts } from "../Abstract/PagesAndLayouts";

@@ -1,6 +1,6 @@
 import React from "react";
-import PermissionWrapper from "../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
-import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
+import PermissionWrapper from "../../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
+import useVerbiage from "../../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
 
 const Footer = ({ version }) => {
   const { getVerbiage } = useVerbiage(

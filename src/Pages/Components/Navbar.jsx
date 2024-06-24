@@ -1,11 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Link from "../Laravel _Reimagined_Library/Components/Link";
-import { logout } from "../Laravel _Reimagined_Library/React Base Stores/auth";
-import PermissionWrapper from "../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
-import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
-import { setUpNodes } from "../Laravel _Reimagined_Library/Abstract/AppStructure";
-import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
+import Link from "../../Laravel _Reimagined_Library/Components/Link";
+import { logout } from "../../Laravel _Reimagined_Library/React Base Stores/auth";
+import PermissionWrapper from "../../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
+import useNavigator from "../../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
+import { setUpNodes } from "../../Laravel _Reimagined_Library/Abstract/AppStructure";
+import useVerbiage from "../../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
 
 export default function Navbar() {
   const { app_name, redirect_to_after_logout, app_version } = useSelector(
@@ -32,7 +32,7 @@ export default function Navbar() {
           enable_verbiage={{
             enable: true,
             verbiage_key: "home_nav_text",
-            verbiage_properties: { app_name, app_version: `v${app_version}`},
+            verbiage_properties: { app_name, app_version: app_version },
           }}
         ></Link>
       </a>

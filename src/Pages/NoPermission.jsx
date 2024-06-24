@@ -24,7 +24,7 @@ const styles = {
   },
 };
 
-export default function NoPermission({ link_uuid, className, Node }) {
+export default function NoPermission({ className, Node }) {
   const { site_email_address } = useSelector((state) => {
     return {
       site_email_address: state?.setting?.settings?.site_email_address?.value,
@@ -44,7 +44,7 @@ export default function NoPermission({ link_uuid, className, Node }) {
           <div className="card-body">
             <p className="card-text" style={styles.message}>
               {getVerbiage("first_message", {
-                component_name: Node?.name ?? "this page",
+                component_name: Node?.name,
               })}
               <br />
               {getVerbiage("second_message", {

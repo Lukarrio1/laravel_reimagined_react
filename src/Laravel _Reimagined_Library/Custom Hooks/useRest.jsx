@@ -5,9 +5,7 @@ import { restClient } from "../Abstract/restClient";
 
 export default function useRest() {
   const { Routes } = useSelector((state) => {
-    let temp = true;
     const routes = [...state?.coreNodes?.routes];
-
     return { Routes: routes };
   });
   return {

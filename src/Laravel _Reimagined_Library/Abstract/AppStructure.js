@@ -6,7 +6,7 @@ import { setAuthProperties } from "../React Base Stores/auth";
 import Layout from "../Wrappers/LayoutWrapper";
 import Redirect from "../Wrappers/RedirectWrapper";
 import { Suspense, lazy } from "react";
-import Loading from "../../Components/Loading";
+import Loading from "../../Pages/Components/Loading";
 import { pages } from "./PagesAndLayouts";
 import LayoutWrapper from "../Wrappers/LayoutWrapper";
 import RedirectWrapper from "../Wrappers/RedirectWrapper";

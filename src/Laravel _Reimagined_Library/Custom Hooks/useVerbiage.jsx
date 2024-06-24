@@ -48,12 +48,36 @@ export default function useVerbiage(uuid) {
                     .filter((new_item) => new_item.length > 0)[0]
                     ?.split("-}")
                     .filter((new_item) => new_item.length > 0)[0];
-                  return properties[variable] != undefined
-                    ? updateValues(
-                        variable,
-                        properties[variable] ?? "",
+
+                  const middle_seg = item
+                    .split("{-")
+                    .filter((new_item) => new_item.length > 0)[1]
+                    ?.split("-}")[0];
+
+                  const first_seg =
+                    middle_seg == undefined
+                      ? ""
+                      : item
+                          .split("{-")
+                          .filter((new_item) => new_item.length > 0)[0] ?? "";
+
+                  const last_seg =
+                    middle_seg == undefined
+                      ? ""
+                      : item
+                          .split("{-")
+                          .filter((new_item) => new_item.length > 0)[1]
+                          ?.split("-}")[1] ?? "";
+                  return properties[
+                    middle_seg != undefined ? middle_seg : variable
+                  ] != undefined
+                    ? `${first_seg}${updateValues(
+                        middle_seg != undefined ? middle_seg : variable,
+                        properties[
+                          middle_seg != undefined ? middle_seg : variable
+                        ] ?? "",
                         addPrefixOrSuffix
-                      )
+                      )}${last_seg}`
                     : "";
                 }
                 return item;
