@@ -1,4 +1,5 @@
 import React from "react";
+import useVerbiage from "../../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
 const styles = {
   loading: {
     display: "flex",
@@ -9,17 +10,13 @@ const styles = {
   },
 };
 export default function Loading() {
+  const { getVerbiage } = useVerbiage(
+    "PL26qXGSDPYbjVvaxbL7k9kZWcOXn7skFgSdph1S9h8wQmSfWt"
+  );
   return (
     <div>
-      <div
-        className="container-fluid text-center"
-        style={styles.loading}
-      >
-        <h1>
-          <div class="spinner-border text-info" style={{fontSize:'200px'}} role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </h1>
+      <div className="container-fluid text-center" style={styles.loading}>
+        {getVerbiage("loading_animation_element")}
       </div>
     </div>
   );

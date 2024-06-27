@@ -24,6 +24,7 @@ const generateRoutes = (pages_properties, authUser, app_animation) => {
       page_props = page_props ? page_props : {};
       const path = page_props?.path ? page_props.path : "/";
       const Component = pages[page_props.component ?? "NoFound"];
+      console.log(Component, "this is the component",page_props);
       return (
         <Route
           key={path}
@@ -34,7 +35,7 @@ const generateRoutes = (pages_properties, authUser, app_animation) => {
                 page={{ ...page_props }}
                 Component={
                   <Suspense fallback={<Loading></Loading>}>
-                    <Component animation_class={app_animation}></Component>
+                    <Component></Component>
                   </Suspense>
                 }
               ></LayoutWrapper>
