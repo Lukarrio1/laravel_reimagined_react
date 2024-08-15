@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PermissionWrapper from "../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
 import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
-import AnimationWrapper from '../Laravel _Reimagined_Library/Wrappers/AnimationWrapper'
+import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
+import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 
 const Home = () => {
   const styles = {
@@ -27,6 +28,20 @@ const Home = () => {
   const { getVerbiage } = useVerbiage(
     "kmg9uKHV1VR9eoF1mdl3nahG8CCpSduNdL55C26uvwG6c9ldsH"
   );
+  const { restClient } = useRest();
+
+  const testRoutes = async () => {
+    const { data } = await restClient(
+      "qUTJzqnQDZQvm9EdcIYkfKNTh3RUFNuk3egIwKg9eVmhrg04De",
+      {
+        name: "Amethyst Gray",
+      }
+    );
+  };
+
+  useEffect(() => {
+    testRoutes();
+  }, []);
 
   return (
     <AnimationWrapper>

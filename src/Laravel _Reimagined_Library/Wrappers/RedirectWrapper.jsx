@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useNavigator from "../Custom Hooks/useNavigator";
 import { useSelector } from "react-redux";
 import useVerbiage from "../Custom Hooks/useVerbiage";
+import { useNavigate } from "react-router-dom";
 
 export default function RedirectWrapper({ children, page }) {
   const { auth_user, redirect_to_after_login, redirect_to_after_logout } =
@@ -14,15 +15,15 @@ export default function RedirectWrapper({ children, page }) {
           state?.setting?.settings?.redirect_to_after_logout,
       };
     });
-
+  const navigate = useNavigate();
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (auth_user && page?.hasAccess == false) {
-        window.location.href = redirect_to_after_login?.value;
+        navigate(redirect_to_after_login?.value);
         return;
       }
       if (!auth_user && page?.hasAccess == false) {
-        window.location.href = redirect_to_after_logout?.value;
+        navigate(redirect_to_after_logout?.value);
         return;
       }
     }, 1100);

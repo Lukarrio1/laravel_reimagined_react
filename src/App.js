@@ -9,7 +9,7 @@ import { assembleApp } from "./Laravel _Reimagined_Library/Abstract/AppStructure
 import NotFound from "./Pages/NotFound";
 
 function App() {
-  const [pages_properties, setPagesProperties] = useState([]);
+  const [pages_properties, setPagesProperties] = useState(null);
   const [app_animation, setAppAnimation] = useState("");
   const [authUser, setUser] = useState(-1);
   const dispatch = useDispatch();
@@ -29,20 +29,39 @@ function App() {
     });
   }, []);
 
-
-
-  return (
-    pages_properties &&
-    app_animation && (
-      <>
-        <BrowserRouter>
-          <Routes>
-            {pages_properties.length > 0 &&
-              generateRoutes(pages_properties, authUser, app_animation)}
-          </Routes>
-        </BrowserRouter>
-      </>
-    )
+  return !pages_properties ? (
+    <>
+      <div
+        style={{
+          height: "100vh",
+          margin: 0,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div
+          className="spinner-border"
+          role="status"
+          style={{
+            width: "10rem",
+            height: "10rem",
+            borderWidth: "0.4em",
+          }}
+        >
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </>
+  ) : (
+    <>
+      <BrowserRouter>
+        <Routes>
+          {pages_properties.length > 0 &&
+            generateRoutes(pages_properties, authUser, app_animation)}
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
