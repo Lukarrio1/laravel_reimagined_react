@@ -12,7 +12,7 @@ import LayoutWrapper from "../Wrappers/LayoutWrapper";
 import RedirectWrapper from "../Wrappers/RedirectWrapper";
 import NotFound from "../../Pages/NotFound";
 
-const generateRoutes = (pages_properties, authUser, app_animation) => {
+const generateRoutes = (pages_properties, search_skip_word) => {
   if (pages_properties.length === 0) {
     return null;
   }
@@ -24,7 +24,6 @@ const generateRoutes = (pages_properties, authUser, app_animation) => {
       page_props = page_props ? page_props : {};
       const path = page_props?.path ? page_props.path : "/";
       const Component = pages[page_props.component ?? "NoFound"];
-      console.log(Component, "this is the component",page_props);
       return (
         <Route
           key={path}
@@ -35,7 +34,7 @@ const generateRoutes = (pages_properties, authUser, app_animation) => {
                 page={{ ...page_props }}
                 Component={
                   <Suspense fallback={<Loading></Loading>}>
-                    <Component></Component>
+                    <Component search_skip_word={search_skip_word}></Component>
                   </Suspense>
                 }
               ></LayoutWrapper>

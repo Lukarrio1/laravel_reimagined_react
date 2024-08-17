@@ -7,10 +7,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { generateRoutes } from "./Laravel _Reimagined_Library/Abstract/AppStructure";
 import { assembleApp } from "./Laravel _Reimagined_Library/Abstract/AppStructure";
 import NotFound from "./Pages/NotFound";
+import Loading from "./Pages/Components/Loading";
 
 function App() {
   const [pages_properties, setPagesProperties] = useState(null);
-  const [app_animation, setAppAnimation] = useState("");
+  const [routes, setRoutes] = useState(null);
+  const [search_skip_word, setSearchSkipWord] = useState();
   const [authUser, setUser] = useState(-1);
   const dispatch = useDispatch();
 
@@ -22,44 +24,30 @@ function App() {
     store.subscribe(() => {
       document.title = store.getState().setting?.settings?.app_name?.value;
       setPagesProperties(store.getState().coreNodes.pages);
-      setAppAnimation(
-        store?.getState()?.setting?.settings?.app_animation?.value
-      );
       setUser(store.getState().authentication.user);
+      setSearchSkipWord(
+        store.getState().setting?.settings?.search_skip_word?.value
+      );
     });
   }, []);
 
-  return !pages_properties ? (
-    <>
-      <div
-        style={{
-          height: "100vh",
-          margin: 0,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <div
-          className="spinner-border"
-          role="status"
-          style={{
-            width: "10rem",
-            height: "10rem",
-            borderWidth: "0.4em",
-          }}
-        >
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    </>
+  useEffect(() => {
+    if (!pages_properties) return;
+    setRoutes(generateRoutes(pages_properties, search_skip_word));
+  }, [pages_properties]);
+
+  return pages_properties == null ? (
+    <Loading></Loading>
+  ) : routes == null ? (
+    <Loading
+      textElement={
+        <div className="h3">Processing the app structure, please wait ...</div>
+      }
+    ></Loading>
   ) : (
     <>
       <BrowserRouter>
-        <Routes>
-          {pages_properties.length > 0 &&
-            generateRoutes(pages_properties, authUser, app_animation)}
-        </Routes>
+        <Routes>{routes}</Routes>
       </BrowserRouter>
     </>
   );

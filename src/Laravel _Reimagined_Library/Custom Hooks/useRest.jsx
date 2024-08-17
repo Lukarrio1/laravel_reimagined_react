@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Route } from "react-router-dom";
 import { restClient } from "../Abstract/restClient";
-
+// the save word for a empty variable is "empty_search_value" instead of passing it with an empty value
 export default function useRest() {
   const { Routes } = useSelector((state) => {
     const routes = [...state?.coreNodes?.routes];

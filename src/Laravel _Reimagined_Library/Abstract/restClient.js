@@ -45,6 +45,7 @@ const build_rest_url = (url, params) =>
     : url
         .split("/")
         .map((seg) => {
+          console.log(seg, "current segment", translate_params(params)[seg]);
           return translate_params(params)[seg]
             ? translate_params(params)[seg]
             : seg;
@@ -56,6 +57,7 @@ const translate_params = (params) => {
   Object.keys(params).forEach((param) => {
     translation[`{${param}}`] = params[param];
   });
+  console.log(translation,"translation")
   return translation;
 };
 

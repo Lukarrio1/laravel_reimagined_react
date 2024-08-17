@@ -7,7 +7,7 @@ import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage
 import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 
-const Home = () => {
+const Home = ({ search_skip_word }) => {
   const styles = {
     welcomeSection: {
       display: "flex",
@@ -32,9 +32,10 @@ const Home = () => {
 
   const testRoutes = async () => {
     const { data } = await restClient(
-      "qUTJzqnQDZQvm9EdcIYkfKNTh3RUFNuk3egIwKg9eVmhrg04De",
+      "jb15qZsvnOZQtRSmmlyLaM9o4IFsdc96Anmu9suzAiEkZg9ioW",
       {
-        name: "Amethyst Gray",
+        first_name: "ah",
+        last_name: search_skip_word,
       }
     );
   };
