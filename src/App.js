@@ -1,4 +1,5 @@
 import "./App.css";
+import "./animation.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { store } from "./store/store";
@@ -41,7 +42,10 @@ function App() {
   ) : routes == null ? (
     <Loading
       textElement={
-        <div className="h3">Processing the app structure, please wait ...</div>
+        <div className="h3 text-bold">
+          Processing the app structure, please wait
+          <span className="dots"></span>
+        </div>
       }
     ></Loading>
   ) : (
