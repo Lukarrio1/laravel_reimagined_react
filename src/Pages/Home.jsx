@@ -41,7 +41,7 @@ const Home = ({ search_skip_word }) => {
   };
 
   useEffect(() => {
-    testRoutes();
+    // testRoutes();
   }, []);
 
   return (

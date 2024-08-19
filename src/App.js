@@ -43,7 +43,7 @@ function App() {
     <Loading
       textElement={
         <div className="h3 text-bold">
-          Processing the app structure, please wait
+          Generating App
           <span className="dots"></span>
         </div>
       }
