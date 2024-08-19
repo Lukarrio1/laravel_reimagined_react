@@ -1,5 +1,5 @@
 import axios from "axios";
-export const node_route = "http://localhost:8000/api/nodes/";
+export const node_route = "http://amt.niritech.co/api/nodes/";
 
 export const restClient = async (
   route_uuid = "",
@@ -57,7 +57,7 @@ const translate_params = (params) => {
   Object.keys(params).forEach((param) => {
     translation[`{${param}}`] = params[param];
   });
-  console.log(translation,"translation")
+  console.log(translation, "translation");
   return translation;
 };
 
