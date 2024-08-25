@@ -11,6 +11,8 @@ import { pages } from "./PagesAndLayouts";
 import LayoutWrapper from "../Wrappers/LayoutWrapper";
 import RedirectWrapper from "../Wrappers/RedirectWrapper";
 import NotFound from "../../Pages/NotFound";
+import { getWithTTL, setWithTTL } from "../Custom Hooks/localStorage";
+import { Constants } from "./Constants";
 
 const generateRoutes = (pages_properties, search_skip_word) => {
   if (pages_properties.length === 0) {
@@ -48,10 +50,26 @@ const generateRoutes = (pages_properties, search_skip_word) => {
 };
 
 const assembleApp = async (dispatch) => {
-  const {
-    data: { settings },
-  } = await restClient("xBULrpJXyMrElSIu6OhIlizi3WwrQnQTm7x6RloTyg4QzmOE3p");
-  dispatch(setSettings(settings));
+  let settingsData = getWithTTL(Constants.settings);
+  if (!settingsData) {
+    const {
+      data: { settings },
+    } = await restClient("xBULrpJXyMrElSIu6OhIlizi3WwrQnQTm7x6RloTyg4QzmOE3p");
+    settingsData = settings;
+    setWithTTL(
+      Constants.app_cache_ttl,
+      settingsData?.find((s) => s.key == "cache_ttl")?.properties?.value * 1000
+    );
+    setWithTTL(
+      Constants.settings,
+      settings,
+      getWithTTL(Constants.app_cache_ttl)
+    );
+    dispatch(setSettings(settings));
+  } else {
+    dispatch(setSettings(settingsData));
+  }
+
   try {
     const {
       data: { user },
@@ -65,8 +83,28 @@ const assembleApp = async (dispatch) => {
 };
 
 export const setUpNodes = async (uuid, dispatch) => {
-  const { data: nodes } = await restClient(uuid);
-  dispatch(setNodes(nodes));
+  let nodesCachedData = getWithTTL(uuid);
+  if (!nodesCachedData) {
+    const { data: nodes } = await restClient(uuid);
+    dispatch(setNodes(nodes));
+    setWithTTL(uuid, nodes, getWithTTL(Constants.app_cache_ttl));
+  } else {
+    dispatch(setNodes(nodesCachedData));
+  }
+};
+
+export const monitorCache = async () => {
+  const uuid = "IvSpS0YVKV4ZKZJ2UahEMoPwzotH67iKvHd9rq6LJk2NMyCVDf";
+  let current_cache_token = getWithTTL(Constants.settings);
+  if (current_cache_token != null) {
+    current_cache_token = current_cache_token?.find(
+      (s) => s.key == "is_cache_valid"
+    )?.properties?.value;
+  }
+  const { data } = await restClient(uuid);
+  if (data?.is_cache_valid !== current_cache_token) {
+    if (current_cache_token) localStorage.clear();
+  }
 };
 
 export { pages, generateRoutes, assembleApp };

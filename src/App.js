@@ -5,7 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { store } from "./store/store";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { generateRoutes } from "./Laravel _Reimagined_Library/Abstract/AppStructure";
+import {
+  generateRoutes,
+  monitorCache,
+} from "./Laravel _Reimagined_Library/Abstract/AppStructure";
 import { assembleApp } from "./Laravel _Reimagined_Library/Abstract/AppStructure";
 import NotFound from "./Pages/NotFound";
 import Loading from "./Pages/Components/Loading";
@@ -19,6 +22,8 @@ function App() {
 
   useEffect(() => {
     assembleApp(dispatch);
+    const interval = setInterval(() => monitorCache(), 30000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {

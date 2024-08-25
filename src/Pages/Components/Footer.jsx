@@ -13,7 +13,7 @@ const Footer = ({ version }) => {
       <footer
         className="bg-white fixed-bottom"
         style={{
-          " z-index": 1030,
+          "zIndex": 1030,
         }}
       >
         <div className="container text-center py-3">

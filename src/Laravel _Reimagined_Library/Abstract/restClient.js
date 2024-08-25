@@ -1,5 +1,6 @@
 import axios from "axios";
-export const node_route = "http://amt.niritech.co/api/nodes/";
+import { getWithTTL, setWithTTL } from "../Custom Hooks/localStorage";
+export const node_route = "http://localhost:8000/api/nodes/";
 
 export const restClient = async (
   route_uuid = "",
@@ -24,10 +25,15 @@ export const restClient = async (
 };
 
 const getNodeData = async (route_uuid) => {
-  const {
-    data: { node },
-  } = await axios.get(node_route + route_uuid);
-  return node;
+  let nodeCacheData = getWithTTL(route_uuid);
+  if (!nodeCacheData) {
+    const {
+      data: { node },
+    } = await axios.get(node_route + route_uuid);
+    setWithTTL(route_uuid, node, 1000 * 60 * 60);
+    nodeCacheData = node;
+  }
+  return nodeCacheData;
 };
 
 const setUpAuth = (node) =>

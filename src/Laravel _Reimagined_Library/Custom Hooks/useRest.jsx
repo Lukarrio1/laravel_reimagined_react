@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Route } from "react-router-dom";
 import { restClient } from "../Abstract/restClient";
+import useLocalStorageCache from "./localStorage";
 // the save word for a empty variable is "empty_search_value" instead of passing it with an empty value
 export default function useRest() {
   const { Routes } = useSelector((state) => {
@@ -9,9 +10,9 @@ export default function useRest() {
     return { Routes: routes };
   });
   return {
-    restClient: async (uuid, route_params, data_to_send) => {
+    restClient: async (uuid, route_params, data_to_send, use_cache = false) => {
       const route = Routes?.filter((r) => r?.uuid == uuid)[0];
-      return restClient(uuid, route_params, data_to_send, route);
+      return restClient(uuid, route_params, data_to_send, route, use_cache);
     },
   };
 }

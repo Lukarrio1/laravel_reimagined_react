@@ -21,6 +21,7 @@ const Authentication = createSlice({
     },
     logout: (state) => {
       sessionStorage.removeItem("bearerToken");
+      localStorage.clear();
       state.permissions = [];
       state.user = null;
       state.is_logged_in = false;
