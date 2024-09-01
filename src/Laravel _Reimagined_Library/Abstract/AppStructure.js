@@ -13,8 +13,9 @@ import RedirectWrapper from "../Wrappers/RedirectWrapper";
 import NotFound from "../../Pages/NotFound";
 import { getWithTTL, setWithTTL } from "../Custom Hooks/localStorage";
 import { Constants } from "./Constants";
+import { setReloadCachedData } from "../React Base Stores/app";
 
-const generateRoutes = (pages_properties, search_skip_word) => {
+const generateRoutes = (pages_properties = [], search_skip_word) => {
   if (pages_properties.length === 0) {
     return null;
   }
@@ -89,11 +90,11 @@ export const setUpNodes = async (uuid, dispatch) => {
     dispatch(setNodes(nodes));
     setWithTTL(uuid, nodes, getWithTTL(Constants.app_cache_ttl));
   } else {
-    dispatch(setNodes(nodesCachedData));
+    dispatch(setNodes(nodesCachedData ?? []));
   }
 };
 
-export const monitorCache = async () => {
+export const monitorCache = async (dispatch) => {
   const uuid = "IvSpS0YVKV4ZKZJ2UahEMoPwzotH67iKvHd9rq6LJk2NMyCVDf";
   let current_cache_token = getWithTTL(Constants.settings);
   if (current_cache_token != null) {
@@ -103,7 +104,10 @@ export const monitorCache = async () => {
   }
   const { data } = await restClient(uuid);
   if (data?.is_cache_valid !== current_cache_token) {
-    if (current_cache_token) localStorage.clear();
+    if (current_cache_token) {
+      localStorage.clear();
+      dispatch(setReloadCachedData(true));
+    }
   }
 };
 

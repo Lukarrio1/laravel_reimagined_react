@@ -18,11 +18,12 @@ function App() {
   const [routes, setRoutes] = useState(null);
   const [search_skip_word, setSearchSkipWord] = useState();
   const [authUser, setUser] = useState(-1);
+  const [recache_core_data, setRecacheCoreData] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     assembleApp(dispatch);
-    const interval = setInterval(() => monitorCache(), 30000);
+    const interval = setInterval(() => monitorCache(dispatch), 30000);
     return () => clearInterval(interval);
   }, []);
 
@@ -31,15 +32,22 @@ function App() {
       document.title = store.getState().setting?.settings?.app_name?.value;
       setPagesProperties(store.getState().coreNodes.pages);
       setUser(store.getState().authentication.user);
+      setRecacheCoreData(store.getState().app.reload_if_cache_is_clear);
       setSearchSkipWord(
         store.getState().setting?.settings?.search_skip_word?.value
       );
     });
   }, []);
 
+  // useEffect(() => {
+  //   if (recache_core_data == false) return;
+  //   assembleApp(dispatch);
+  //   dispatch(setRecacheCoreData(false));
+  // }, [recache_core_data]);
+
   useEffect(() => {
     if (!pages_properties) return;
-    setRoutes(generateRoutes(pages_properties, search_skip_word));
+    setRoutes(generateRoutes(pages_properties ?? [], search_skip_word));
   }, [pages_properties]);
 
   return pages_properties == null ? (
