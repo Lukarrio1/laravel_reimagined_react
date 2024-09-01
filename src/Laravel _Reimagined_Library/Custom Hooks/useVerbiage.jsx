@@ -36,8 +36,6 @@ export default function useVerbiage(uuid) {
         // { variable_name: "", value_to_attach: "", addPrefixOrSuffix: true  //true to prepend, false to append },
       ]
     ) => {
-      console.log(PageVerbiage[key], "current verbiage value");
-
       return PageVerbiage[key] != undefined && PageVerbiage[key] != null ? (
         <span
           dangerouslySetInnerHTML={{
