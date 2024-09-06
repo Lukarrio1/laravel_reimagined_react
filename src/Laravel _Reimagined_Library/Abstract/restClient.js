@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getWithTTL, setWithTTL } from "../Custom Hooks/localStorage";
-export const node_route = "http://localhost:8000/api/nodes/";
+export const node_route = "http://amt.niritech.co/api/nodes/";
 
 export const restClient = async (
   route_uuid = "",

@@ -26,8 +26,9 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  
   useEffect(() => {
-    store.subscribe(() => {
+    document.title = store.subscribe(() => {
       document.title = store.getState().setting?.settings?.app_name?.value;
       setPagesProperties(store.getState().coreNodes.pages);
       setUser(store.getState().authentication.user);
