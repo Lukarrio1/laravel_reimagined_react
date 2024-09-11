@@ -7,6 +7,8 @@ import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage
 import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
+import useAuthUser from "../Laravel _Reimagined_Library/Custom Hooks/useAuthUser";
+import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
 
 const Home = ({ search_skip_word }) => {
   const styles = {
@@ -18,16 +20,12 @@ const Home = ({ search_skip_word }) => {
       height: "80vh",
     },
   };
-
-  const { user } = useSelector((state) => {
-    return {
-      user: state?.authentication?.user,
-    };
-  });
+  const user = useAuthUser();
 
   const { getVerbiage } = useVerbiage(
     "kmg9uKHV1VR9eoF1mdl3nahG8CCpSduNdL55C26uvwG6c9ldsH"
   );
+
 
   const { getSetting } = useSettings();
 
@@ -40,7 +38,7 @@ const Home = ({ search_skip_word }) => {
         <PermissionWrapper
           uuid={"IYUhLzLdfYToLMg4YY46dxsXVvIwA90fLLew0vOoFXbBnrfn51"}
         >
-          <h1>{getVerbiage("title", { app_name: getSetting('app_name') })}</h1>
+          <h1>{getVerbiage("title", { app_name: getSetting("app_name") })}</h1>
           <p className="lead">
             {getVerbiage("welcome_message", { user_name: user?.name })}
           </p>

@@ -4,19 +4,16 @@ import Link from "../Laravel _Reimagined_Library/Components/Link";
 // import restClient from "../Laravel _Reimagined_Library";
 import { useDispatch, useSelector } from "react-redux";
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
-import useVerbiage from '../Laravel _Reimagined_Library/Custom Hooks/useVerbiage'
-import AnimationWrapper from '../Laravel _Reimagined_Library/Wrappers/AnimationWrapper'
+import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
+import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
+import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
 
 const Login = () => {
-  const { redirect_to_after_login } = useSelector((state) => {
-    return {
-      redirect_to_after_login:
-        state?.setting?.settings?.redirect_to_after_login?.value,
-    };
-  });
-   const { getVerbiage } = useVerbiage(
-     "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5"
-   );
+  const { getSetting } = useSettings();
+  
+  const { getVerbiage } = useVerbiage(
+    "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5"
+  );
 
   const [error, setError] = useState(null);
   const [{ email, password }, setCredentials] = useState({
@@ -35,7 +32,7 @@ const Login = () => {
       );
       setError(null);
       sessionStorage.setItem("bearerToken", data?.token);
-      window.location.href = redirect_to_after_login;
+      window.location.href = getSetting("redirect_to_after_login");
     } catch (error) {
       setError(error?.response?.data?.message);
     }

@@ -3,20 +3,17 @@ import Link from "../Laravel _Reimagined_Library/Components/Link";
 import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 import { useSelector } from "react-redux";
-import useVerbiage from '../Laravel _Reimagined_Library/Custom Hooks/useVerbiage'
-import AnimationWrapper from '../Laravel _Reimagined_Library/Wrappers/AnimationWrapper'
+import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
+import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
+import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
 
 const Register = () => {
-  const { redirect_to_after_register } = useSelector((state) => {
-    return {
-      redirect_to_after_register:
-        state?.setting?.settings?.redirect_to_after_register?.value,
-    };
-  });
+  
+  const { getVerbiage } = useVerbiage(
+    "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP"
+  );
 
-   const { getVerbiage } = useVerbiage(
-     "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP"
-   );
+  const {getSetting} = useSettings();
 
   const [error, setError] = useState(null);
 
@@ -36,7 +33,7 @@ const Register = () => {
         { ...creds }
       );
       sessionStorage.setItem("bearerToken", data?.token);
-      window.location.href = redirect_to_after_register;
+      window.location.href = getSetting('redirect_to_after_register');
     } catch (error) {
       setError(error?.response?.data?.errors);
     }

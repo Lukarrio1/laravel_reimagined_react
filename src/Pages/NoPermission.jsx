@@ -3,6 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Link from "../Laravel _Reimagined_Library/Components/Link";
 import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
+import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
 
 const styles = {
   container: {
@@ -25,11 +26,8 @@ const styles = {
 };
 
 export default function NoPermission({ className, Node }) {
-  const { site_email_address } = useSelector((state) => {
-    return {
-      site_email_address: state?.setting?.settings?.site_email_address?.value,
-    };
-  });
+  const { getSetting } = useSettings();
+  
   const { getVerbiage } = useVerbiage(
     "Ozmr5U5M7Wvd1FBiU4oIi1ZHhCKIrkiQNGFjbZofuo9oiqLbJQ"
   );
@@ -48,7 +46,7 @@ export default function NoPermission({ className, Node }) {
               })}
               <br />
               {getVerbiage("second_message", {
-                site_email: site_email_address,
+                site_email: getSetting("site_email_address"),
               })}
             </p>
           </div>

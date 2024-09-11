@@ -3,27 +3,26 @@ import useNavigator from "../Custom Hooks/useNavigator";
 import { useSelector } from "react-redux";
 import useVerbiage from "../Custom Hooks/useVerbiage";
 import { useNavigate } from "react-router-dom";
+import useSettings from "../Custom Hooks/useSettings";
+import useAuthUser from "../Custom Hooks/useAuthUser";
 
+/*
+  Redirect Wrapper
+  This handles the redirecting of user if they are not logged 
+  in or lack the required permission to view the requested page 
+*/
 export default function RedirectWrapper({ children, page }) {
-  const { auth_user, redirect_to_after_login, redirect_to_after_logout } =
-    useSelector((state) => {
-      return {
-        auth_user: state?.authentication?.user,
-        redirect_to_after_login:
-          state?.setting?.settings?.redirect_to_after_login,
-        redirect_to_after_logout:
-          state?.setting?.settings?.redirect_to_after_logout,
-      };
-    });
+  const { getSetting } = useSettings();
+  const auth_user = useAuthUser();
   const navigate = useNavigate();
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (auth_user && page?.hasAccess == false) {
-        navigate(redirect_to_after_login?.value);
+        navigate(getSetting("redirect_to_after_login"));
         return;
       }
       if (!auth_user && page?.hasAccess == false) {
-        navigate(redirect_to_after_logout?.value);
+        navigate(getSetting("redirect_to_after_logout"));
         return;
       }
     }, 1100);
@@ -42,8 +41,8 @@ export default function RedirectWrapper({ children, page }) {
             <div class="alert alert-warning" role="alert">
               {getVerbiage("on_redirect_message", {
                 url: auth_user
-                  ? redirect_to_after_login?.key
-                  : redirect_to_after_logout?.key,
+                  ? getSetting("redirect_to_after_login", "key")
+                  : getSetting("redirect_to_after_logout", "key"),
               })}
             </div>
           </div>

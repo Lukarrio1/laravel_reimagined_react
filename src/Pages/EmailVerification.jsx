@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
+import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
 
 const EmailVerification = () => {
   const styles = {
@@ -16,19 +17,26 @@ const EmailVerification = () => {
   };
 
   const { token } = useParams();
+
   const { restClient } = useRest();
+
+  const { node } = useNavigator(
+    "nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"
+  );
+
   const verifyEmail = async () => {
     const { data } = await restClient(
       "napwAbGlLIs2owgXvRr9bF8C84SlmhaYy2QMwIclCT9ddM5qZU",
       { token: token }
     );
     sessionStorage.setItem("bearerToken", data?.token);
-    window.location.href = "/";
+    window.location.href = node?.node_route;
   };
 
   useEffect(() => {
     verifyEmail();
   }, []);
+  
   const { getVerbiage } = useVerbiage(
     "so2HDQJPD7rZlNL66ifHff0mt5ymXRyOmxE0hPsJt5x2xiDcV4"
   );
