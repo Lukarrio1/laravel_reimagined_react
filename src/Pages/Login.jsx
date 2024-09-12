@@ -7,15 +7,17 @@ import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
 import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
 import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
+import useErrors from "../Laravel _Reimagined_Library/Custom Hooks/useErrors";
 
 const Login = () => {
   const { getSetting } = useSettings();
-  
+
   const { getVerbiage } = useVerbiage(
     "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5"
   );
 
   const [error, setError] = useState(null);
+  
   const [{ email, password }, setCredentials] = useState({
     email: "",
     password: "",
@@ -23,19 +25,19 @@ const Login = () => {
 
   const { restClient } = useRest();
 
+  const { clearError } = useErrors();
+
   const login = async () => {
-    try {
-      const { data } = await restClient(
-        "xCggjsbTw94JlgbHDsaQ1j77nBKU08EKdSI0OiJPSoS9EFCyH8",
-        {},
-        { email, password }
-      );
-      setError(null);
-      sessionStorage.setItem("bearerToken", data?.token);
-      window.location.href = getSetting("redirect_to_after_login");
-    } catch (error) {
-      setError(error?.response?.data?.message);
-    }
+    clearError("system_errors");
+    const response = await restClient(
+      "xCggjsbTw94JlgbHDsaQ1j77nBKU08EKdSI0OiJPSoS9EFCyH8",
+      {},
+      { email, password }
+    );
+    if (response === null) return;
+    const { data } = response;
+    sessionStorage.setItem("bearerToken", data?.token);
+    window.location.href = getSetting("redirect_to_after_login");
   };
 
   return (

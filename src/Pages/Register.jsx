@@ -6,14 +6,14 @@ import { useSelector } from "react-redux";
 import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
 import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
 import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
+import useErrors from "../Laravel _Reimagined_Library/Custom Hooks/useErrors";
 
 const Register = () => {
-  
   const { getVerbiage } = useVerbiage(
     "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP"
   );
 
-  const {getSetting} = useSettings();
+  const { getSetting } = useSettings();
 
   const [error, setError] = useState(null);
 
@@ -25,18 +25,22 @@ const Register = () => {
   });
   const { restClient } = useRest();
 
+  const { getError, clearError } = useErrors();
+
   const register = async () => {
-    try {
-      const { data } = await restClient(
-        "AdhmjMGkWcgYO9VvTACKum8h1BsYSP1btLfBVajD52KupkOlbC",
-        {},
-        { ...creds }
-      );
-      sessionStorage.setItem("bearerToken", data?.token);
-      window.location.href = getSetting('redirect_to_after_register');
-    } catch (error) {
-      setError(error?.response?.data?.errors);
-    }
+    clearError("name");
+    clearError("email");
+    clearError("password");
+    clearError("confirm_password");
+    const response = await restClient(
+      "AdhmjMGkWcgYO9VvTACKum8h1BsYSP1btLfBVajD52KupkOlbC",
+      {},
+      { ...creds }
+    );
+    if (response == null) return;
+    const { data } = response;
+    sessionStorage.setItem("bearerToken", data?.token);
+    window.location.href = getSetting("redirect_to_after_register");
   };
 
   return (
@@ -65,9 +69,9 @@ const Register = () => {
                       setCredentials({ ...creds, name: e.target.value })
                     }
                   />
-                  {error && error["name"] && (
+                  {getError("name")?.length > 0 && (
                     <div className="text-left">
-                      {error["name"]?.map((er) => (
+                      {getError("name")?.map((er) => (
                         <div className="text-danger">{er}</div>
                       ))}
                     </div>
@@ -84,9 +88,9 @@ const Register = () => {
                       setCredentials({ ...creds, email: e.target.value })
                     }
                   />
-                  {error && error["email"] && (
+                  {getError("email")?.length > 0 && (
                     <div className="text-left">
-                      {error["email"]?.map((er) => (
+                      {getError("email")?.map((er) => (
                         <div className="text-danger">{er}</div>
                       ))}
                     </div>
@@ -103,9 +107,9 @@ const Register = () => {
                       setCredentials({ ...creds, password: e.target.value })
                     }
                   />
-                  {error && error["password"] && (
+                  {getError("password")?.length > 0 && (
                     <div className="text-left">
-                      {error["password"]?.map((er) => (
+                      {getError("password")?.map((er) => (
                         <div className="text-danger">{er}</div>
                       ))}
                     </div>
@@ -125,9 +129,9 @@ const Register = () => {
                       })
                     }
                   />
-                  {error && error["confirm_password"] && (
+                  {getError("confirm_password")?.length > 0 && (
                     <div className="text-left">
-                      {error["confirm_password"]?.map((er) => (
+                      {getError("confirm_password")?.map((er) => (
                         <div className="text-danger">{er}</div>
                       ))}
                     </div>
