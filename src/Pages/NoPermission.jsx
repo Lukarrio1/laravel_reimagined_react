@@ -1,7 +1,4 @@
 import React from "react";
-
-import { useSelector } from "react-redux";
-import Link from "../Laravel _Reimagined_Library/Components/Link";
 import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
 import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
 

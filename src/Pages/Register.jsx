@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import Link from "../Laravel _Reimagined_Library/Components/Link";
-import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
-import { useSelector } from "react-redux";
 import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
 import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
 import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
@@ -14,8 +12,6 @@ const Register = () => {
   );
 
   const { getSetting } = useSettings();
-
-  const [error, setError] = useState(null);
 
   const [creds, setCredentials] = useState({
     email: "",

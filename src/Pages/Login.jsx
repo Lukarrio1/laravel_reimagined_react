@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
-import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
+import React, { useState } from "react";
 import Link from "../Laravel _Reimagined_Library/Components/Link";
-// import restClient from "../Laravel _Reimagined_Library";
-import { useDispatch, useSelector } from "react-redux";
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
 import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
@@ -16,8 +13,6 @@ const Login = () => {
     "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5"
   );
 
-  const [error, setError] = useState(null);
-  
   const [{ email, password }, setCredentials] = useState({
     email: "",
     password: "",
@@ -25,10 +20,10 @@ const Login = () => {
 
   const { restClient } = useRest();
 
-  const { clearError } = useErrors();
+  const { clearError, getError } = useErrors();
 
   const login = async () => {
-    clearError("system_errors");
+    clearError("invalid_credentials");
     const response = await restClient(
       "xCggjsbTw94JlgbHDsaQ1j77nBKU08EKdSI0OiJPSoS9EFCyH8",
       {},
@@ -49,7 +44,9 @@ const Login = () => {
               {getVerbiage("title")}
             </div>
             <div className="card-body">
-              <div className="text-center text-danger">{error}</div>
+              <div className="text-center text-danger">
+                {getError("invalid_credentials")}
+              </div>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();

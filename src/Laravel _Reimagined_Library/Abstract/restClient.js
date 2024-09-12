@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getWithTTL, setWithTTL } from "../Custom Hooks/localStorage";
-export const node_route = "http://amt.niritech.co/api/nodes/";
+import { Constants } from "./Constants";
 
 export const restClient = async (
   route_uuid = "",
@@ -29,7 +29,7 @@ const getNodeData = async (route_uuid) => {
   if (!nodeCacheData) {
     const {
       data: { node },
-    } = await axios.get(node_route + route_uuid);
+    } = await axios.get(Constants.base_source_url + route_uuid);
     setWithTTL(route_uuid, node, 1000 * 60 * 60);
     nodeCacheData = node;
   }

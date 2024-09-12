@@ -1,23 +1,13 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Link from "../../Laravel _Reimagined_Library/Components/Link";
 import { logout } from "../../Laravel _Reimagined_Library/React Base Stores/auth";
 import PermissionWrapper from "../../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
-import useNavigator from "../../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
-import { setUpNodes } from "../../Laravel _Reimagined_Library/Abstract/AppStructure";
 import useVerbiage from "../../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
+import useSettings from "../../Laravel _Reimagined_Library/Custom Hooks/useSettings";
 
 export default function Navbar() {
-  const { app_name, redirect_to_after_logout, app_version } = useSelector(
-    (state) => {
-      return {
-        app_name: state?.setting?.settings?.app_name?.value,
-        app_version: state?.setting?.settings?.app_version?.value,
-        redirect_to_after_logout:
-          state?.setting?.settings?.redirect_to_after_logout,
-      };
-    }
-  );
+  const { getSetting } = useSettings();
   const { getVerbiage: getLogoutVerbiage } = useVerbiage(
     "YiNfpDugNwyu1yTlOsGGvPAj2YZpoitcuEgEGphxrQxcK1HT0t"
   );
@@ -32,7 +22,10 @@ export default function Navbar() {
           enable_verbiage={{
             enable: true,
             verbiage_key: "home_nav_text",
-            verbiage_properties: { app_name, app_version: app_version },
+            verbiage_properties: {
+              app_name: getSetting("app_name"),
+              app_version: getSetting("app_version"),
+            },
           }}
         ></Link>
       </a>
@@ -78,7 +71,7 @@ export default function Navbar() {
               uuid={"YiNfpDugNwyu1yTlOsGGvPAj2YZpoitcuEgEGphxrQxcK1HT0t"}
             >
               <a
-                href={redirect_to_after_logout?.value}
+                href={getSetting("redirect_to_after_logout")}
                 onClick={() => {
                   dispatch(logout());
                 }}

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
+import { useParams } from "react-router-dom";
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
 import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
@@ -36,7 +35,7 @@ const EmailVerification = () => {
   useEffect(() => {
     verifyEmail();
   }, []);
-  
+
   const { getVerbiage } = useVerbiage(
     "so2HDQJPD7rZlNL66ifHff0mt5ymXRyOmxE0hPsJt5x2xiDcV4"
   );

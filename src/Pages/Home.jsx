@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Link from "../Laravel _Reimagined_Library/Components/Link";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React from "react";
 import PermissionWrapper from "../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
 import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
 import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
-import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
 import useAuthUser from "../Laravel _Reimagined_Library/Custom Hooks/useAuthUser";
-import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
+
 
 const Home = ({ search_skip_word }) => {
   const styles = {
@@ -25,7 +21,6 @@ const Home = ({ search_skip_word }) => {
   const { getVerbiage } = useVerbiage(
     "kmg9uKHV1VR9eoF1mdl3nahG8CCpSduNdL55C26uvwG6c9ldsH"
   );
-
 
   const { getSetting } = useSettings();
 

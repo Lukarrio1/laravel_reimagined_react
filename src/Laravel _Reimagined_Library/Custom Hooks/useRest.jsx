@@ -30,12 +30,23 @@ export default function useRest() {
           status,
         } = error;
         switch (status) {
-          case 401:
+          case 500:
             dispatch(
               setErrors([
                 {
                   status,
                   key: "system_errors",
+                  messages: [data?.message],
+                },
+              ])
+            );
+            break;
+          case 401:
+            dispatch(
+              setErrors([
+                {
+                  status,
+                  key: "invalid_credentials",
                   messages: [data?.message],
                 },
               ])
