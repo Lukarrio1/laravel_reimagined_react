@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { layouts } from "../Abstract/PagesAndLayouts";
 import useLayouts from "../Custom Hooks/useLayouts";
-/*
-    Layout Wrapper
-    This is the general layout file that is to apply a pages layout dynamically
-*/
+/**
+ *
+ *@description This is the general layout component that is used  to apply a pages layout dynamically .
+ */
 export default function LayoutWrapper({ Component, page }) {
   const layout = useLayouts(page?.layout_id);
   const [ActualLayoutComponent, setActualLayoutComponent] = useState(null);

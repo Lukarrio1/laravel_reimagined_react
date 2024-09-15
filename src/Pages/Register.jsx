@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "../Laravel _Reimagined_Library/Components/Link";
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
@@ -38,6 +38,12 @@ const Register = () => {
     sessionStorage.setItem("bearerToken", data?.token);
     window.location.href = getSetting("redirect_to_after_register");
   };
+
+  useEffect(() => {
+    return () => {
+      clearError();
+    };
+  }, []);
 
   return (
     <AnimationWrapper>

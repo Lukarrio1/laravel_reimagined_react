@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * @description This hook is used to programmatically navigate through the app
+ * it handles adding params to route(link) and permission cases of the route(link)
+ * @param {string} UUID
+ * @returns setProperties(), node
+ */
 const useNavigator = (UUID) => {
   const navigate = useNavigate();
   const [isReady, setIsReady] = useState(false);
@@ -58,6 +64,11 @@ const useNavigator = (UUID) => {
   }, [newLink]);
 
   return {
+    /**
+     *@description this function sets the properties of the link that was given
+     and the is ready state if navigating is being done programmatically
+     * @param {object} param
+     */
     setNavProperties: ({ ready, ...next }) => {
       setProperties(next);
       setIsReady(ready);

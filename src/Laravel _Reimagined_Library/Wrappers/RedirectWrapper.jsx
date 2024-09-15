@@ -5,12 +5,11 @@ import useVerbiage from "../Custom Hooks/useVerbiage";
 import { useNavigate } from "react-router-dom";
 import useSettings from "../Custom Hooks/useSettings";
 import useAuthUser from "../Custom Hooks/useAuthUser";
-
-/*
-  Redirect Wrapper
-  This handles the redirecting of user if they are not logged 
-  in or lack the required permission to view the requested page 
-*/
+/**
+ *
+ *@description This handles the redirecting of user if they are not logged
+  in or lack the required permission to view the requested page
+ */
 export default function RedirectWrapper({ children, page }) {
   const { getSetting } = useSettings();
   const auth_user = useAuthUser();

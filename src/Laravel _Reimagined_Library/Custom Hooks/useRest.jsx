@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route } from "react-router-dom";
 import { restClient } from "../Abstract/restClient";
-import useLocalStorageCache from "./localStorage";
 import { setErrors } from "../React Base Stores/errors";
 // the save word for a empty variable is "empty_search_value" instead of passing it with an empty value
+/**
+ * @description This hook return the restClient which could be used to make async calls to the serve
+ * and it automatically pushes the errors to error state for ease of use
+ * @returns restClient()
+ */
 export default function useRest() {
   const { Routes } = useSelector((state) => {
     const routes = [...state?.coreNodes?.routes];
@@ -12,6 +14,19 @@ export default function useRest() {
   });
   const dispatch = useDispatch();
   return {
+    /**
+     *
+     * @param {string} uuid
+     * @param {object} route_params
+     * @param {object} data_to_send
+     * @param {boolean} use_cache
+     * @description This function is used to make rest calls to the serve given
+     * the uuid which is used to identify the route that is being requested
+     * the route_params which is add to the url as a query string
+     * the data_to_send which is sent to the server
+     * the use_cache which is used to tell the rest client to cache the return data
+     * @returns data
+     */
     restClient: async (uuid, route_params, data_to_send, use_cache = false) => {
       const route = Routes?.find((r) => r?.uuid == uuid);
       try {
@@ -23,51 +38,7 @@ export default function useRest() {
           use_cache
         );
       } catch (error) {
-        if (error == null) return;
-        if (error.response == null) return;
-        const {
-          response: { data },
-          status,
-        } = error;
-        switch (status) {
-          case 500:
-            dispatch(
-              setErrors([
-                {
-                  status,
-                  key: "system_errors",
-                  messages: [data?.message],
-                },
-              ])
-            );
-            break;
-          case 401:
-            dispatch(
-              setErrors([
-                {
-                  status,
-                  key: "invalid_credentials",
-                  messages: [data?.message],
-                },
-              ])
-            );
-            break;
-          case 422:
-            const keys = Object.keys(data?.errors);
-            const temp = [];
-            if (keys.length == 0) return;
-            keys.forEach((key) => {
-              temp.push({
-                status,
-                key,
-                messages: [...data?.errors[key]],
-              });
-            });
-            dispatch(setErrors(temp));
-            break;
-          default:
-            break;
-        }
+        if (error != null) dispatch(setErrors(error));
         return null;
       }
     },

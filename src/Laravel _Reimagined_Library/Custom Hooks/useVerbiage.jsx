@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-
+/**
+ *@description This hook is used to get the verbiage associated
+ with item found comparing the uuid given and the uuid from the item
+ * @param {string} uuid
+ * @returns getVerbiage()
+ */
 export default function useVerbiage(uuid) {
   const { PageVerbiage } = useSelector((state) => {
     const item = [
@@ -29,6 +34,16 @@ export default function useVerbiage(uuid) {
   };
 
   return {
+    /**
+     *@description getVerbiage is used to get a specific piece of content given key and properties,
+     properties is the data that should be interpolated in the content eg {name:'foo'}
+     content="Hello {name}"
+     output="Hello foo"
+     * @param {string} key
+     * @param {object} properties
+     * @param {array} addPrefixOrSuffix
+     * @returns
+     */
     getVerbiage: (
       key,
       properties = {},
