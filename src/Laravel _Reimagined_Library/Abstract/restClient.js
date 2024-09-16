@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getWithTTL, setWithTTL } from "../Custom Hooks/localStorage";
+import { getWithTTL, setWithTTL } from "./localStorage";
 import { Constants } from "./Constants";
 
 export const restClient = async (

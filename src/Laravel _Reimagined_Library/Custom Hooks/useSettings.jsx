@@ -13,7 +13,7 @@ export default function useSettings() {
      *
      * @param {string} key
      * @param {string} return_value
-     * @returns string|boolean|array|object
+     * @returns mixed
      */
     getSetting: (key, return_value = "value") => {
       if (settings[key] == "undefined") {

@@ -8,7 +8,7 @@ import Loading from "../../Pages/Components/Loading";
 import { pages } from "./PagesAndLayouts";
 import LayoutWrapper from "../Wrappers/LayoutWrapper";
 import RedirectWrapper from "../Wrappers/RedirectWrapper";
-import { getWithTTL, setWithTTL } from "../Custom Hooks/localStorage";
+import { getWithTTL, setWithTTL } from "./localStorage";
 import { Constants } from "./Constants";
 
 const generateRoutes = (pages_properties, search_skip_word) => {

@@ -23,6 +23,8 @@ const Register = () => {
 
   const { getError, clearError } = useErrors();
 
+  const possibleErrors = ["name", "email", "password", "confirm_password"];
+
   const register = async () => {
     clearError("name");
     clearError("email");
@@ -41,7 +43,7 @@ const Register = () => {
 
   useEffect(() => {
     return () => {
-      clearError();
+      possibleErrors.forEach((pr) => clearError(pr));
     };
   }, []);
 

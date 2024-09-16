@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "../Laravel _Reimagined_Library/Components/Link";
 import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
 import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
@@ -21,6 +21,7 @@ const Login = () => {
   const { restClient } = useRest();
 
   const { clearError, getError } = useErrors();
+  const possibleErrors = ["invalid_credentials"];
 
   const login = async () => {
     clearError("invalid_credentials");
@@ -34,6 +35,10 @@ const Login = () => {
     sessionStorage.setItem("bearerToken", data?.token);
     window.location.href = getSetting("redirect_to_after_login");
   };
+
+  useEffect(() => {
+    return () => possibleErrors.forEach((pr) => clearError(pr));
+  }, []);
 
   return (
     <AnimationWrapper>

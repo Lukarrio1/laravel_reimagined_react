@@ -36,7 +36,8 @@ export default function useVerbiage(uuid) {
   return {
     /**
      *@description getVerbiage is used to get a specific piece of content given key and properties,
-     properties is the data that should be interpolated in the content eg {name:'foo'}
+     properties is the data that should be interpolated in the content eg
+     properties={name:'foo'}
      content="Hello {name}"
      output="Hello foo"
      * @param {string} key

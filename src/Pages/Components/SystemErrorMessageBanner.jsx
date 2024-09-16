@@ -8,7 +8,11 @@ export default function SystemErrorMessageBanner() {
     <div className="row">
       <div className="col-sm-12 text-center">
         {getError("system_errors")?.map((error) => {
-          return <p className="text-danger">{error}</p>;
+          return (
+            <marquee behavior="" direction="left">
+              <p className="text-danger">{error}</p>;
+            </marquee>
+          );
         })}
       </div>
     </div>

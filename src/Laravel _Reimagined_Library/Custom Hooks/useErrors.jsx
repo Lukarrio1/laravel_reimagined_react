@@ -31,7 +31,7 @@ export default function useErrors() {
    * @description if key is empty it will clear all of the errors
    * if not it will clear all occurrences of key
    */
-  const clearError = (key = "") => {
+  const clearError = (key = null) => {
     dispatch(clearErrors(key));
   };
 
