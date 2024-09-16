@@ -12,8 +12,8 @@ const Errors = createSlice({
       const {
         response: { data, status },
       } = payload;
-      console.log(payload, data, status, "this is the payload from errors");
       switch (status) {
+        // handles serve errors
         case 500:
           state.errors = [
             ...state.errors,
@@ -27,6 +27,7 @@ const Errors = createSlice({
           ];
           break;
         case 401:
+          // handles invalid credentials
           state.errors = [
             ...state.errors,
             ...[
@@ -38,6 +39,7 @@ const Errors = createSlice({
             ],
           ];
           break;
+        // handles form errors
         case 422:
           const keys = Object.keys(data?.errors);
           const temp = [];
