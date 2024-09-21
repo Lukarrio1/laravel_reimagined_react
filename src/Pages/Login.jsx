@@ -5,6 +5,7 @@ import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage
 import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
 import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
 import useErrors from "../Laravel _Reimagined_Library/Custom Hooks/useErrors";
+import useInput from "../Laravel _Reimagined_Library/Custom Hooks/Html/useInput";
 
 const Login = () => {
   const { getSetting } = useSettings();
@@ -13,7 +14,7 @@ const Login = () => {
     "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5"
   );
 
-  const [{ email, password }, setCredentials] = useState({
+  const [creds, setCredentials] = useState({
     email: "",
     password: "",
   });
@@ -21,6 +22,7 @@ const Login = () => {
   const { restClient } = useRest();
 
   const { clearError, getError } = useErrors();
+
   const possibleErrors = ["invalid_credentials"];
 
   const login = async () => {
@@ -28,7 +30,7 @@ const Login = () => {
     const response = await restClient(
       "xCggjsbTw94JlgbHDsaQ1j77nBKU08EKdSI0OiJPSoS9EFCyH8",
       {},
-      { email, password }
+      { ...creds }
     );
     if (response === null) return;
     const { data } = response;
@@ -39,6 +41,51 @@ const Login = () => {
   useEffect(() => {
     return () => possibleErrors.forEach((pr) => clearError(pr));
   }, []);
+
+  const {
+    setProperties: setEmailProperties,
+    value: email,
+    Html: EmailHtml,
+    clearError: clearEmailError,
+  } = useInput();
+
+  const {
+    setProperties: setPasswordProperties,
+    value: password,
+    Html: PasswordHtml,
+    clearError: clearPasswordError,
+  } = useInput();
+
+  useEffect(() => {
+    setEmailProperties({
+      name: "email",
+      type: "email",
+      className: "form-control",
+      id: "email-input",
+      verbiage: {
+        key: "email_field_title",
+        uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+      },
+    });
+    setPasswordProperties({
+      name: "password",
+      type: "password",
+      className: "form-control",
+      id: "password-input",
+      verbiage: {
+        key: "password_field_title",
+        uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    setCredentials({
+      ...creds,
+      email,
+      password,
+    });
+  }, [email, password]);
 
   return (
     <AnimationWrapper>
@@ -58,30 +105,8 @@ const Login = () => {
                   login();
                 }}
               >
-                <div className="mb-3">
-                  <label for="exampleInputEmail1" className="form-label">
-                    {getVerbiage("email_field_title")}
-                  </label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    onChange={(e) =>
-                      setCredentials({ password, email: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="mb-3">
-                  <label for="exampleInputPassword1" className="form-label">
-                    {getVerbiage("password_field_title")}
-                  </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    onChange={(e) =>
-                      setCredentials({ email, password: e.target.value })
-                    }
-                  />
-                </div>
+                <div className="mb-3">{EmailHtml}</div>
+                <div className="mb-3">{PasswordHtml}</div>
                 <div className="text-center">
                   <button type="submit" className="btn btn-primary">
                     {getVerbiage("login_button")}

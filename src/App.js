@@ -10,37 +10,31 @@ import {
   monitorCache,
 } from "./Laravel _Reimagined_Library/Abstract/AppStructure";
 import { assembleApp } from "./Laravel _Reimagined_Library/Abstract/AppStructure";
-import NotFound from "./Pages/NotFound";
 import Loading from "./Pages/Components/Loading";
 
 function App() {
   const [pages_properties, setPagesProperties] = useState(null);
   const [routes, setRoutes] = useState(null);
-  const [search_skip_word, setSearchSkipWord] = useState();
-  const [authUser, setUser] = useState(-1);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    document.title = "Loading ...";
     assembleApp(dispatch);
     const interval = setInterval(() => monitorCache(), 30000);
     return () => clearInterval(interval);
   }, []);
 
-  
   useEffect(() => {
-    document.title = store.subscribe(() => {
-      document.title = store.getState().setting?.settings?.app_name?.value;
+    store.subscribe(() => {
+      document.title =
+        store.getState().setting?.settings?.client_app_name?.value ?? "";
       setPagesProperties(store.getState().coreNodes.pages);
-      setUser(store.getState().authentication.user);
-      setSearchSkipWord(
-        store.getState().setting?.settings?.search_skip_word?.value
-      );
     });
   }, []);
 
   useEffect(() => {
     if (!pages_properties) return;
-    setRoutes(generateRoutes(pages_properties, search_skip_word));
+    setRoutes(generateRoutes(pages_properties));
   }, [pages_properties]);
 
   return pages_properties == null ? (

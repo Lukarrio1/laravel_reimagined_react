@@ -1,13 +1,4 @@
 import React from "react";
-const styles = {
-  loading: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "80vh",
-  },
-};
 export default function Loading({ textElement = null }) {
   return (
     <div>

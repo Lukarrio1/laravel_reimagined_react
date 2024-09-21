@@ -23,7 +23,7 @@ export default function Navbar() {
             enable: true,
             verbiage_key: "home_nav_text",
             verbiage_properties: {
-              app_name: getSetting("app_name"),
+              app_name: getSetting("client_app_name"),
               app_version: getSetting("app_version"),
             },
           }}

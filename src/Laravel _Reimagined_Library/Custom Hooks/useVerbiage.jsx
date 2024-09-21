@@ -13,9 +13,9 @@ export default function useVerbiage(uuid) {
       ...state?.coreNodes?.components,
       ...state?.coreNodes?.links,
       ...state?.coreNodes?.layouts,
-    ]?.filter((item) => item?.uuid == uuid)[0];
+    ]?.find((item) => item?.uuid == uuid);
     return {
-      PageVerbiage: item?.verbiage,
+      PageVerbiage: item?.verbiage ?? {},
     };
   });
   const updateValues = (

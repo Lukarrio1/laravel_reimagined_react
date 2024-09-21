@@ -5,6 +5,7 @@ import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage
 import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
 import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
 import useErrors from "../Laravel _Reimagined_Library/Custom Hooks/useErrors";
+import useInput from "../Laravel _Reimagined_Library/Custom Hooks/Html/useInput";
 
 const Register = () => {
   const { getVerbiage } = useVerbiage(
@@ -21,15 +22,8 @@ const Register = () => {
   });
   const { restClient } = useRest();
 
-  const { getError, clearError } = useErrors();
-
-  const possibleErrors = ["name", "email", "password", "confirm_password"];
-
   const register = async () => {
-    clearError("name");
-    clearError("email");
-    clearError("password");
-    clearError("confirm_password");
+    clearAllErrors();
     const response = await restClient(
       "AdhmjMGkWcgYO9VvTACKum8h1BsYSP1btLfBVajD52KupkOlbC",
       {},
@@ -41,11 +35,93 @@ const Register = () => {
     window.location.href = getSetting("redirect_to_after_register");
   };
 
+  const {
+    setProperties: setNameProperties,
+    value: name,
+    Html: NameHtml,
+    clearError: clearNameError,
+  } = useInput();
+
+  const {
+    setProperties: setEmailProperties,
+    value: email,
+    Html: EmailHtml,
+    clearError: clearEmailError,
+  } = useInput();
+
+  const {
+    setProperties: setPasswordProperties,
+    value: password,
+    Html: PasswordHtml,
+    clearError: clearPasswordError,
+  } = useInput();
+
+  const {
+    setProperties: setConfirmPasswordProperties,
+    value: confirm_password,
+    Html: ConfirmPasswordHtml,
+    clearError: clearConFirmPasswordError,
+  } = useInput();
+
   useEffect(() => {
-    return () => {
-      possibleErrors.forEach((pr) => clearError(pr));
-    };
+    setNameProperties({
+      name: "name",
+      className: "form-control",
+      id: "name-input",
+      type: "text",
+      verbiage: {
+        key: "full_name_field_title",
+        uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+      },
+    });
+    setEmailProperties({
+      name: "email",
+      type: "email",
+      className: "form-control",
+      id: "email-input",
+      verbiage: {
+        key: "email_field_title",
+        uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+      },
+    });
+    setPasswordProperties({
+      name: "password",
+      type: "password",
+      className: "form-control",
+      id: "password-input",
+      verbiage: {
+        key: "password_field_title",
+        uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+      },
+    });
+    setConfirmPasswordProperties({
+      name: "confirm_password",
+      type: "password",
+      className: "form-control",
+      id: "confirm_password-input",
+      verbiage: {
+        key: "confirm_password_field_title",
+        uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+      },
+    });
   }, []);
+
+  useEffect(() => {
+    setCredentials({
+      ...creds,
+      name,
+      email,
+      password,
+      confirm_password,
+    });
+  }, [name, email, password, confirm_password]);
+
+  const clearAllErrors = () => {
+    clearNameError();
+    clearEmailError();
+    clearPasswordError();
+    clearConFirmPasswordError();
+  };
 
   return (
     <AnimationWrapper>
@@ -62,85 +138,10 @@ const Register = () => {
                   register();
                 }}
               >
-                <div className="mb-3">
-                  <label for="exampleInputEmail1" className="form-label">
-                    {getVerbiage("full_name_field_title")}
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    onChange={(e) =>
-                      setCredentials({ ...creds, name: e.target.value })
-                    }
-                  />
-                  {getError("name")?.length > 0 && (
-                    <div className="text-left">
-                      {getError("name")?.map((er) => (
-                        <div className="text-danger">{er}</div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div className="mb-3">
-                  <label for="exampleInputEmail1" className="form-label">
-                    {getVerbiage("email_field_title")}
-                  </label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    onChange={(e) =>
-                      setCredentials({ ...creds, email: e.target.value })
-                    }
-                  />
-                  {getError("email")?.length > 0 && (
-                    <div className="text-left">
-                      {getError("email")?.map((er) => (
-                        <div className="text-danger">{er}</div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div className="mb-3">
-                  <label for="exampleInputPassword1" className="form-label">
-                    {getVerbiage("password_field_title")}
-                  </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    onChange={(e) =>
-                      setCredentials({ ...creds, password: e.target.value })
-                    }
-                  />
-                  {getError("password")?.length > 0 && (
-                    <div className="text-left">
-                      {getError("password")?.map((er) => (
-                        <div className="text-danger">{er}</div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div className="mb-3">
-                  <label for="exampleInputPassword1" className="form-label">
-                    {getVerbiage("confirm_password_field_title")}
-                  </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    onChange={(e) =>
-                      setCredentials({
-                        ...creds,
-                        confirm_password: e.target.value,
-                      })
-                    }
-                  />
-                  {getError("confirm_password")?.length > 0 && (
-                    <div className="text-left">
-                      {getError("confirm_password")?.map((er) => (
-                        <div className="text-danger">{er}</div>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <div className="mb-3">{NameHtml}</div>
+                <div className="mb-3">{EmailHtml}</div>
+                <div className="mb-3">{PasswordHtml}</div>
+                <div className="mb-3">{ConfirmPasswordHtml}</div>
                 <div className="text-center">
                   <button type="submit" className="btn btn-primary">
                     {getVerbiage("register_button")}
@@ -151,6 +152,9 @@ const Register = () => {
             <div className="card-footer h5 bg-white">
               or{" "}
               <Link
+                onClick={() => {
+                  clearAllErrors();
+                }}
                 uuid={"K7rMLEQkQjaUJOOOyXQIbhjssBvPTTpR7MtmLwoFS3TQxXpKLe"}
                 enable_verbiage={{
                   enable: true,

@@ -11,7 +11,7 @@ import RedirectWrapper from "../Wrappers/RedirectWrapper";
 import { getWithTTL, setWithTTL } from "./localStorage";
 import { Constants } from "./Constants";
 
-const generateRoutes = (pages_properties, search_skip_word) => {
+const generateRoutes = (pages_properties) => {
   if (pages_properties.length === 0) {
     return null;
   }
@@ -33,7 +33,9 @@ const generateRoutes = (pages_properties, search_skip_word) => {
                 page={{ ...page_props }}
                 Component={
                   <Suspense fallback={<Loading></Loading>}>
-                    <Component search_skip_word={search_skip_word}></Component>
+                    <Component
+                    //  search_skip_word={search_skip_word}
+                    ></Component>
                   </Suspense>
                 }
               ></LayoutWrapper>

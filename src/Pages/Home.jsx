@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PermissionWrapper from "../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
 import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
 import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
 import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
 import useAuthUser from "../Laravel _Reimagined_Library/Custom Hooks/useAuthUser";
 
-
-const Home = ({ search_skip_word }) => {
+const Home = () => {
   const styles = {
     welcomeSection: {
       display: "flex",
@@ -33,7 +32,9 @@ const Home = ({ search_skip_word }) => {
         <PermissionWrapper
           uuid={"IYUhLzLdfYToLMg4YY46dxsXVvIwA90fLLew0vOoFXbBnrfn51"}
         >
-          <h1>{getVerbiage("title", { app_name: getSetting("app_name") })}</h1>
+          <h1>
+            {getVerbiage("title", { app_name: getSetting("client_app_name") })}
+          </h1>
           <p className="lead">
             {getVerbiage("welcome_message", { user_name: user?.name })}
           </p>
