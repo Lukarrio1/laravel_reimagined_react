@@ -64,7 +64,7 @@ const Login = () => {
       id: "email-input",
       verbiage: {
         key: "email_field_title",
-        uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+        uuid: "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5",
       },
     });
     setPasswordProperties({
@@ -74,7 +74,7 @@ const Login = () => {
       id: "password-input",
       verbiage: {
         key: "password_field_title",
-        uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+        uuid: "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5",
       },
     });
   }, []);
