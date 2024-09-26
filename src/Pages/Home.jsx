@@ -1,20 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PermissionWrapper from "../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
 import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
 import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
 import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
 import useAuthUser from "../Laravel _Reimagined_Library/Custom Hooks/useAuthUser";
-
+import useTable from "../Laravel _Reimagined_Library/Custom Hooks/Html/useTable";
+import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
+const styles = {
+  welcomeSection: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "80vh",
+  },
+};
 const Home = () => {
-  const styles = {
-    welcomeSection: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      height: "80vh",
-    },
-  };
   const user = useAuthUser();
 
   const { getVerbiage } = useVerbiage(

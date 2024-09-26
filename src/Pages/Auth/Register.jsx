@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Link from "../Laravel _Reimagined_Library/Components/Link";
-import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
-import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
-import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
-import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
-import useErrors from "../Laravel _Reimagined_Library/Custom Hooks/useErrors";
-import useInput from "../Laravel _Reimagined_Library/Custom Hooks/Html/useInput";
+import Link from "../../Laravel _Reimagined_Library/Components/Link";
+import useRest from "../../Laravel _Reimagined_Library/Custom Hooks/useRest";
+import useVerbiage from "../../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
+import AnimationWrapper from "../../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
+import useSettings from "../../Laravel _Reimagined_Library/Custom Hooks/useSettings";
+import useErrors from "../../Laravel _Reimagined_Library/Custom Hooks/useErrors";
+import useInput from "../../Laravel _Reimagined_Library/Custom Hooks/Html/useInput";
 
 const Register = () => {
   const { getVerbiage } = useVerbiage(
@@ -69,9 +69,13 @@ const Register = () => {
       className: "form-control",
       id: "name-input",
       type: "text",
-      verbiage: {
-        key: "full_name_field_title",
-        uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+      label: {
+        className: "form-label",
+        enabled: true,
+        verbiage: {
+          key: "full_name_field_title",
+          uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+        },
       },
     });
     setEmailProperties({
@@ -79,9 +83,13 @@ const Register = () => {
       type: "email",
       className: "form-control",
       id: "email-input",
-      verbiage: {
-        key: "email_field_title",
-        uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+      label: {
+        className: "form-label",
+        enabled: true,
+        verbiage: {
+          key: "email_field_title",
+          uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+        },
       },
     });
     setPasswordProperties({
@@ -89,9 +97,13 @@ const Register = () => {
       type: "password",
       className: "form-control",
       id: "password-input",
-      verbiage: {
-        key: "password_field_title",
-        uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+      label: {
+        className: "form-label",
+        enabled: true,
+        verbiage: {
+          key: "password_field_title",
+          uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+        },
       },
     });
     setConfirmPasswordProperties({
@@ -99,9 +111,13 @@ const Register = () => {
       type: "password",
       className: "form-control",
       id: "confirm_password-input",
-      verbiage: {
-        key: "confirm_password_field_title",
-        uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+      label: {
+        className: "form-label",
+        enabled: true,
+        verbiage: {
+          key: "confirm_password_field_title",
+          uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+        },
       },
     });
   }, []);

@@ -24,7 +24,7 @@ export const restClient = async (
   );
 };
 
-const getNodeData = async (route_uuid) => {
+const getNodeData = async (route_uuid = "") => {
   let nodeCacheData = getWithTTL(route_uuid);
   if (!nodeCacheData) {
     const {
@@ -36,7 +36,7 @@ const getNodeData = async (route_uuid) => {
   return nodeCacheData;
 };
 
-const setUpAuth = (node) =>
+const setUpAuth = (node = {}) =>
   node?.authentication_level["value"] == 1
     ? axios.create({
         headers: {
@@ -45,7 +45,7 @@ const setUpAuth = (node) =>
       })
     : axios;
 
-const build_rest_url = (url, params) =>
+const build_rest_url = (url = "", params = {}) =>
   Object.keys(params).length == 0
     ? url
     : url
@@ -57,7 +57,7 @@ const build_rest_url = (url, params) =>
         })
         .join("/");
 
-const translate_params = (params) => {
+const translate_params = (params = {}) => {
   const translation = {};
   Object.keys(params).forEach((param) => {
     translation[`{${param}}`] = params[param];
@@ -65,5 +65,9 @@ const translate_params = (params) => {
   return translation;
 };
 
-const build_rest_client = (route, route_values, data, node) =>
-  setUpAuth(node)[route_values["route_method"]](route, data);
+const build_rest_client = (
+  route = "",
+  route_values = {},
+  data = {},
+  node = {}
+) => setUpAuth(node)[route_values["route_method"]](route, data);

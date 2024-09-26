@@ -17,10 +17,12 @@ export default function useInput() {
     value: "",
     label: {
       className: "form-label",
-    },
-    verbiage: {
-      uuid: "",
-      key: "",
+      enabled: false,
+      verbiage: {
+        uuid: "",
+        key: "",
+        properties: {},
+      },
     },
   });
 
@@ -29,14 +31,19 @@ export default function useInput() {
     [inputState.name, getError, clearError]
   );
 
-  const { getVerbiage } = useVerbiage(inputState?.verbiage?.uuid);
+  const { getVerbiage } = useVerbiage(inputState?.label?.verbiage?.uuid);
 
   const Html = useMemo(
     () => (
       <>
-        <label for={inputState?.id} className={inputState?.label?.className}>
-          {getVerbiage(inputState?.verbiage?.key)}
-        </label>
+        {inputState?.label?.enabled == true && (
+          <label for={inputState?.id} className={inputState?.label?.className}>
+            {getVerbiage(
+              inputState?.label?.verbiage?.key,
+              inputState?.label?.verbiage?.properties
+            )}
+          </label>
+        )}
         <input
           {...inputState}
           onChange={(e) =>
@@ -67,14 +74,34 @@ export default function useInput() {
      * type: "",
      * name: "",
      * value: "",
-     * label: {className: "form-label"},
+     * label: {
+     * className: "form-label",
+     * enabled:false
      * verbiage: {
      *   uuid: "",
      *   key: "",
-     * }}} properties
+     * }},
+     * }} properties
      * @returns void
      */
-    setProperties: (properties = {}) => {
+    setProperties: (
+      properties = {
+        className: "",
+        id: "",
+        type: "",
+        name: "",
+        value: "",
+        label: {
+          className: "form-label",
+          enabled: false,
+          verbiage: {
+            uuid: "",
+            key: "",
+            properties: {},
+          },
+        },
+      }
+    ) => {
       setInputState((prev) => ({
         ...prev,
         ...properties,
@@ -94,6 +121,8 @@ export default function useInput() {
      * @returns void
      */
     setValue: (newValue) =>
-      setInputState((prev) => ({ ...prev, value: newValue })),
+      setInputState((prev) =>
+        prev?.value != newValue ? { ...prev, value: newValue } : { ...prev }
+      ),
   };
 }

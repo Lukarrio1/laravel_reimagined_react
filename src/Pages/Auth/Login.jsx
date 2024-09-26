@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Link from "../Laravel _Reimagined_Library/Components/Link";
-import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
-import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
-import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
-import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
-import useErrors from "../Laravel _Reimagined_Library/Custom Hooks/useErrors";
-import useInput from "../Laravel _Reimagined_Library/Custom Hooks/Html/useInput";
+import Link from "../../Laravel _Reimagined_Library/Components/Link";
+import useRest from "../../Laravel _Reimagined_Library/Custom Hooks/useRest";
+import useVerbiage from "../../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
+import AnimationWrapper from "../../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
+import useSettings from "../../Laravel _Reimagined_Library/Custom Hooks/useSettings";
+import useErrors from "../../Laravel _Reimagined_Library/Custom Hooks/useErrors";
+import useInput from "../../Laravel _Reimagined_Library/Custom Hooks/Html/useInput";
 
 const Login = () => {
   const { getSetting } = useSettings();
@@ -62,9 +62,13 @@ const Login = () => {
       type: "email",
       className: "form-control",
       id: "email-input",
-      verbiage: {
-        key: "email_field_title",
-        uuid: "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5",
+      label: {
+        className: "form-label",
+        enabled: true,
+        verbiage: {
+          key: "email_field_title",
+          uuid: "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5",
+        },
       },
     });
     setPasswordProperties({
@@ -72,9 +76,13 @@ const Login = () => {
       type: "password",
       className: "form-control",
       id: "password-input",
-      verbiage: {
-        key: "password_field_title",
-        uuid: "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5",
+      label: {
+        className: "form-label",
+        enabled: true,
+        verbiage: {
+          key: "password_field_title",
+          uuid: "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5",
+        },
       },
     });
   }, []);

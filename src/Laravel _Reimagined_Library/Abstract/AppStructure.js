@@ -33,9 +33,7 @@ const generateRoutes = (pages_properties) => {
                 page={{ ...page_props }}
                 Component={
                   <Suspense fallback={<Loading></Loading>}>
-                    <Component
-                    //  search_skip_word={search_skip_word}
-                    ></Component>
+                    <Component></Component>
                   </Suspense>
                 }
               ></LayoutWrapper>

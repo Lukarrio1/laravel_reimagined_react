@@ -1,7 +1,5 @@
 import { useSelector } from "react-redux";
 import NoPermission from "../../Pages/NoPermission";
-import { useEffect } from "react";
-import useSettings from "../Custom Hooks/useSettings";
 /**
  *@description This is used to apply the defined permission to a component of page given the uuid
  */
