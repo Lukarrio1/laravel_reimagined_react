@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Link from "../../Laravel _Reimagined_Library/Components/Link";
-import useRest from "../../Laravel _Reimagined_Library/Custom Hooks/useRest";
-import useVerbiage from "../../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
-import AnimationWrapper from "../../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
-import useSettings from "../../Laravel _Reimagined_Library/Custom Hooks/useSettings";
-import useErrors from "../../Laravel _Reimagined_Library/Custom Hooks/useErrors";
-import useInput from "../../Laravel _Reimagined_Library/Custom Hooks/Html/useInput";
+import Link from "../../Amt-library/Components/Link";
+import useVerbiage from "../../Amt-library/Custom Hooks/useVerbiage";
+import AnimationWrapper from "../../Amt-library/Wrappers/AnimationWrapper";
+import useInput from "../../Amt-library/Custom Hooks/Html/useInput";
+import useAuthDataLayer from "../../Amt-library/Data-layer/useAuthDataLayer";
 
 const Register = () => {
   const { getVerbiage } = useVerbiage(
     "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP"
   );
-
-  const { getSetting } = useSettings();
+  const { register, getIsLoading, uuids } = useAuthDataLayer();
 
   const [creds, setCredentials] = useState({
     email: "",
@@ -20,20 +17,6 @@ const Register = () => {
     name: "",
     confirm_password: "",
   });
-  const { restClient } = useRest();
-
-  const register = async () => {
-    clearAllErrors();
-    const response = await restClient(
-      "AdhmjMGkWcgYO9VvTACKum8h1BsYSP1btLfBVajD52KupkOlbC",
-      {},
-      { ...creds }
-    );
-    if (response == null) return;
-    const { data } = response;
-    sessionStorage.setItem("bearerToken", data?.token);
-    window.location.href = getSetting("redirect_to_after_register");
-  };
 
   const {
     setProperties: setNameProperties,
@@ -147,11 +130,13 @@ const Register = () => {
             <div className="card-header text-center h4 bg-white">
               {getVerbiage("title")}
             </div>
+
             <div className="card-body">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  register();
+                  clearAllErrors();
+                  register({ ...creds });
                 }}
               >
                 <div className="mb-3">{NameHtml}</div>
@@ -159,7 +144,11 @@ const Register = () => {
                 <div className="mb-3">{PasswordHtml}</div>
                 <div className="mb-3">{ConfirmPasswordHtml}</div>
                 <div className="text-center">
-                  <button type="submit" className="btn btn-primary">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={getIsLoading(uuids?.register_endpoint)}
+                  >
                     {getVerbiage("register_button")}
                   </button>
                 </div>

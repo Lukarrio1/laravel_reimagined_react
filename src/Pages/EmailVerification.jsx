@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
-import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
-import useNavigator from "../Laravel _Reimagined_Library/Custom Hooks/useNavigator";
+import useRest from "../Amt-library/Custom Hooks/useRest";
+import useVerbiage from "../Amt-library/Custom Hooks/useVerbiage";
+import useNavigator from "../Amt-library/Custom Hooks/useNavigator";
 
 const EmailVerification = () => {
   const styles = {

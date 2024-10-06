@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import Link from "../../Laravel _Reimagined_Library/Components/Link";
-import { logout } from "../../Laravel _Reimagined_Library/React Base Stores/auth";
-import PermissionWrapper from "../../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
-import useVerbiage from "../../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
-import useSettings from "../../Laravel _Reimagined_Library/Custom Hooks/useSettings";
+import Link from "../../Amt-library/Components/Link";
+import { logout } from "../../Amt-library/React Base Stores/auth";
+import PermissionWrapper from "../../Amt-library/Wrappers/PermissionWrapper";
+import useVerbiage from "../../Amt-library/Custom Hooks/useVerbiage";
+import useSettings from "../../Amt-library/Custom Hooks/useSettings";
 
 export default function Navbar() {
   const { getSetting } = useSettings();

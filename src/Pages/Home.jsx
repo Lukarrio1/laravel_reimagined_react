@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import PermissionWrapper from "../Laravel _Reimagined_Library/Wrappers/PermissionWrapper";
-import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
-import AnimationWrapper from "../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
-import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
-import useAuthUser from "../Laravel _Reimagined_Library/Custom Hooks/useAuthUser";
-import useTable from "../Laravel _Reimagined_Library/Custom Hooks/Html/useTable";
-import useRest from "../Laravel _Reimagined_Library/Custom Hooks/useRest";
+import PermissionWrapper from "../Amt-library/Wrappers/PermissionWrapper";
+import useVerbiage from "../Amt-library/Custom Hooks/useVerbiage";
+import AnimationWrapper from "../Amt-library/Wrappers/AnimationWrapper";
+import useSettings from "../Amt-library/Custom Hooks/useSettings";
+import useAuthUser from "../Amt-library/Custom Hooks/useAuthUser";
+import useTable from "../Amt-library/Custom Hooks/Html/useTable";
+import useRest from "../Amt-library/Custom Hooks/useRest";
+import ComponentLoading from "./Components/ComponentLoading";
 const styles = {
   welcomeSection: {
     display: "flex",
@@ -30,6 +31,7 @@ const Home = () => {
         className="container-fluid text-center"
         style={styles.welcomeSection}
       >
+        {/* <ComponentLoading></ComponentLoading> */}
         <PermissionWrapper
           uuid={"IYUhLzLdfYToLMg4YY46dxsXVvIwA90fLLew0vOoFXbBnrfn51"}
         >

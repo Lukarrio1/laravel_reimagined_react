@@ -8,8 +8,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
   generateRoutes,
   monitorCache,
-} from "./Laravel _Reimagined_Library/Abstract/AppStructure";
-import { assembleApp } from "./Laravel _Reimagined_Library/Abstract/AppStructure";
+} from "./Amt-library/Abstract/AppStructure";
+import { assembleApp } from "./Amt-library/Abstract/AppStructure";
 import Loading from "./Pages/Components/Loading";
 
 function App() {
@@ -42,8 +42,7 @@ function App() {
   ) : routes == null ? (
     <Loading
       textElement={
-        <div className="h3 text-bold">
-          Generating App
+        <div className="h1 text-center mt-5 text-bold">
           <span className="dots"></span>
         </div>
       }

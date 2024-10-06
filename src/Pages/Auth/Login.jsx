@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Link from "../../Laravel _Reimagined_Library/Components/Link";
-import useRest from "../../Laravel _Reimagined_Library/Custom Hooks/useRest";
-import useVerbiage from "../../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
-import AnimationWrapper from "../../Laravel _Reimagined_Library/Wrappers/AnimationWrapper";
-import useSettings from "../../Laravel _Reimagined_Library/Custom Hooks/useSettings";
-import useErrors from "../../Laravel _Reimagined_Library/Custom Hooks/useErrors";
-import useInput from "../../Laravel _Reimagined_Library/Custom Hooks/Html/useInput";
+import Link from "../../Amt-library/Components/Link";
+import useRest from "../../Amt-library/Custom Hooks/useRest";
+import useVerbiage from "../../Amt-library/Custom Hooks/useVerbiage";
+import AnimationWrapper from "../../Amt-library/Wrappers/AnimationWrapper";
+import useSettings from "../../Amt-library/Custom Hooks/useSettings";
+import useErrors from "../../Amt-library/Custom Hooks/useErrors";
+import useInput from "../../Amt-library/Custom Hooks/Html/useInput";
+import useAuthDataLayer from "../../Amt-library/Data-layer/useAuthDataLayer";
 
 const Login = () => {
   const { getSetting } = useSettings();
-
+  const { login, getIsLoading, uuids } = useAuthDataLayer();
   const { getVerbiage } = useVerbiage(
     "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5"
   );
@@ -19,24 +20,9 @@ const Login = () => {
     password: "",
   });
 
-  const { restClient } = useRest();
-
   const { clearError, getError } = useErrors();
 
   const possibleErrors = ["invalid_credentials"];
-
-  const login = async () => {
-    clearError("invalid_credentials");
-    const response = await restClient(
-      "xCggjsbTw94JlgbHDsaQ1j77nBKU08EKdSI0OiJPSoS9EFCyH8",
-      {},
-      { ...creds }
-    );
-    if (response === null) return;
-    const { data } = response;
-    sessionStorage.setItem("bearerToken", data?.token);
-    window.location.href = getSetting("redirect_to_after_login");
-  };
 
   useEffect(() => {
     return () => possibleErrors.forEach((pr) => clearError(pr));
@@ -110,13 +96,17 @@ const Login = () => {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  login();
+                  login({ ...creds });
                 }}
               >
                 <div className="mb-3">{EmailHtml}</div>
                 <div className="mb-3">{PasswordHtml}</div>
                 <div className="text-center">
-                  <button type="submit" className="btn btn-primary">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={getIsLoading(uuids?.login_endpoint)}
+                  >
                     {getVerbiage("login_button")}
                   </button>
                 </div>

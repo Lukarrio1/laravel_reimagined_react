@@ -1,5 +1,5 @@
 import React from "react";
-import useErrors from "../../Laravel _Reimagined_Library/Custom Hooks/useErrors";
+import useErrors from "../../Amt-library/Custom Hooks/useErrors";
 
 export default function SystemErrorMessageBanner() {
   const { getError } = useErrors();

@@ -1,6 +1,6 @@
 import React from "react";
-import useVerbiage from "../Laravel _Reimagined_Library/Custom Hooks/useVerbiage";
-import useSettings from "../Laravel _Reimagined_Library/Custom Hooks/useSettings";
+import useVerbiage from "../Amt-library/Custom Hooks/useVerbiage";
+import useSettings from "../Amt-library/Custom Hooks/useSettings";
 
 const styles = {
   container: {
@@ -24,7 +24,7 @@ const styles = {
 
 export default function NoPermission({ className, Node }) {
   const { getSetting } = useSettings();
-  
+
   const { getVerbiage } = useVerbiage(
     "Ozmr5U5M7Wvd1FBiU4oIi1ZHhCKIrkiQNGFjbZofuo9oiqLbJQ"
   );
