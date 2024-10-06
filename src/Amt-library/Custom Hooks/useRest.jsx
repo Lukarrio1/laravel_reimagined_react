@@ -63,7 +63,7 @@ export default function useRest() {
      * @returns boolean
      */
     getIsLoading: (uuid) => {
-      return isLoading[uuid];
+      return isLoading[uuid]??false;
     },
   };
 }
