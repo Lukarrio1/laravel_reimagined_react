@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import { setNodes } from "../Stores/coreNodes";
 import { restClient } from "./restClient";
 import { setAuthProperties } from "../Stores/auth";
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
 import Loading from "../../Pages/Components/Loading";
 import { pages } from "./PagesAndLayouts";
 import LayoutWrapper from "../Wrappers/LayoutWrapper";

@@ -19,7 +19,6 @@ export default function Link({
   ...rest
 }) {
   const { Actual_link } = useSelector((state) => {
-    let temp = true;
     const currentNode = [
       ...state?.coreNodes.links,
       ...state?.coreNodes.components,

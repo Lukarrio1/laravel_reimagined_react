@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PermissionWrapper from "../AMT/Wrappers/PermissionWrapper";
 import useVerbiage from "../AMT/Custom Hooks/useVerbiage";
 import AnimationWrapper from "../AMT/Wrappers/AnimationWrapper";
 import useSettings from "../AMT/Custom Hooks/useSettings";
 import useAuthUser from "../AMT/Custom Hooks/useAuthUser";
-import useRest from "../AMT/Custom Hooks/useRest";
 
 const styles = {
   welcomeSection: {

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Link from "../../AMT/Components/Link";
-import useRest from "../../AMT/Custom Hooks/useRest";
 import useVerbiage from "../../AMT/Custom Hooks/useVerbiage";
 import AnimationWrapper from "../../AMT/Wrappers/AnimationWrapper";
 import useSettings from "../../AMT/Custom Hooks/useSettings";
@@ -9,7 +8,6 @@ import useInput from "../../AMT/Custom Hooks/Html/useInput";
 import useAuthDataLayer from "../../AMT/Data-layer/useAuthDataLayer";
 
 const Login = () => {
-  const { getSetting } = useSettings();
   const { login, getIsLoading, uuids } = useAuthDataLayer();
   const { getVerbiage } = useVerbiage(
     "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5"
