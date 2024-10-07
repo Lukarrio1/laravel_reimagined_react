@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import useRest from "../Amt-library/Custom Hooks/useRest";
-import useVerbiage from "../Amt-library/Custom Hooks/useVerbiage";
-import useNavigator from "../Amt-library/Custom Hooks/useNavigator";
+import useRest from "../AMT/Custom Hooks/useRest";
+import useVerbiage from "../AMT/Custom Hooks/useVerbiage";
+import useNavigator from "../AMT/Custom Hooks/useNavigator";
 
 const EmailVerification = () => {
   const styles = {

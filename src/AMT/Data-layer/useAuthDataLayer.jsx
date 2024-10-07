@@ -1,5 +1,5 @@
 import React from "react";
-import { clearErrors } from "../React Base Stores/errors";
+import { clearErrors } from "../Stores/errors";
 import useRest from "../Custom Hooks/useRest";
 import useSettings from "../Custom Hooks/useSettings";
 import { Constants } from "../Abstract/Constants";

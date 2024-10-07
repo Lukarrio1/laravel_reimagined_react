@@ -30,7 +30,7 @@ const getNodeData = async (route_uuid = "") => {
     const {
       data: { node },
     } = await axios.get(Constants.base_source_url + route_uuid);
-    setWithTTL(route_uuid, node, 1000 * 60 * 60);
+    setWithTTL(route_uuid, node, 60 * 60);
     nodeCacheData = node;
   }
   return nodeCacheData;

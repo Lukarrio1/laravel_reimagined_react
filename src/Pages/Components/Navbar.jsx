@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import Link from "../../Amt-library/Components/Link";
-import { logout } from "../../Amt-library/React Base Stores/auth";
-import PermissionWrapper from "../../Amt-library/Wrappers/PermissionWrapper";
-import useVerbiage from "../../Amt-library/Custom Hooks/useVerbiage";
-import useSettings from "../../Amt-library/Custom Hooks/useSettings";
+import Link from "../../AMT/Components/Link";
+import PermissionWrapper from "../../AMT/Wrappers/PermissionWrapper";
+import { logout } from "../../AMT/Stores/auth";
+import useVerbiage from "../../AMT/Custom Hooks/useVerbiage";
+import useSettings from "../../AMT/Custom Hooks/useSettings";
 
 export default function Navbar() {
   const { getSetting } = useSettings();

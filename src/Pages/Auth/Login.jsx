@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Link from "../../Amt-library/Components/Link";
-import useRest from "../../Amt-library/Custom Hooks/useRest";
-import useVerbiage from "../../Amt-library/Custom Hooks/useVerbiage";
-import AnimationWrapper from "../../Amt-library/Wrappers/AnimationWrapper";
-import useSettings from "../../Amt-library/Custom Hooks/useSettings";
-import useErrors from "../../Amt-library/Custom Hooks/useErrors";
-import useInput from "../../Amt-library/Custom Hooks/Html/useInput";
-import useAuthDataLayer from "../../Amt-library/Data-layer/useAuthDataLayer";
+import Link from "../../AMT/Components/Link";
+import useRest from "../../AMT/Custom Hooks/useRest";
+import useVerbiage from "../../AMT/Custom Hooks/useVerbiage";
+import AnimationWrapper from "../../AMT/Wrappers/AnimationWrapper";
+import useSettings from "../../AMT/Custom Hooks/useSettings";
+import useErrors from "../../AMT/Custom Hooks/useErrors";
+import useInput from "../../AMT/Custom Hooks/Html/useInput";
+import useAuthDataLayer from "../../AMT/Data-layer/useAuthDataLayer";
 
 const Login = () => {
   const { getSetting } = useSettings();

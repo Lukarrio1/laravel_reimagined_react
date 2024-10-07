@@ -1,6 +1,6 @@
 import React from "react";
-import useVerbiage from "../Amt-library/Custom Hooks/useVerbiage";
-import useSettings from "../Amt-library/Custom Hooks/useSettings";
+import useVerbiage from "../AMT/Custom Hooks/useVerbiage";
+import useSettings from "../AMT/Custom Hooks/useSettings";
 
 const styles = {
   container: {

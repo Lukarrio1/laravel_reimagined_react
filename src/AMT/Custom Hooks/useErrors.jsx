@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors } from "../React Base Stores/errors";
+import { clearErrors } from "../Stores/errors";
 
 /**
  * @description This hook returns getError which could be used to retrieve an error given the error key

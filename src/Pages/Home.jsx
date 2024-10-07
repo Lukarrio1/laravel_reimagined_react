@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import PermissionWrapper from "../Amt-library/Wrappers/PermissionWrapper";
-import useVerbiage from "../Amt-library/Custom Hooks/useVerbiage";
-import AnimationWrapper from "../Amt-library/Wrappers/AnimationWrapper";
-import useSettings from "../Amt-library/Custom Hooks/useSettings";
-import useAuthUser from "../Amt-library/Custom Hooks/useAuthUser";
-import useTable from "../Amt-library/Custom Hooks/Html/useTable";
-import useRest from "../Amt-library/Custom Hooks/useRest";
-import ComponentLoading from "./Components/ComponentLoading";
+import PermissionWrapper from "../AMT/Wrappers/PermissionWrapper";
+import useVerbiage from "../AMT/Custom Hooks/useVerbiage";
+import AnimationWrapper from "../AMT/Wrappers/AnimationWrapper";
+import useSettings from "../AMT/Custom Hooks/useSettings";
+import useAuthUser from "../AMT/Custom Hooks/useAuthUser";
+import useRest from "../AMT/Custom Hooks/useRest";
+
 const styles = {
   welcomeSection: {
     display: "flex",

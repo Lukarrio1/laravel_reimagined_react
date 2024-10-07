@@ -1,5 +1,5 @@
 import React from "react";
-import useErrors from "../../Amt-library/Custom Hooks/useErrors";
+import useErrors from "../../AMT/Custom Hooks/useErrors";
 
 export default function SystemErrorMessageBanner() {
   const { getError } = useErrors();

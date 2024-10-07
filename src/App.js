@@ -5,11 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { store } from "./store/store";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import {
-  generateRoutes,
-  monitorCache,
-} from "./Amt-library/Abstract/AppStructure";
-import { assembleApp } from "./Amt-library/Abstract/AppStructure";
+import { generateRoutes, monitorCache } from "./AMT/Abstract/AppStructure";
+import { assembleApp } from "./AMT/Abstract/AppStructure";
 import Loading from "./Pages/Components/Loading";
 
 function App() {
@@ -42,7 +39,10 @@ function App() {
   ) : routes == null ? (
     <Loading
       textElement={
-        <div className="h1 text-center mt-5 text-bold">
+        <div
+          className="h1 text-center mt-5 text-bold"
+          style={{ fontSize: "100px" }}
+        >
           <span className="dots"></span>
         </div>
       }

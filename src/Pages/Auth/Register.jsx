@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Link from "../../Amt-library/Components/Link";
-import useVerbiage from "../../Amt-library/Custom Hooks/useVerbiage";
-import AnimationWrapper from "../../Amt-library/Wrappers/AnimationWrapper";
-import useInput from "../../Amt-library/Custom Hooks/Html/useInput";
-import useAuthDataLayer from "../../Amt-library/Data-layer/useAuthDataLayer";
+import Link from "../../AMT/Components/Link";
+import useVerbiage from "../../AMT/Custom Hooks/useVerbiage";
+import AnimationWrapper from "../../AMT/Wrappers/AnimationWrapper";
+import useInput from "../../AMT/Custom Hooks/Html/useInput";
+import useAuthDataLayer from "../../AMT/Data-layer/useAuthDataLayer";
 
 const Register = () => {
   const { getVerbiage } = useVerbiage(

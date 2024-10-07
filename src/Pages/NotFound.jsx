@@ -1,5 +1,5 @@
 import React from "react";
-import useVerbiage from "../Amt-library/Custom Hooks/useVerbiage";
+import useVerbiage from "../AMT/Custom Hooks/useVerbiage";
 
 const NotFound = () => {
   const { getVerbiage } = useVerbiage(

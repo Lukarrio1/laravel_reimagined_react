@@ -1,8 +1,8 @@
 import { Route } from "react-router-dom";
-import { setSettings } from "../React Base Stores/setting";
-import { setNodes } from "../React Base Stores/coreNodes";
+
+import { setNodes } from "../Stores/coreNodes";
 import { restClient } from "./restClient";
-import { setAuthProperties } from "../React Base Stores/auth";
+import { setAuthProperties } from "../Stores/auth";
 import { Suspense, lazy } from "react";
 import Loading from "../../Pages/Components/Loading";
 import { pages } from "./PagesAndLayouts";
@@ -10,6 +10,19 @@ import LayoutWrapper from "../Wrappers/LayoutWrapper";
 import RedirectWrapper from "../Wrappers/RedirectWrapper";
 import { getWithTTL, setWithTTL } from "./localStorage";
 import { Constants } from "./Constants";
+import { setSettings } from "../Stores/setting";
+
+const {
+  uuids: {
+    user_uuids: { profile_endpoint },
+    auth_uuids: {
+      auth_nodes_endpoint,
+      guest_nodes_enpoint,
+      settings_endpoint,
+      monitor_endpoint,
+    },
+  },
+} = Constants;
 
 const generateRoutes = (pages_properties) => {
   if (pages_properties.length === 0) {
@@ -47,18 +60,18 @@ const generateRoutes = (pages_properties) => {
 };
 
 const assembleApp = async (dispatch) => {
-  let settingsData = getWithTTL(Constants.settings);
+  let settingsData = getWithTTL(settings_endpoint);
   if (!settingsData) {
     const {
       data: { settings },
-    } = await restClient("xBULrpJXyMrElSIu6OhIlizi3WwrQnQTm7x6RloTyg4QzmOE3p");
+    } = await restClient(settings_endpoint);
     settingsData = settings;
     setWithTTL(
       Constants.app_cache_ttl,
-      settingsData?.find((s) => s.key == "cache_ttl")?.properties?.value * 1000
+      settingsData?.find((s) => s.key == "cache_ttl")?.properties?.value
     );
     setWithTTL(
-      Constants.settings,
+      settings_endpoint,
       settings,
       getWithTTL(Constants.app_cache_ttl)
     );
@@ -70,12 +83,12 @@ const assembleApp = async (dispatch) => {
   try {
     const {
       data: { user },
-    } = await restClient("kZ5ZSVmv6BWUYWbPI0is2N3kiy6agWIm4fZw4LUBUbx2xi2Reo");
-    setUpNodes("QGXWjhKGG4odx9O6zOcy7MSKyjYO3KW9nw9orosCQD6vEEHMnk", dispatch);
+    } = await restClient(profile_endpoint);
+    setUpNodes(auth_nodes_endpoint, dispatch);
     dispatch(setAuthProperties(user));
     return;
   } catch (error) {}
-  setUpNodes("ITD2Dj5t8NFdl8FCjsQxldnMPwdSnq1iuAYh7qpmjMbSZktUUF", dispatch);
+  setUpNodes(guest_nodes_enpoint, dispatch);
   return true;
 };
 
@@ -91,14 +104,13 @@ export const setUpNodes = async (uuid, dispatch) => {
 };
 
 export const monitorCache = async () => {
-  const uuid = "IvSpS0YVKV4ZKZJ2UahEMoPwzotH67iKvHd9rq6LJk2NMyCVDf";
-  let current_cache_token = getWithTTL(Constants.settings);
+  let current_cache_token = getWithTTL(settings_endpoint);
   if (current_cache_token != null) {
     current_cache_token = current_cache_token?.find(
       (s) => s.key == "is_cache_valid"
     )?.properties?.value;
   }
-  const { data } = await restClient(uuid);
+  const { data } = await restClient(monitor_endpoint);
   if (data?.is_cache_valid !== current_cache_token) {
     if (current_cache_token) localStorage.clear();
   }

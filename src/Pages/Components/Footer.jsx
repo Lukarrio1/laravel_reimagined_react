@@ -1,7 +1,7 @@
 import React from "react";
-import PermissionWrapper from "../../Amt-library/Wrappers/PermissionWrapper";
-import useVerbiage from "../../Amt-library/Custom Hooks/useVerbiage";
-import useSettings from "../../Amt-library/Custom Hooks/useSettings";
+import PermissionWrapper from "../../AMT/Wrappers/PermissionWrapper";
+import useVerbiage from "../../AMT/Custom Hooks/useVerbiage";
+import useSettings from "../../AMT/Custom Hooks/useSettings";
 
 const Footer = () => {
   const { getVerbiage } = useVerbiage(

@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { restClient } from "../Abstract/restClient";
-import { setErrors } from "../React Base Stores/errors";
+import { setErrors } from "../Stores/errors";
 import { useState } from "react";
+import { getWithTTL, setWithTTL } from "../Abstract/localStorage";
 // the save word for a empty variable is "empty_search_value" instead of passing it with an empty value
 /**
  * @description This hook return the restClient which could be used to make async calls to the serve
@@ -22,6 +23,52 @@ export default function useRest() {
       return prev;
     });
   };
+
+  const fetchData = async (
+    uuid,
+    route_params,
+    data_to_send,
+    route,
+    use_cache
+  ) => {
+    const data = await restClient(
+      uuid,
+      route_params,
+      data_to_send,
+      route,
+      use_cache
+    );
+    return data;
+  };
+
+  const handleCaching = async (
+    uuid,
+    route_params,
+    data_to_send,
+    route,
+    use_cache = false
+  ) => {
+    // const node_cache_ttl = route?.properties?.value?.node_cache_ttl;
+    // const cache_name = `${uuid}_${node_cache_ttl}`;
+    // const cached_data = getWithTTL(cache_name);
+    // if (node_cache_ttl > 0) {
+    //   if (!cached_data) {
+    //     const data = await fetchData(
+    //       uuid,
+    //       route_params,
+    //       data_to_send,
+    //       route,
+    //       use_cache
+    //     );
+    //     setWithTTL(cache_name, data, node_cache_ttl);
+    //     return data;
+    //   } else {
+    //     return cached_data;
+    //   }
+    // }
+    return await fetchData(uuid, route_params, data_to_send, route, use_cache);
+  };
+
   return {
     /**
      *
@@ -38,10 +85,11 @@ export default function useRest() {
      */
     restClient: async (uuid, route_params, data_to_send, use_cache = false) => {
       const route = Routes?.find((r) => r?.uuid == uuid);
+
       handleIsLoading(uuid, true);
       if (!route) return null;
       try {
-        const data = await restClient(
+        const data = await handleCaching(
           uuid,
           route_params,
           data_to_send,
