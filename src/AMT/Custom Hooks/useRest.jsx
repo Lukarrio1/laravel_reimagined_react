@@ -85,9 +85,8 @@ export default function useRest() {
      */
     restClient: async (uuid, route_params, data_to_send, use_cache = false) => {
       const route = Routes?.find((r) => r?.uuid == uuid);
-
-      handleIsLoading(uuid, true);
       if (!route) return null;
+      handleIsLoading(uuid, true);
       try {
         const data = await handleCaching(
           uuid,
@@ -111,7 +110,7 @@ export default function useRest() {
      * @returns boolean
      */
     getIsLoading: (uuid) => {
-      return isLoading[uuid];
+      return isLoading[uuid] ?? false;
     },
   };
 }
