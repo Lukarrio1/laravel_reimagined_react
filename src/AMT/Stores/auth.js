@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
 
 const Authentication = createSlice({
   name: "authenication",
@@ -31,3 +32,10 @@ const Authentication = createSlice({
 
 export const { setAuthProperties, logout } = Authentication.actions;
 export default Authentication.reducer;
+
+export const getMemProfile = createSelector(
+  [(state) => state?.authentication?.user],
+  (user) => {
+    return !user ? null : { ...user };
+  }
+);

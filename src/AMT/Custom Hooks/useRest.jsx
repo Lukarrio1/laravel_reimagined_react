@@ -3,6 +3,7 @@ import { restClient } from "../Abstract/restClient";
 import { setErrors } from "../Stores/errors";
 import { useState } from "react";
 import { getWithTTL, setWithTTL } from "../Abstract/localStorage";
+import { getMemRoutes } from "../Stores/coreNodes";
 // the save word for a empty variable is "empty_search_value" instead of passing it with an empty value
 /**
  * @description This hook return the restClient which could be used to make async calls to the serve
@@ -10,10 +11,7 @@ import { getWithTTL, setWithTTL } from "../Abstract/localStorage";
  * @returns restClient()
  */
 export default function useRest() {
-  const { Routes } = useSelector((state) => {
-    const routes = [...state?.coreNodes?.routes];
-    return { Routes: routes };
-  });
+  const Routes = useSelector((state) => [...state?.coreNodes?.routes]);
   const [isLoading, setIsLoading] = useState({});
   const dispatch = useDispatch();
 

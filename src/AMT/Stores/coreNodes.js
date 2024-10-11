@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
 
 const coreNodes = createSlice({
   name: "coreNodes",
@@ -61,3 +62,33 @@ const coreNodes = createSlice({
 
 export const { setNodes } = coreNodes.actions;
 export default coreNodes.reducer;
+
+export const getLinksPagesLayoutsAndComponents = createSelector(
+  [
+    (state) => state?.coreNodes?.pages,
+    (state) => state?.coreNodes?.links,
+    (state) => state?.coreNodes?.layouts,
+    (state) => state?.coreNodes?.components,
+  ],
+  (pages, links, layouts, components) => [
+    ...pages,
+    ...components,
+    ...layouts,
+    ...links,
+  ]
+);
+
+export const getMemLinksAndComponents = createSelector(
+  [(state) => state?.coreNodes?.links, (state) => state?.coreNodes?.components],
+  (links, components) => [...components, ...links]
+);
+
+export const getMemRoutes = createSelector(
+  [(state) => state?.coreNodes?.routes],
+  (routes) => [...routes]
+);
+
+export const getMemLayouts = createSelector(
+  [(state) => state?.coreNodes?.layouts],
+  (layouts) => [...layouts]
+);

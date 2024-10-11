@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { getLinksPagesLayoutsAndComponents } from "../Stores/coreNodes";
 /**
  *@description This hook is used to get the verbiage associated
  with item found comparing the uuid given and the uuid from the item
@@ -7,17 +8,11 @@ import { useSelector } from "react-redux";
  * @returns getVerbiage()
  */
 export default function useVerbiage(uuid) {
-  const { PageVerbiage } = useSelector((state) => {
-    const item = [
-      ...state?.coreNodes?.pages,
-      ...state?.coreNodes?.components,
-      ...state?.coreNodes?.links,
-      ...state?.coreNodes?.layouts,
-    ]?.find((item) => item?.uuid == uuid);
-    return {
-      PageVerbiage: item?.verbiage ?? {},
-    };
-  });
+  const PageVerbiage =
+    useSelector((state) => getLinksPagesLayoutsAndComponents(state))?.find(
+      (item) => item?.uuid == uuid
+    )?.verbiage ?? {};
+
   const updateValues = (
     variable_name,
     variable_value,

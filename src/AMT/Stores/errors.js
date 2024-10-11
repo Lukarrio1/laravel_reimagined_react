@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { createSelector } from "reselect";
 const Errors = createSlice({
   name: "errors",
   initialState: {
@@ -70,3 +70,8 @@ const Errors = createSlice({
 
 export const { setErrors, clearErrors } = Errors.actions;
 export default Errors.reducer;
+
+export const getMemErrors = createSelector(
+  [(state) => state?.errors?.errors],
+  (errors) => [...errors]
+);

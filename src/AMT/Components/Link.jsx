@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import PermissionWrapper from "../Wrappers/PermissionWrapper";
 import useVerbiage from "../Custom Hooks/useVerbiage";
+import { getMemLinksAndComponents } from "../Stores/coreNodes";
 
 // use text from rest to override the text of the button
 export default function Link({
@@ -18,19 +19,16 @@ export default function Link({
   },
   ...rest
 }) {
-  const { Actual_link } = useSelector((state) => {
-    const currentNode = [
-      ...state?.coreNodes.links,
-      ...state?.coreNodes.components,
-    ]?.filter((cl) => cl.uuid == uuid)[0];
-    return {
-      Actual_link: {
+  const Actual_link = useSelector((state) => getMemLinksAndComponents(state))
+    ?.map((currentNode) => {
+      return {
+        uuid: currentNode?.uuid,
         name: currentNode?.name,
         hasAccess: currentNode?.hasAccess,
         ...currentNode?.properties?.value,
-      },
-    };
-  });
+      };
+    })
+    ?.find((cl) => cl.uuid == uuid);
 
   const [newLink, setNewLink] = useState(null);
   const { getVerbiage } = useVerbiage(uuid);
