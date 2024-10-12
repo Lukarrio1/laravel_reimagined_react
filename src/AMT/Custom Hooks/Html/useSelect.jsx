@@ -43,7 +43,7 @@ export default function useSelect() {
       <>
         {selectState?.label?.enabled == true && (
           <label
-            for={selectState?.id}
+            htmlFor={selectState?.id}
             className={selectState?.label?.className}
           >
             {getVerbiage(

@@ -79,7 +79,7 @@ const assembleApp = async (dispatch) => {
   } else {
     dispatch(setSettings(settingsData));
   }
-
+  // gets the user profile data
   try {
     const {
       data: { user },

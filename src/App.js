@@ -1,10 +1,10 @@
 import "./App.css";
 import "./animation.css";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { store } from "./store/store";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import { BrowserRouter, Routes } from "react-router-dom";
 import { generateRoutes, monitorCache } from "./AMT/Abstract/AppStructure";
 import { assembleApp } from "./AMT/Abstract/AppStructure";
 import Loading from "./Pages/Components/Loading";

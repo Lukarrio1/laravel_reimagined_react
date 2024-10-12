@@ -37,7 +37,10 @@ export default function useInput() {
     () => (
       <>
         {inputState?.label?.enabled == true && (
-          <label for={inputState?.id} className={inputState?.label?.className}>
+          <label
+            htmlFor={inputState?.id}
+            className={inputState?.label?.className}
+          >
             {getVerbiage(
               inputState?.label?.verbiage?.key,
               inputState?.label?.verbiage?.properties
