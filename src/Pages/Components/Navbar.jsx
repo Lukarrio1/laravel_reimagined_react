@@ -67,6 +67,30 @@ export default function Navbar() {
             ></Link>
           </li>
           <li className="nav-item">
+            <Link
+              uuid={"o0LVzUJB2VFibPG8Ru66U5YZA5sSZ8s2uzf9vVT5EB2uyH4kHc"}
+              className="nav-link"
+              enable_verbiage={{
+                enable: true,
+                verbiage_key: "text",
+                verbiage_properties: {},
+                addPrefixOrSuffix: [],
+              }}
+            ></Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              uuid={"FqDbNP4kYWubSNPZq1iR1glyrXZkbaVuRt8luRvt1ljCCWwhlU"}
+              className="nav-link"
+              enable_verbiage={{
+                enable: true,
+                verbiage_key: "text",
+                verbiage_properties: {},
+                addPrefixOrSuffix: [],
+              }}
+            ></Link>
+          </li>
+          <li className="nav-item">
             <PermissionWrapper
               uuid={"YiNfpDugNwyu1yTlOsGGvPAj2YZpoitcuEgEGphxrQxcK1HT0t"}
             >

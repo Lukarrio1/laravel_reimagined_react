@@ -41,8 +41,8 @@ const useNavigator = (UUID) => {
 
   useEffect(() => {
     if (isReady == false) return;
-    let linkSeg = Actual_link.node_route.split("/");
-
+    let linkSeg = Actual_link?.node_route?.split("/") ?? [];
+    console.log(Actual_link, rest);
     const linkSegValue = {};
     Object.keys(rest)?.forEach((key) => {
       linkSegValue[":" + key] = rest[key];

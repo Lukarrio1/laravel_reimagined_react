@@ -3,6 +3,7 @@ import settingReducer from "./setting";
 import AuthenticationReducer from "./auth";
 import ErrorsReducer from "./errors";
 import ResponseReducer from "./response";
+import LoadingReducer from "./loading";
 
 export default {
   coreNodes: coreNodesReducer,
@@ -10,4 +11,5 @@ export default {
   authentication: AuthenticationReducer,
   errors: ErrorsReducer,
   response: ResponseReducer,
+  loading: LoadingReducer,
 };

@@ -4,6 +4,8 @@ import { setErrors } from "../Stores/errors";
 import { useState } from "react";
 import { getWithTTL, setWithTTL } from "../Abstract/localStorage";
 import { getMemRoutes } from "../Stores/coreNodes";
+import { setLoadingProperties } from "../Stores/loading";
+import useIsLoading from "./useIsLoading";
 // the save word for a empty variable is "empty_search_value" instead of passing it with an empty value
 /**
  * @description This hook return the restClient which could be used to make async calls to the serve
@@ -12,14 +14,11 @@ import { getMemRoutes } from "../Stores/coreNodes";
  */
 export default function useRest() {
   const Routes = useSelector((state) => [...state?.coreNodes?.routes]);
-  const [isLoading, setIsLoading] = useState({});
+  const { isLoading } = useIsLoading();
   const dispatch = useDispatch();
 
   const handleIsLoading = (uuid, currentState) => {
-    setIsLoading((prev) => {
-      prev[uuid] = currentState;
-      return prev;
-    });
+    dispatch(setLoadingProperties({ key: uuid, loading: currentState }));
   };
 
   const fetchData = async (
@@ -108,7 +107,7 @@ export default function useRest() {
      * @returns boolean
      */
     getIsLoading: (uuid) => {
-      return isLoading[uuid] ?? false;
+      return isLoading(uuid) ?? false;
     },
   };
 }

@@ -7,3 +7,15 @@ export function except(obj = {}, exceptions = []) {
   });
   return newObj;
 }
+
+export function createQueryString(params = {}) {
+  const queryString = Object.keys(params)
+    .map(
+      (key) =>
+        encodeURIComponent(key) +
+        "=" +
+        encodeURIComponent(params[key] ? params[key] : null)
+    )
+    .join("&");
+  return queryString;
+}
