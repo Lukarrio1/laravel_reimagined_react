@@ -103,7 +103,7 @@ const Login = () => {
                   <button
                     type="submit"
                     className="btn btn-primary"
-                    disabled={getIsLoading(uuids?.login_endpoint)}
+                    disabled={getIsLoading(uuids?.login_endpoint_uuid)}
                   >
                     {getVerbiage("login_button")}
                   </button>

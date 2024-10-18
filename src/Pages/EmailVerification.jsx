@@ -3,6 +3,17 @@ import { useParams } from "react-router-dom";
 import useRest from "../AMT/Custom Hooks/useRest";
 import useVerbiage from "../AMT/Custom Hooks/useVerbiage";
 import useNavigator from "../AMT/Custom Hooks/useNavigator";
+import { Constants } from "../AMT/Abstract/Constants";
+
+const {
+  uuids: {
+    home_page: { home_page_link_uuid },
+    email_verification_page: {
+      email_verification_endpoint_uuid,
+      email_verification_page_uuid,
+    },
+  },
+} = Constants;
 
 const EmailVerification = () => {
   const styles = {
@@ -19,15 +30,12 @@ const EmailVerification = () => {
 
   const { restClient } = useRest();
 
-  const { node } = useNavigator(
-    "nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"
-  );
+  const { node } = useNavigator(home_page_link_uuid);
 
   const verifyEmail = async () => {
-    const { data } = await restClient(
-      "napwAbGlLIs2owgXvRr9bF8C84SlmhaYy2QMwIclCT9ddM5qZU",
-      { token: token }
-    );
+    const { data } = await restClient(email_verification_endpoint_uuid, {
+      token: token,
+    });
     sessionStorage.setItem("bearerToken", data?.token);
     window.location.href = node?.node_route;
   };
@@ -36,9 +44,7 @@ const EmailVerification = () => {
     verifyEmail();
   }, []);
 
-  const { getVerbiage } = useVerbiage(
-    "so2HDQJPD7rZlNL66ifHff0mt5ymXRyOmxE0hPsJt5x2xiDcV4"
-  );
+  const { getVerbiage } = useVerbiage(email_verification_page_uuid);
 
   return (
     <div className="container-fluid text-center" style={styles.welcomeSection}>

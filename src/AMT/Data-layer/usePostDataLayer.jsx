@@ -7,9 +7,9 @@ import { useParams } from "react-router-dom";
 const {
   uuids: {
     blog: {
-      create_or_update_post_endpoint,
-      delete_post_endpoint,
-      get_posts_endpoint,
+      create_or_update_post_endpoint_uuid,
+      delete_post_endpoint_uuid,
+      get_posts_endpoint_uuid,
       get_post_endpoint_uuid,
     },
   },
@@ -25,20 +25,25 @@ export default function usePostDataLayer() {
 
   const createOrUpdatePost = async (obj) => {
     clearError();
-    const response = await restClient(create_or_update_post_endpoint, {}, obj);
+    const response = await restClient(
+      create_or_update_post_endpoint_uuid,
+      {},
+      obj
+    );
     if (response == null) return null;
     const { data } = response;
     return data;
   };
 
   const deletePost = async (id) => {
-    const response = await restClient(delete_post_endpoint, { post: id });
+    const response = await restClient(delete_post_endpoint_uuid, { post: id });
     if (response == null) return null;
+    console.log(response, "this is the response");
     return true;
   };
 
   const getPosts = async () => {
-    const response = await restClient(get_posts_endpoint);
+    const response = await restClient(get_posts_endpoint_uuid);
     if (response == null) return null;
     const { data } = response;
     setFetchedPosts((prev) => {
@@ -64,9 +69,9 @@ export default function usePostDataLayer() {
       fetchedPosts: fetchedPosts?.fetchedPosts,
       fetchedPost: fetchedPosts.fetchedPost,
     },
-    deletingPost: () => getIsLoading(delete_post_endpoint),
-    gettingPosts: () => getIsLoading(get_posts_endpoint),
+    deletingPost: () => getIsLoading(delete_post_endpoint_uuid),
+    gettingPosts: () => getIsLoading(get_posts_endpoint_uuid),
     gettingPost: () => getIsLoading(get_post_endpoint_uuid),
-    savingPost: () => getIsLoading(create_or_update_post_endpoint),
+    savingPost: () => getIsLoading(create_or_update_post_endpoint_uuid),
   };
 }

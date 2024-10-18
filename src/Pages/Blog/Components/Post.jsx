@@ -2,7 +2,6 @@ import React from "react";
 import useNavigator from "../../../AMT/Custom Hooks/useNavigator";
 import { Constants } from "../../../AMT/Abstract/Constants";
 import usePostDataLayer from "../../../AMT/Data-layer/usePostDataLayer";
-import PermissionWrapper from "../../../AMT/Wrappers/PermissionWrapper";
 import useVerbiage from "../../../AMT/Custom Hooks/useVerbiage";
 const {
   uuids: {
@@ -23,7 +22,11 @@ export default function Post({ post }) {
         </div>
         <div className="card-body">
           <p>{getVerbiage("post_body", { body: post?.body })}</p>
-          {post?.posts_owner && <p>Post Owner:{post?.posts_owner?.name}</p>}
+          {post?.posts_owner && (
+            <p>
+              {getVerbiage("post_owner", { owner: post?.posts_owner?.name })}
+            </p>
+          )}
           <p>
             {getVerbiage("post_status", {
               status: post?.is_active ? "true" : "false",

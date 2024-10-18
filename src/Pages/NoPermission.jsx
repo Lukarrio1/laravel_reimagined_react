@@ -1,6 +1,7 @@
 import React from "react";
 import useVerbiage from "../AMT/Custom Hooks/useVerbiage";
 import useSettings from "../AMT/Custom Hooks/useSettings";
+import { Constants } from "../AMT/Abstract/Constants";
 
 const styles = {
   container: {
@@ -21,13 +22,15 @@ const styles = {
     color: "#6c757d",
   },
 };
+const {
+  uuids: {
+    system_uuids: { no_permission_component_uuid },
+  },
+} = Constants;
 
 export default function NoPermission({ className, Node }) {
   const { getSetting } = useSettings();
-
-  const { getVerbiage } = useVerbiage(
-    "Ozmr5U5M7Wvd1FBiU4oIi1ZHhCKIrkiQNGFjbZofuo9oiqLbJQ"
-  );
+  const { getVerbiage } = useVerbiage(no_permission_component_uuid);
 
   return (
     <div className={className}>

@@ -1,10 +1,13 @@
 import React from "react";
 import useVerbiage from "../AMT/Custom Hooks/useVerbiage";
-
+import { Constants } from "../AMT/Abstract/Constants";
+const {
+  uuids: {
+    system_uuids: { not_found_page_uuid },
+  },
+} = Constants;
 const NotFound = () => {
-  const { getVerbiage } = useVerbiage(
-    "20GNjHG693sKUTzxMCGFS0MCd0uZ2MeoNEx6knvvCj26x3Zh0W"
-  );
+  const { getVerbiage } = useVerbiage(not_found_page_uuid);
   return <div>{getVerbiage("not_found_message")}</div>;
 };
 

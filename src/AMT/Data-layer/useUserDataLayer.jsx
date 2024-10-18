@@ -5,7 +5,7 @@ import { setAuthProperties } from "../Stores/auth";
 import { Constants } from "../Abstract/Constants";
 const {
   uuids: {
-    user_uuids: { profile_endpoint },
+    user_uuids: { profile_endpoint_uuid },
   },
 } = Constants;
 export default function useUserDataLayer() {
@@ -15,7 +15,7 @@ export default function useUserDataLayer() {
     try {
       const {
         data: { user },
-      } = await restClient(profile_endpoint);
+      } = await restClient(profile_endpoint_uuid);
       dispatch(setAuthProperties(user));
       return;
     } catch (error) {}

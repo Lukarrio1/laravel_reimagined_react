@@ -5,19 +5,29 @@ import PermissionWrapper from "../../AMT/Wrappers/PermissionWrapper";
 import { logout } from "../../AMT/Stores/auth";
 import useVerbiage from "../../AMT/Custom Hooks/useVerbiage";
 import useSettings from "../../AMT/Custom Hooks/useSettings";
+import { Constants } from "../../AMT/Abstract/Constants";
+const {
+  uuids: {
+    auth_uuids: {
+      logout_component_uuid,
+      register_page_link_uuid,
+      login_page_link_uuid,
+    },
+    home_page: { home_page_link_uuid },
+    blog: { create_post_page_link_uuid, post_page_link_uuid },
+  },
+} = Constants;
 
 export default function Navbar() {
   const { getSetting } = useSettings();
-  const { getVerbiage: getLogoutVerbiage } = useVerbiage(
-    "YiNfpDugNwyu1yTlOsGGvPAj2YZpoitcuEgEGphxrQxcK1HT0t"
-  );
+  const { getVerbiage: getLogoutVerbiage } = useVerbiage(logout_component_uuid);
 
   const dispatch = useDispatch();
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <a className="navbar-brand" href="#">
         <Link
-          uuid={"nQVEMpoZ4cyBICO0iVvi0zBqDIPzN2RWz1ixwSK1ojSOCMZEGG"}
+          uuid={home_page_link_uuid}
           className="nav-link"
           enable_verbiage={{
             enable: true,
@@ -44,7 +54,7 @@ export default function Navbar() {
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <Link
-              uuid={"FJisFM6Ur8GMDW5PDjM2lLO9KIzyW9LhRNGLGBwS6vxCI38Q7B"}
+              uuid={register_page_link_uuid}
               className="nav-link"
               enable_verbiage={{
                 enable: true,
@@ -56,7 +66,7 @@ export default function Navbar() {
           </li>
           <li className="nav-item">
             <Link
-              uuid={"K7rMLEQkQjaUJOOOyXQIbhjssBvPTTpR7MtmLwoFS3TQxXpKLe"}
+              uuid={login_page_link_uuid}
               className="nav-link"
               enable_verbiage={{
                 enable: true,
@@ -68,7 +78,7 @@ export default function Navbar() {
           </li>
           <li className="nav-item">
             <Link
-              uuid={"o0LVzUJB2VFibPG8Ru66U5YZA5sSZ8s2uzf9vVT5EB2uyH4kHc"}
+              uuid={create_post_page_link_uuid}
               className="nav-link"
               enable_verbiage={{
                 enable: true,
@@ -80,7 +90,7 @@ export default function Navbar() {
           </li>
           <li className="nav-item">
             <Link
-              uuid={"FqDbNP4kYWubSNPZq1iR1glyrXZkbaVuRt8luRvt1ljCCWwhlU"}
+              uuid={post_page_link_uuid}
               className="nav-link"
               enable_verbiage={{
                 enable: true,
@@ -91,9 +101,7 @@ export default function Navbar() {
             ></Link>
           </li>
           <li className="nav-item">
-            <PermissionWrapper
-              uuid={"YiNfpDugNwyu1yTlOsGGvPAj2YZpoitcuEgEGphxrQxcK1HT0t"}
-            >
+            <PermissionWrapper uuid={logout_component_uuid}>
               <a
                 href={getSetting("redirect_to_after_logout")}
                 onClick={() => {

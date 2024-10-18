@@ -10,7 +10,7 @@ import Loading from "../../Components/Loading";
 
 const {
   uuids: {
-    blog: { create_page_uuid, posts_page },
+    blog: { create_page_uuid, posts_page_uuid },
   },
 } = Constants;
 export default function Update() {
@@ -108,7 +108,7 @@ export default function Update() {
     setIsActiveValue(fetchedPost?.is_active ? "true" : "false");
   }, [fetchedPost]);
 
-  const { setNavProperties } = useNavigator(posts_page);
+  const { setNavProperties } = useNavigator(posts_page_uuid);
 
   const process = async () => {
     const obj = {

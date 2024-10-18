@@ -147,7 +147,7 @@ const Register = () => {
                   <button
                     type="submit"
                     className="btn btn-primary"
-                    disabled={getIsLoading(uuids?.register_endpoint)}
+                    disabled={getIsLoading(uuids?.register_endpoint_uuid)}
                   >
                     {getVerbiage("register_button")}
                   </button>

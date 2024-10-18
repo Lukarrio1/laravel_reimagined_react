@@ -4,7 +4,13 @@ import useVerbiage from "../AMT/Custom Hooks/useVerbiage";
 import AnimationWrapper from "../AMT/Wrappers/AnimationWrapper";
 import useSettings from "../AMT/Custom Hooks/useSettings";
 import useAuthUser from "../AMT/Custom Hooks/useAuthUser";
+import { Constants } from "../AMT/Abstract/Constants";
 
+const {
+  uuids: {
+    home_page: { welcome_component_uuid, home_page_uuid },
+  },
+} = Constants;
 const styles = {
   welcomeSection: {
     display: "flex",
@@ -17,9 +23,7 @@ const styles = {
 const Home = () => {
   const user = useAuthUser();
 
-  const { getVerbiage } = useVerbiage(
-    "kmg9uKHV1VR9eoF1mdl3nahG8CCpSduNdL55C26uvwG6c9ldsH"
-  );
+  const { getVerbiage } = useVerbiage(home_page_uuid);
 
   const { getSetting } = useSettings();
 
@@ -29,10 +33,7 @@ const Home = () => {
         className="container-fluid text-center"
         style={styles.welcomeSection}
       >
-        {/* <ComponentLoading></ComponentLoading> */}
-        <PermissionWrapper
-          uuid={"IYUhLzLdfYToLMg4YY46dxsXVvIwA90fLLew0vOoFXbBnrfn51"}
-        >
+        <PermissionWrapper uuid={welcome_component_uuid}>
           <h1>
             {getVerbiage("title", { app_name: getSetting("client_app_name") })}
           </h1>

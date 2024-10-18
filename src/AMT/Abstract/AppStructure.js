@@ -14,12 +14,12 @@ import { setSettings } from "../Stores/setting";
 
 const {
   uuids: {
-    user_uuids: { profile_endpoint },
+    user_uuids: { profile_endpoint_uuid },
     auth_uuids: {
-      auth_nodes_endpoint,
-      guest_nodes_enpoint,
-      settings_endpoint,
-      monitor_endpoint,
+      auth_nodes_endpoint_uuid,
+      guest_nodes_enpoint_uuid,
+      settings_endpoint_uuid,
+      monitor_endpoint_uuid,
     },
   },
 } = Constants;
@@ -60,18 +60,18 @@ const generateRoutes = (pages_properties) => {
 };
 
 const assembleApp = async (dispatch) => {
-  let settingsData = getWithTTL(settings_endpoint);
+  let settingsData = getWithTTL(settings_endpoint_uuid);
   if (!settingsData) {
     const {
       data: { settings },
-    } = await restClient(settings_endpoint);
+    } = await restClient(settings_endpoint_uuid);
     settingsData = settings;
     setWithTTL(
       Constants.app_cache_ttl,
       settingsData?.find((s) => s.key == "cache_ttl")?.properties?.value
     );
     setWithTTL(
-      settings_endpoint,
+      settings_endpoint_uuid,
       settings,
       getWithTTL(Constants.app_cache_ttl)
     );
@@ -83,12 +83,12 @@ const assembleApp = async (dispatch) => {
   try {
     const {
       data: { user },
-    } = await restClient(profile_endpoint);
-    setUpNodes(auth_nodes_endpoint, dispatch);
+    } = await restClient(profile_endpoint_uuid);
+    setUpNodes(auth_nodes_endpoint_uuid, dispatch);
     dispatch(setAuthProperties(user));
     return;
   } catch (error) {}
-  setUpNodes(guest_nodes_enpoint, dispatch);
+  setUpNodes(guest_nodes_enpoint_uuid, dispatch);
   return true;
 };
 
@@ -104,13 +104,13 @@ export const setUpNodes = async (uuid, dispatch) => {
 };
 
 export const monitorCache = async () => {
-  let current_cache_token = getWithTTL(settings_endpoint);
+  let current_cache_token = getWithTTL(settings_endpoint_uuid);
   if (current_cache_token != null) {
     current_cache_token = current_cache_token?.find(
       (s) => s.key == "is_cache_valid"
     )?.properties?.value;
   }
-  const { data } = await restClient(monitor_endpoint);
+  const { data } = await restClient(monitor_endpoint_uuid);
   if (data?.is_cache_valid !== current_cache_token) {
     if (current_cache_token) localStorage.clear();
   }

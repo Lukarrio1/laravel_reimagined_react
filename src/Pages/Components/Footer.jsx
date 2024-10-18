@@ -2,16 +2,18 @@ import React from "react";
 import PermissionWrapper from "../../AMT/Wrappers/PermissionWrapper";
 import useVerbiage from "../../AMT/Custom Hooks/useVerbiage";
 import useSettings from "../../AMT/Custom Hooks/useSettings";
+import { Constants } from "../../AMT/Abstract/Constants";
+const {
+  uuids: {
+    system_uuids: { footer_component_uuid },
+  },
+} = Constants;
 
 const Footer = () => {
-  const { getVerbiage } = useVerbiage(
-    "cUHq5K7gFKAwgX6qsJx0mGnnpTnap70ljk3VGpTfNsPf7ZLXYM"
-  );
+  const { getVerbiage } = useVerbiage(footer_component_uuid);
   const { getSetting } = useSettings();
   return (
-    <PermissionWrapper
-      uuid={"cUHq5K7gFKAwgX6qsJx0mGnnpTnap70ljk3VGpTfNsPf7ZLXYM"}
-    >
+    <PermissionWrapper uuid={footer_component_uuid}>
       <footer
         className="bg-white fixed-bottom"
         style={{

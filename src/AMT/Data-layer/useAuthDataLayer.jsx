@@ -15,7 +15,7 @@ export default function useAuthDataLayer() {
   const login = async (obj) => {
     clearErrors("invalid_credentials");
     const response = await restClient(
-      auth_uuids?.login_endpoint,
+      auth_uuids?.login_endpoint_uuid,
       {},
       { ...obj }
     );
@@ -27,7 +27,7 @@ export default function useAuthDataLayer() {
 
   const register = async (obj) => {
     const response = await restClient(
-      auth_uuids?.register_endpoint,
+      auth_uuids?.register_endpoint_uuid,
       {},
       { ...obj }
     );
