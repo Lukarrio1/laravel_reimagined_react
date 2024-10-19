@@ -37,7 +37,7 @@ export default function RedirectWrapper({ children, page }) {
       {page?.hasAccess == false ? (
         <div className="row">
           <div className="col-sm-6 offset-sm-3 h4 mt-5 text-center">
-            <div class="alert alert-warning" role="alert">
+            <div className="alert alert-warning" role="alert">
               {getVerbiage("on_redirect_message", {
                 url: auth_user
                   ? getSetting("redirect_to_after_login", "key")
