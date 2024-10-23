@@ -30,10 +30,8 @@ const generateRoutes = (pages_properties) => {
   }
   return [
     ...Object.keys(pages).map((page) => {
-      let page_props = pages_properties.filter(
-        (p) => p.component && p.component === page
-      )[0];
-      page_props = page_props ? page_props : {};
+      let page_props =
+        pages_properties.find((p) => p.component && p.component === page) ?? {};
       const path = page_props?.path ? page_props.path : "/";
       const Component = pages[page_props.component ?? "NoFound"];
       return (

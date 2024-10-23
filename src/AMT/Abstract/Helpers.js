@@ -9,6 +9,7 @@ export function except(obj = {}, exceptions = []) {
 }
 
 export function createQueryString(params = {}) {
+  const condition = Object.keys(params).length > 0;
   const queryString = Object.keys(params)
     .map(
       (key) =>
@@ -17,5 +18,5 @@ export function createQueryString(params = {}) {
         encodeURIComponent(params[key] ? params[key] : null)
     )
     .join("&");
-  return queryString;
+  return condition ? "?" + queryString : queryString;
 }

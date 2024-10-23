@@ -13,7 +13,7 @@ import useIsLoading from "./useIsLoading";
  * @returns restClient()
  */
 export default function useRest() {
-  const Routes = useSelector((state) => [...state?.coreNodes?.routes]);
+  const Routes = useSelector((state) => getMemRoutes(state));
   const { isLoading } = useIsLoading();
   const dispatch = useDispatch();
 
@@ -26,14 +26,16 @@ export default function useRest() {
     route_params,
     data_to_send,
     route,
-    use_cache
+    use_cache,
+    query_params
   ) => {
     const data = await restClient(
       uuid,
       route_params,
       data_to_send,
       route,
-      use_cache
+      use_cache,
+      query_params
     );
     return data;
   };
@@ -43,7 +45,8 @@ export default function useRest() {
     route_params,
     data_to_send,
     route,
-    use_cache = false
+    use_cache = false,
+    query_params
   ) => {
     // const node_cache_ttl = route?.properties?.value?.node_cache_ttl;
     // const cache_name = `${uuid}_${node_cache_ttl}`;
@@ -63,7 +66,14 @@ export default function useRest() {
     //     return cached_data;
     //   }
     // }
-    return await fetchData(uuid, route_params, data_to_send, route, use_cache);
+    return await fetchData(
+      uuid,
+      route_params,
+      data_to_send,
+      route,
+      use_cache,
+      query_params
+    );
   };
 
   return {
@@ -80,7 +90,13 @@ export default function useRest() {
      * the use_cache which is used to tell the rest client to cache the return data
      * @returns data
      */
-    restClient: async (uuid, route_params, data_to_send, use_cache = false) => {
+    restClient: async (
+      uuid,
+      route_params,
+      data_to_send,
+      use_cache = false,
+      query_params = {}
+    ) => {
       const route = Routes?.find((r) => r?.uuid == uuid);
       if (!route) return null;
       handleIsLoading(uuid, true);
@@ -90,7 +106,8 @@ export default function useRest() {
           route_params,
           data_to_send,
           route,
-          use_cache
+          use_cache,
+          query_params
         );
         handleIsLoading(uuid, false);
         return data;

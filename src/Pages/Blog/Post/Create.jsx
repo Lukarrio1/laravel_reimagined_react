@@ -5,9 +5,8 @@ import useSelect from "../../../AMT/Custom Hooks/Html/useSelect";
 import useVerbiage from "../../../AMT/Custom Hooks/useVerbiage";
 import { Constants } from "../../../AMT/Abstract/Constants";
 import usePostDataLayer from "../../../AMT/Data-layer/usePostDataLayer";
-import useErrors from "../../../AMT/Custom Hooks/useErrors";
-import { useNavigate } from "react-router-dom";
 import useNavigator from "../../../AMT/Custom Hooks/useNavigator";
+import { clearErrors } from "../../../AMT/Stores/errors";
 
 const {
   uuids: {
@@ -15,7 +14,7 @@ const {
   },
 } = Constants;
 export default function Create() {
-  const { createOrUpdatePost, savingPost } = usePostDataLayer();
+  const { createPost, savingPost } = usePostDataLayer();
 
   const {
     setProperties: setTitleProps,
@@ -48,7 +47,7 @@ export default function Create() {
       id: "is_active",
       name: "is_active",
       options: [
-        { label: "Select a value", value: "" },
+        { label: "Select a value", value: null },
         { label: "Active", value: true },
         { label: "In Active", value: false },
       ],
@@ -92,6 +91,10 @@ export default function Create() {
         },
       },
     });
+    return () => {
+      bodyError();
+      titleError();
+    };
   }, []);
 
   const { setNavProperties } = useNavigator(posts_page_uuid);
@@ -102,9 +105,9 @@ export default function Create() {
       title: titleValue,
       is_active: isActiveValue,
     };
-    const data = await createOrUpdatePost(obj);
+    const data = await createPost(obj);
     if (!data) return;
-    setNavProperties({ ready: true });
+    setNavProperties({ params: {} });
   };
 
   return (

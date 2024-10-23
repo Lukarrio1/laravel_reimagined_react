@@ -1,0 +1,4 @@
+Layout instructions
+1: Copy from the AuthLayout.jsx or UnAuthLayout.jsx for a template
+2: Register the newly created layout in the "../AMT/Abstract/PagesAndLayouts.js file
+3: The layouts name should be the same as the one registered in AMT

@@ -17,6 +17,8 @@ export default function Link({
       // { variable_name: "", value_to_attach: "", addPrefixOrSuffix: true  //true to prepend, false to append },
     ],
   },
+  //pass callback function
+  prefetch = null,
   ...rest
 }) {
   const Actual_link = useSelector((state) => getMemLinksAndComponents(state))
@@ -32,6 +34,7 @@ export default function Link({
 
   const [newLink, setNewLink] = useState(null);
   const { getVerbiage } = useVerbiage(uuid);
+
   useEffect(() => {
     if (!Actual_link?.node_route) return;
     let linkSeg = Actual_link.node_route.split("/");
@@ -51,22 +54,21 @@ export default function Link({
   }, []);
 
   return newLink?.hasAccess ? (
-    <PermissionWrapper
-      uuid={uuid}
-      children={
-        <NavLink to={newLink?.node_route} {...rest}>
-          {!text
-            ? enable_verbiage?.enable == true
-              ? getVerbiage(
-                  enable_verbiage?.verbiage_key,
-                  enable_verbiage?.verbiage_properties,
-                  enable_verbiage?.addPrefixOrSuffix
-                )
-              : newLink?.name
-            : text}
-        </NavLink>
-      }
-    ></PermissionWrapper>
+    <NavLink
+      to={newLink?.node_route}
+      {...rest}
+      onMouseEnter={() => (prefetch != null ? prefetch() : null)}
+    >
+      {!text
+        ? enable_verbiage?.enable == true
+          ? getVerbiage(
+              enable_verbiage?.verbiage_key,
+              enable_verbiage?.verbiage_properties,
+              enable_verbiage?.addPrefixOrSuffix
+            )
+          : newLink?.name
+        : text}
+    </NavLink>
   ) : (
     ""
   );

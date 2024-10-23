@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import useNavigator from "../Custom Hooks/useNavigator";
-import { useSelector } from "react-redux";
 import useVerbiage from "../Custom Hooks/useVerbiage";
 import { useNavigate } from "react-router-dom";
 import useSettings from "../Custom Hooks/useSettings";

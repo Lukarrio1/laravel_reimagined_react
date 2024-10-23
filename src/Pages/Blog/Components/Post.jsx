@@ -1,17 +1,17 @@
 import React from "react";
-import useNavigator from "../../../AMT/Custom Hooks/useNavigator";
 import { Constants } from "../../../AMT/Abstract/Constants";
 import usePostDataLayer from "../../../AMT/Data-layer/usePostDataLayer";
 import useVerbiage from "../../../AMT/Custom Hooks/useVerbiage";
+import useNavigator from "../../../AMT/Custom Hooks/useNavigator";
 const {
   uuids: {
     blog: { edit_post_link_uuid, post_component_uuid },
   },
 } = Constants;
 
-export default function Post({ post }) {
+const Post = ({ post }) => {
   const { setNavProperties } = useNavigator(edit_post_link_uuid);
-  const { deletePost } = usePostDataLayer();
+  const { deletePost, deletingPost } = usePostDataLayer();
   const { getVerbiage } = useVerbiage(post_component_uuid);
 
   return (
@@ -36,12 +36,13 @@ export default function Post({ post }) {
         <div className="card-footer text-center bg-white">
           <button
             className="btn btn-sm btn-warning"
-            onClick={() => setNavProperties({ ready: true, post: post?.id })}
+            onClick={() => setNavProperties({ params: { post: post?.id } })}
           >
             {getVerbiage("post_edit_btn")}
           </button>{" "}
           <button
             className="btn btn-sm btn-danger"
+            disabled={deletingPost()}
             onClick={() => deletePost(post?.id)}
           >
             {getVerbiage("post_delete_btn")}
@@ -50,4 +51,5 @@ export default function Post({ post }) {
       </div>
     </div>
   );
-}
+};
+export default Post;

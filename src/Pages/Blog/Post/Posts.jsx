@@ -15,29 +15,35 @@ export default function Posts() {
     gettingPosts,
     getPosts,
     fetchedData: { fetchedPosts },
-    deletingPost,
   } = usePostDataLayer();
 
   useEffect(() => {
-    if (!deletingPost()) return;
+    if (fetchedPosts.length > 0) return;
     getPosts();
   }, []);
 
-  useEffect(() => {
-    if (deletingPost()) return;
-    getPosts();
-  }, [deletingPost()]);
-
-  return gettingPosts() ? (
-    <Loading></Loading>
-  ) : (
+  return (
     <AnimationWrapper>
       <PermissionWrapper uuid={post_component_uuid}>
         <div className="row">
-          {fetchedPosts &&
+          <div className="col-sm-12">
+            <div className="card">
+              <div className="card-body">
+                <div className="col-sm-8"></div>
+                <div className="col-sm-4">
+                  Posts ({fetchedPosts?.length ?? 0})
+                </div>
+              </div>
+            </div>
+          </div>
+          {gettingPosts() ? (
+            <Loading></Loading>
+          ) : (
+            fetchedPosts &&
             fetchedPosts?.map((post) => {
               return <Post key={post.id} post={post}></Post>;
-            })}
+            })
+          )}
         </div>
       </PermissionWrapper>
     </AnimationWrapper>

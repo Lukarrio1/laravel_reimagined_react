@@ -5,13 +5,11 @@ import SystemErrorMessageBanner from "../Pages/Components/SystemErrorMessageBann
 
 export default function UnAuthLayout({ Component, page }) {
   return (
-    page && (
-      <>
-        <Navbar></Navbar>
-        <SystemErrorMessageBanner></SystemErrorMessageBanner>
-        <div className={"container"}>{Component}</div>
-        <Footer />
-      </>
-    )
+    <div className="container-fluid">
+      <Navbar></Navbar>
+      <SystemErrorMessageBanner></SystemErrorMessageBanner>
+      <div className={"container mt-4"}>{Component}</div>
+      <Footer />
+    </div>
   );
 }

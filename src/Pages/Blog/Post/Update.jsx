@@ -5,8 +5,8 @@ import useSelect from "../../../AMT/Custom Hooks/Html/useSelect";
 import useVerbiage from "../../../AMT/Custom Hooks/useVerbiage";
 import { Constants } from "../../../AMT/Abstract/Constants";
 import usePostDataLayer from "../../../AMT/Data-layer/usePostDataLayer";
-import useNavigator from "../../../AMT/Custom Hooks/useNavigator";
 import Loading from "../../Components/Loading";
+import useNavigator from "../../../AMT/Custom Hooks/useNavigator";
 
 const {
   uuids: {
@@ -15,7 +15,7 @@ const {
 } = Constants;
 export default function Update() {
   const {
-    createOrUpdatePost,
+    updatePost,
     savingPost,
     getPost,
     gettingPost,
@@ -55,7 +55,7 @@ export default function Update() {
       id: "is_active",
       name: "is_active",
       options: [
-        { label: "Select a value", value: "" },
+        { label: "Select a value", value: null },
         { label: "Active", value: true },
         { label: "In Active", value: false },
       ],
@@ -99,6 +99,10 @@ export default function Update() {
         },
       },
     });
+    return () => {
+      bodyError();
+      titleError();
+    };
   }, []);
 
   useEffect(() => {
@@ -117,9 +121,9 @@ export default function Update() {
       is_active: isActiveValue == "true" ? 1 : 0,
       id: fetchedPost?.id,
     };
-    const data = await createOrUpdatePost(obj);
+    const data = await updatePost(obj);
     if (!data) return;
-    setNavProperties({ ready: true });
+    setNavProperties({ params: {} });
   };
 
   return gettingPost() ? (

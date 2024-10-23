@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useRest from "../AMT/Custom Hooks/useRest";
 import useVerbiage from "../AMT/Custom Hooks/useVerbiage";
-import useNavigator from "../AMT/Custom Hooks/useNavigator";
 import { Constants } from "../AMT/Abstract/Constants";
+import useNavigator2 from "../AMT/Custom Hooks/useNavigator";
 
 const {
   uuids: {
@@ -30,7 +30,7 @@ const EmailVerification = () => {
 
   const { restClient } = useRest();
 
-  const { node } = useNavigator(home_page_link_uuid);
+  const { node } = useNavigator2(home_page_link_uuid);
 
   const verifyEmail = async () => {
     const { data } = await restClient(email_verification_endpoint_uuid, {

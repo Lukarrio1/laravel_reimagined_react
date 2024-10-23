@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { layouts } from "../Abstract/PagesAndLayouts";
 import useLayouts from "../Custom Hooks/useLayouts";
+import useSettings from "../Custom Hooks/useSettings";
 /**
  *
  *@description This is the general layout component that is used  to apply a pages layout dynamically .
