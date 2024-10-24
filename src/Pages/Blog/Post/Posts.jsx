@@ -10,6 +10,7 @@ const {
     blog: { post_component_uuid },
   },
 } = Constants;
+
 export default function Posts() {
   const {
     gettingPosts,

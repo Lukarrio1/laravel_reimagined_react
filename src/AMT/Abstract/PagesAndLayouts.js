@@ -13,6 +13,7 @@ const pages = {
   Posts: lazy(() => import("../../Pages/Blog/Post/Posts")),
   Create: lazy(() => import("../../Pages/Blog/Post/Create")),
   Update: lazy(() => import("../../Pages/Blog/Post/Update")),
+  Post_Home: lazy(() => import("../../Pages/Blog/Post/Post_Home")),
 };
 
 const layouts = {
