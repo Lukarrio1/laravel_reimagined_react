@@ -37,5 +37,10 @@ export default function useAuthDataLayer() {
     window.location.href = getSetting("redirect_to_after_register");
   };
 
-  return { login, register, getIsLoading, uuids: { ...auth_uuids } };
+  return {
+    login,
+    register,
+    registering: () => getIsLoading(auth_uuids?.register_endpoint_uuid),
+    signing: () => getIsLoading(auth_uuids.login_endpoint_uuid),
+  };
 }

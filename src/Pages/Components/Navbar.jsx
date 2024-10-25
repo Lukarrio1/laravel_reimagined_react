@@ -6,7 +6,6 @@ import { logout } from "../../AMT/Stores/auth";
 import useVerbiage from "../../AMT/Custom Hooks/useVerbiage";
 import useSettings from "../../AMT/Custom Hooks/useSettings";
 import { Constants } from "../../AMT/Abstract/Constants";
-import usePostDataLayer from "../../AMT/Data-layer/usePostDataLayer";
 const {
   uuids: {
     auth_uuids: {
@@ -23,10 +22,6 @@ export default function Navbar() {
   const { getSetting } = useSettings();
   const { getVerbiage: getLogoutVerbiage } = useVerbiage(logout_component_uuid);
   const dispatch = useDispatch();
-  const {
-    getPosts,
-    fetchedData: { fetchedPosts },
-  } = usePostDataLayer();
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">

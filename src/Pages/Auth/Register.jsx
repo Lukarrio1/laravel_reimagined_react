@@ -4,12 +4,16 @@ import useVerbiage from "../../AMT/Custom Hooks/useVerbiage";
 import AnimationWrapper from "../../AMT/Wrappers/AnimationWrapper";
 import useInput from "../../AMT/Custom Hooks/Html/useInput";
 import useAuthDataLayer from "../../AMT/Data-layer/useAuthDataLayer";
-
+import { Constants } from "../../AMT/Abstract/Constants";
+import ButtonSpinnerComponent from "../Components/ButtonSpinnerComponent";
+const {
+  uuids: {
+    auth_uuids: { register_page_uuid, login_page_link_uuid },
+  },
+} = Constants;
 const Register = () => {
-  const { getVerbiage } = useVerbiage(
-    "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP"
-  );
-  const { register, getIsLoading, uuids } = useAuthDataLayer();
+  const { getVerbiage } = useVerbiage(register_page_uuid);
+  const { register, registering } = useAuthDataLayer();
 
   const [creds, setCredentials] = useState({
     email: "",
@@ -57,7 +61,7 @@ const Register = () => {
         enabled: true,
         verbiage: {
           key: "full_name_field_title",
-          uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+          uuid: register_page_uuid,
         },
       },
     });
@@ -71,7 +75,7 @@ const Register = () => {
         enabled: true,
         verbiage: {
           key: "email_field_title",
-          uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+          uuid: register_page_uuid,
         },
       },
     });
@@ -85,7 +89,7 @@ const Register = () => {
         enabled: true,
         verbiage: {
           key: "password_field_title",
-          uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+          uuid: register_page_uuid,
         },
       },
     });
@@ -99,7 +103,7 @@ const Register = () => {
         enabled: true,
         verbiage: {
           key: "confirm_password_field_title",
-          uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",
+          uuid: register_page_uuid,
         },
       },
     });
@@ -147,9 +151,12 @@ const Register = () => {
                   <button
                     type="submit"
                     className="btn btn-primary"
-                    disabled={getIsLoading(uuids?.register_endpoint_uuid)}
+                    disabled={registering()}
                   >
-                    {getVerbiage("register_button")}
+                    <ButtonSpinnerComponent
+                      text={getVerbiage("register_button")}
+                      isLoading={registering()}
+                    ></ButtonSpinnerComponent>
                   </button>
                 </div>
               </form>
@@ -160,7 +167,7 @@ const Register = () => {
                 onClick={() => {
                   clearAllErrors();
                 }}
-                uuid={"K7rMLEQkQjaUJOOOyXQIbhjssBvPTTpR7MtmLwoFS3TQxXpKLe"}
+                uuid={login_page_link_uuid}
                 enable_verbiage={{
                   enable: true,
                   verbiage_key: "login_nav_text",

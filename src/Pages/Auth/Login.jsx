@@ -2,42 +2,38 @@ import React, { useEffect, useState } from "react";
 import Link from "../../AMT/Components/Link";
 import useVerbiage from "../../AMT/Custom Hooks/useVerbiage";
 import AnimationWrapper from "../../AMT/Wrappers/AnimationWrapper";
-import useSettings from "../../AMT/Custom Hooks/useSettings";
 import useErrors from "../../AMT/Custom Hooks/useErrors";
 import useInput from "../../AMT/Custom Hooks/Html/useInput";
 import useAuthDataLayer from "../../AMT/Data-layer/useAuthDataLayer";
+import { Constants } from "../../AMT/Abstract/Constants";
+import ButtonSpinnerComponent from "../Components/ButtonSpinnerComponent";
+
+const {
+  uuids: {
+    auth_uuids: { login_page_uuid, register_page_link_uuid },
+  },
+} = Constants;
 
 const Login = () => {
-  const { login, getIsLoading, uuids } = useAuthDataLayer();
-  const { getVerbiage } = useVerbiage(
-    "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5"
-  );
-
-  const [creds, setCredentials] = useState({
-    email: "",
-    password: "",
-  });
+  const { login, signing } = useAuthDataLayer();
+  const { getVerbiage } = useVerbiage(login_page_uuid);
 
   const { clearError, getError } = useErrors();
 
-  const possibleErrors = ["invalid_credentials"];
-
   useEffect(() => {
-    return () => possibleErrors.forEach((pr) => clearError(pr));
+    return () => clearError();
   }, []);
 
   const {
     setProperties: setEmailProperties,
     value: email,
     Html: EmailHtml,
-    clearError: clearEmailError,
   } = useInput();
 
   const {
     setProperties: setPasswordProperties,
     value: password,
     Html: PasswordHtml,
-    clearError: clearPasswordError,
   } = useInput();
 
   useEffect(() => {
@@ -51,7 +47,7 @@ const Login = () => {
         enabled: true,
         verbiage: {
           key: "email_field_title",
-          uuid: "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5",
+          uuid: login_page_uuid,
         },
       },
     });
@@ -65,19 +61,11 @@ const Login = () => {
         enabled: true,
         verbiage: {
           key: "password_field_title",
-          uuid: "uK95PIquDI8ODXyLrs3vQmeGs9kbUuG5qwlj52pDw5nI9v86A5",
+          uuid: login_page_uuid,
         },
       },
     });
   }, []);
-
-  useEffect(() => {
-    setCredentials({
-      ...creds,
-      email,
-      password,
-    });
-  }, [email, password]);
 
   return (
     <AnimationWrapper>
@@ -94,7 +82,8 @@ const Login = () => {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  login({ ...creds });
+                  clearError();
+                  login({ password, email });
                 }}
               >
                 <div className="mb-3">{EmailHtml}</div>
@@ -103,9 +92,12 @@ const Login = () => {
                   <button
                     type="submit"
                     className="btn btn-primary"
-                    disabled={getIsLoading(uuids?.login_endpoint_uuid)}
+                    disabled={signing()}
                   >
-                    {getVerbiage("login_button")}
+                    <ButtonSpinnerComponent
+                      text={getVerbiage("login_button")}
+                      isLoading={signing()}
+                    ></ButtonSpinnerComponent>
                   </button>
                 </div>
               </form>
@@ -113,7 +105,7 @@ const Login = () => {
             <div className="card-footer h5 bg-white">
               or{" "}
               <Link
-                uuid={"FJisFM6Ur8GMDW5PDjM2lLO9KIzyW9LhRNGLGBwS6vxCI38Q7B"}
+                uuid={register_page_link_uuid}
                 className="btn btn-sm btn-default"
                 enable_verbiage={{
                   enable: true,

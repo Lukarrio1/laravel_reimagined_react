@@ -1,9 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import Laravel_Reimagined_Reducers from "../AMT/Stores/Laravel_Reimagined_Reducers";
-import PostReducer from "./post";
 
 export const store = configureStore({
-  reducer: { ...Laravel_Reimagined_Reducers, post: PostReducer },
+  reducer: { ...Laravel_Reimagined_Reducers },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
