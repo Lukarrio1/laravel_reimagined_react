@@ -94,7 +94,7 @@ export const getMemRoutes = createSelector(
 );
 
 export const getMemPages = createSelector(
-  [(state) => state?.coreNodes?.pages],
+  [(state) => state?.coreNodes?.pages ?? []],
   (pages) => [...pages]
 );
 

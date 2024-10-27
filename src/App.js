@@ -15,7 +15,6 @@ function App() {
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
-    document.title = "";
     assembleApp(dispatch);
     const interval = setInterval(() => monitorCache(), 30000);
     return () => clearInterval(interval);
@@ -23,7 +22,7 @@ function App() {
 
   useLayoutEffect(() => {
     store.subscribe(() => {
-      setPagesProperties(getMemPages(store.getState()));
+      setPagesProperties((prev) => getMemPages(store.getState()));
       const app_name = getMemSettings(store.getState())?.client_app_name?.value;
       const page_name = getMemCurrentPage(store.getState())?.name;
       const title = page_name ? `${app_name} | ${page_name}` : "";
