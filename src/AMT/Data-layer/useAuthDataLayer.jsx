@@ -31,7 +31,7 @@ export default function useAuthDataLayer() {
       {},
       { ...obj }
     );
-    if (response == null) return;
+    if (response === null) return;
     const { data } = response;
     sessionStorage.setItem("bearerToken", data?.token);
     window.location.href = getSetting("redirect_to_after_register");

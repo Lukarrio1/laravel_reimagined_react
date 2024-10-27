@@ -7,6 +7,7 @@ import useInput from "../../AMT/Custom Hooks/Html/useInput";
 import useAuthDataLayer from "../../AMT/Data-layer/useAuthDataLayer";
 import { Constants } from "../../AMT/Abstract/Constants";
 import ButtonSpinnerComponent from "../Components/ButtonSpinnerComponent";
+import Loading from "../Components/Loading";
 
 const {
   uuids: {
@@ -109,6 +110,7 @@ const Login = () => {
                 className="btn btn-sm btn-default"
                 enable_verbiage={{
                   enable: true,
+                  flat_value: true,
                   verbiage_key: "register_nav_text",
                   verbiage_properties: {},
                   addPrefixOrSuffix: [],

@@ -15,12 +15,8 @@ import { setSettings } from "../Stores/setting";
 const {
   uuids: {
     user_uuids: { profile_endpoint_uuid },
-    auth_uuids: {
-      auth_nodes_endpoint_uuid,
-      guest_nodes_enpoint_uuid,
-      settings_endpoint_uuid,
-      monitor_endpoint_uuid,
-    },
+    system_uuids: { monitor_endpoint_uuid, settings_endpoint_uuid },
+    auth_uuids: { auth_nodes_endpoint_uuid, guest_nodes_enpoint_uuid },
   },
 } = Constants;
 

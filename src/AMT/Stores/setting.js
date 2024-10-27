@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
 
 const Setting = createSlice({
   name: "setting",
@@ -19,3 +20,10 @@ const Setting = createSlice({
 
 export const { setSettings } = Setting.actions;
 export default Setting.reducer;
+
+export const getMemSettings = createSelector(
+  [(state) => state?.setting?.settings],
+  (settings) => {
+    return { ...settings };
+  }
+);

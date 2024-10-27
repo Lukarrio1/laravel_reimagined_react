@@ -30,14 +30,17 @@ const EmailVerification = () => {
 
   const { restClient } = useRest();
 
-  const { node } = useNavigator2(home_page_link_uuid);
+  const { setNavProperties } = useNavigator2(home_page_link_uuid);
 
   const verifyEmail = async () => {
     const { data } = await restClient(email_verification_endpoint_uuid, {
       token: token,
     });
     sessionStorage.setItem("bearerToken", data?.token);
-    window.location.href = node?.node_route;
+    window.location.href = setNavProperties({
+      queryParams: {},
+      params: {},
+    }).node;
   };
 
   useEffect(() => {

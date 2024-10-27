@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import useVerbiage from "../Custom Hooks/useVerbiage";
 import { useNavigate } from "react-router-dom";
 import useSettings from "../Custom Hooks/useSettings";
@@ -12,7 +12,7 @@ export default function RedirectWrapper({ children, page }) {
   const { getSetting } = useSettings();
   const auth_user = useAuthUser();
   const navigate = useNavigate();
-  useEffect(() => {
+  useLayoutEffect(() => {
     const timeout = setTimeout(() => {
       if (auth_user && page?.hasAccess == false) {
         navigate(getSetting("redirect_to_after_login"));

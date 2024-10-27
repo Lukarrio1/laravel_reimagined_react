@@ -1,32 +1,25 @@
 import React from "react";
 export default function Loading({ textElement = null }) {
   return (
-    <div>
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "rgba(0, 0, 0, 0.1)", // Semi-transparent black background
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 9999, // Ensures the overlay is above other elements
+      }}
+    >
       <div
-        style={{
-          height: "100vh",
-          margin: 0,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        className="h1 text-center text-bold"
+        style={{ fontSize: "100px", color: "#fff" }}
       >
-        {!textElement ? (
-          <div
-            className="spinner-border"
-            role="status"
-            style={{
-              width: "10rem",
-              height: "10rem",
-              borderWidth: "0.4em",
-            }}
-          >
-            {/* {getVerbiage("loading_animation_element")}{" "} */}
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        ) : (
-          textElement
-        )}
+        <span className="dots"></span> {/* Add animation if needed */}
       </div>
     </div>
   );

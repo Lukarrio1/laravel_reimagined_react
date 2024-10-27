@@ -37,65 +37,72 @@ export default function useVerbiage(uuid) {
      output="Hello foo"
      * @param {string} key
      * @param {object} properties
+     * @param {bool} flat_value
      * @param {array} addPrefixOrSuffix
      * @returns
      */
     getVerbiage: (
       key,
       properties = {},
+      flat_value = false,
       addPrefixOrSuffix = [
         // { variable_name: "", value_to_attach: "", addPrefixOrSuffix: true  //true to prepend, false to append },
       ]
     ) => {
-      return PageVerbiage[key] != undefined && PageVerbiage[key] != null ? (
-        <span
-          dangerouslySetInnerHTML={{
-            __html: PageVerbiage[key]
-              ?.split(" ")
-              .map((item) => {
-                if (item.split("{-").length > 1) {
-                  const variable = item
-                    .split("{-")
-                    .filter((new_item) => new_item.length > 0)[0]
-                    ?.split("-}")
-                    .filter((new_item) => new_item.length > 0)[0];
+      const content = PageVerbiage[key]
+        ?.split(" ")
+        .map((item) => {
+          if (item.split("{-").length > 1) {
+            const variable = item
+              .split("{-")
+              .filter((new_item) => new_item.length > 0)[0]
+              ?.split("-}")
+              .filter((new_item) => new_item.length > 0)[0];
 
-                  const middle_seg = item
+            const middle_seg = item
+              .split("{-")
+              .filter((new_item) => new_item.length > 0)[1]
+              ?.split("-}")[0];
+
+            const first_seg =
+              middle_seg == undefined
+                ? ""
+                : item
+                    .split("{-")
+                    .filter((new_item) => new_item.length > 0)[0] ?? "";
+
+            const last_seg =
+              middle_seg == undefined
+                ? ""
+                : item
                     .split("{-")
                     .filter((new_item) => new_item.length > 0)[1]
-                    ?.split("-}")[0];
+                    ?.split("-}")[1] ?? "";
+            return properties[
+              middle_seg != undefined ? middle_seg : variable
+            ] != undefined
+              ? `${first_seg}${updateValues(
+                  middle_seg != undefined ? middle_seg : variable,
+                  properties[middle_seg != undefined ? middle_seg : variable] ??
+                    "",
+                  addPrefixOrSuffix
+                )}${last_seg}`
+              : "";
+          }
+          return item;
+        })
+        .join(" ");
 
-                  const first_seg =
-                    middle_seg == undefined
-                      ? ""
-                      : item
-                          .split("{-")
-                          .filter((new_item) => new_item.length > 0)[0] ?? "";
-
-                  const last_seg =
-                    middle_seg == undefined
-                      ? ""
-                      : item
-                          .split("{-")
-                          .filter((new_item) => new_item.length > 0)[1]
-                          ?.split("-}")[1] ?? "";
-                  return properties[
-                    middle_seg != undefined ? middle_seg : variable
-                  ] != undefined
-                    ? `${first_seg}${updateValues(
-                        middle_seg != undefined ? middle_seg : variable,
-                        properties[
-                          middle_seg != undefined ? middle_seg : variable
-                        ] ?? "",
-                        addPrefixOrSuffix
-                      )}${last_seg}`
-                    : "";
-                }
-                return item;
-              })
-              .join(" "),
-          }}
-        ></span>
+      return PageVerbiage[key] != undefined && PageVerbiage[key] != null ? (
+        flat_value == true ? (
+          content
+        ) : (
+          <span
+            dangerouslySetInnerHTML={{
+              __html: content,
+            }}
+          ></span>
+        )
       ) : (
         ""
       );

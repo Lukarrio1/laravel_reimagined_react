@@ -14,7 +14,6 @@ const {
       login_page_link_uuid,
     },
     home_page: { home_page_link_uuid },
-    blog: { create_post_page_link_uuid, post_page_link_uuid },
   },
 } = Constants;
 
@@ -31,6 +30,7 @@ export default function Navbar() {
           className="nav-link"
           enable_verbiage={{
             enable: true,
+            flat_value: true,
             verbiage_key: "home_nav_text",
             verbiage_properties: {
               app_name: getSetting("client_app_name"),
@@ -58,6 +58,7 @@ export default function Navbar() {
               className="nav-link"
               enable_verbiage={{
                 enable: true,
+                flat_value: true,
                 verbiage_key: "register_nav_text",
                 verbiage_properties: {},
                 addPrefixOrSuffix: [],
@@ -70,32 +71,8 @@ export default function Navbar() {
               className="nav-link"
               enable_verbiage={{
                 enable: true,
+                flat_value: true,
                 verbiage_key: "login_nav_text",
-                verbiage_properties: {},
-                addPrefixOrSuffix: [],
-              }}
-            ></Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              uuid={create_post_page_link_uuid}
-              className="nav-link"
-              enable_verbiage={{
-                enable: true,
-                verbiage_key: "text",
-                verbiage_properties: {},
-                addPrefixOrSuffix: [],
-              }}
-            ></Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              // prefetch={() => (fetchedPosts.length == 0 ? getPosts() : null)}
-              uuid={post_page_link_uuid}
-              className="nav-link"
-              enable_verbiage={{
-                enable: true,
-                verbiage_key: "text",
                 verbiage_properties: {},
                 addPrefixOrSuffix: [],
               }}
@@ -110,7 +87,7 @@ export default function Navbar() {
                 }}
                 className="nav-link"
               >
-                {getLogoutVerbiage("logout_button")}
+                {getLogoutVerbiage("logout_button", {}, true)}
               </a>
             </PermissionWrapper>
           </li>

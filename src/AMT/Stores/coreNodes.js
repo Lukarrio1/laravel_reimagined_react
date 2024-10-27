@@ -9,6 +9,7 @@ const coreNodes = createSlice({
     components: [],
     routes: [],
     layouts: [],
+    currentPage: null,
   },
   reducers: {
     setNodes: (state, { payload }) => {
@@ -57,10 +58,14 @@ const coreNodes = createSlice({
         });
       return state;
     },
+    setCurrentPage: (state, { payload }) => {
+      state.currentPage = payload;
+      return state;
+    },
   },
 });
 
-export const { setNodes } = coreNodes.actions;
+export const { setNodes, setCurrentPage } = coreNodes.actions;
 export default coreNodes.reducer;
 
 export const getLinksPagesLayoutsAndComponents = createSelector(
@@ -86,6 +91,11 @@ export const getMemLinksAndComponents = createSelector(
 export const getMemRoutes = createSelector(
   [(state) => state?.coreNodes?.routes],
   (routes) => [...routes]
+);
+
+export const getMemPages = createSelector(
+  [(state) => state?.coreNodes?.pages],
+  (pages) => [...pages]
 );
 
 export const getMemLayouts = createSelector(

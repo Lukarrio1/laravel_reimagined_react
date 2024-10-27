@@ -7,7 +7,11 @@ export default function SystemErrorMessageBanner() {
   const { getError } = useErrors();
   const dispatch = useDispatch();
   useEffect(() => {
-    setTimeout(() => dispatch(clearErrors("system_errors")), 30);
+    const timeout = setTimeout(
+      () => dispatch(clearErrors("system_errors")),
+      30
+    );
+    return () => clearTimeout(timeout);
   }, []);
 
   return (

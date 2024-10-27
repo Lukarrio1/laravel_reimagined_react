@@ -3,23 +3,6 @@ export const Constants = {
   settings: "xBULrpJXyMrElSIu6OhIlizi3WwrQnQTm7x6RloTyg4QzmOE3p",
   base_source_url: "http://localhost:8000/api/nodes/",
   uuids: {
-    blog: {
-      post_page_link_uuid: "FqDbNP4kYWubSNPZq1iR1glyrXZkbaVuRt8luRvt1ljCCWwhlU",
-      create_post_page_link_uuid:
-        "o0LVzUJB2VFibPG8Ru66U5YZA5sSZ8s2uzf9vVT5EB2uyH4kHc",
-      create_page_uuid: "a1lv1O4Jqw1b8Dqwx7BpBseTFKcWRrvwikFRWR3SJSVW0GGHC9",
-      edit_post_link_uuid: "Mqnfwt7lPLHQby6LTzsj1g6qiUehwP9FjvOpEK5S8fUu7OkMXN",
-      create_or_update_post_endpoint_uuid:
-        "6VAZCHRe2aXb61yReEmc9ZLcn59pZ85MJUX52LviuLOB9eDZ4D",
-      delete_post_endpoint_uuid:
-        "0LWexYQRKmtedx6neoiar6J1I9hOatEOlwEfIEBVkF0k9iHuZO",
-      get_posts_endpoint_uuid:
-        "ZZ5ct99JE7HgE9JdrNJTOiSkHioTO3SkA6XgSzc6g2EsWvt4V6",
-      posts_page_uuid: "FqDbNP4kYWubSNPZq1iR1glyrXZkbaVuRt8luRvt1ljCCWwhlU",
-      post_component_uuid: "nHnZFu2vygLwWKmuORmeRAnlY1axBFdzxzLEfzADxIU90ptAp1",
-      get_post_endpoint_uuid:
-        "paQiqiuJCCLm5xEUDnRMjDYY5rLKakhMT7ZDHBtH7aoPrd8EYu",
-    },
     home_page: {
       welcome_component_uuid:
         "IYUhLzLdfYToLMg4YY46dxsXVvIwA90fLLew0vOoFXbBnrfn51",
@@ -38,6 +21,10 @@ export const Constants = {
       not_found_page_uuid: "20GNjHG693sKUTzxMCGFS0MCd0uZ2MeoNEx6knvvCj26x3Zh0W",
       footer_component_uuid:
         "cUHq5K7gFKAwgX6qsJx0mGnnpTnap70ljk3VGpTfNsPf7ZLXYM",
+      settings_endpoint_uuid:
+        "xBULrpJXyMrElSIu6OhIlizi3WwrQnQTm7x6RloTyg4QzmOE3p",
+      monitor_endpoint_uuid:
+        "IvSpS0YVKV4ZKZJ2UahEMoPwzotH67iKvHd9rq6LJk2NMyCVDf",
     },
 
     auth_uuids: {
@@ -56,10 +43,6 @@ export const Constants = {
         "QGXWjhKGG4odx9O6zOcy7MSKyjYO3KW9nw9orosCQD6vEEHMnk",
       guest_nodes_enpoint_uuid:
         "ITD2Dj5t8NFdl8FCjsQxldnMPwdSnq1iuAYh7qpmjMbSZktUUF",
-      settings_endpoint_uuid:
-        "xBULrpJXyMrElSIu6OhIlizi3WwrQnQTm7x6RloTyg4QzmOE3p",
-      monitor_endpoint_uuid:
-        "IvSpS0YVKV4ZKZJ2UahEMoPwzotH67iKvHd9rq6LJk2NMyCVDf",
     },
     user_uuids: {
       profile_endpoint_uuid:

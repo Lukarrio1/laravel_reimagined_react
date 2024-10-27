@@ -170,6 +170,7 @@ const Register = () => {
                 uuid={login_page_link_uuid}
                 enable_verbiage={{
                   enable: true,
+                  flat_value: true,
                   verbiage_key: "login_nav_text",
                   verbiage_properties: {},
                   addPrefixOrSuffix: [],
