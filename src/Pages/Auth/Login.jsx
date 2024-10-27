@@ -6,8 +6,7 @@ import useErrors from "../../AMT/Custom Hooks/useErrors";
 import useInput from "../../AMT/Custom Hooks/Html/useInput";
 import useAuthDataLayer from "../../AMT/Data-layer/useAuthDataLayer";
 import { Constants } from "../../AMT/Abstract/Constants";
-import ButtonSpinnerComponent from "../Components/ButtonSpinnerComponent";
-import Loading from "../Components/Loading";
+import ButtonSpinnerComponent from "../../AMT/Components/ButtonSpinnerComponent";
 
 const {
   uuids: {

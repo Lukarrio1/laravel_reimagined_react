@@ -10,8 +10,11 @@ import { setCurrentPage } from "../Stores/coreNodes";
  */
 export default function LayoutWrapper({ Component, page }) {
   const layout = useLayouts(page?.layout_id);
+
   const [ActualLayoutComponent, setActualLayoutComponent] = useState(null);
+
   const dispatch = useDispatch();
+
   useLayoutEffect(() => {
     if (!page) return;
     const ActualLayout = layouts[layout?.properties?.value?.actual_component];

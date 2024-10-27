@@ -5,7 +5,7 @@ import AnimationWrapper from "../../AMT/Wrappers/AnimationWrapper";
 import useInput from "../../AMT/Custom Hooks/Html/useInput";
 import useAuthDataLayer from "../../AMT/Data-layer/useAuthDataLayer";
 import { Constants } from "../../AMT/Abstract/Constants";
-import ButtonSpinnerComponent from "../Components/ButtonSpinnerComponent";
+import ButtonSpinnerComponent from "../../AMT/Components/ButtonSpinnerComponent";
 const {
   uuids: {
     auth_uuids: { register_page_uuid, login_page_link_uuid },

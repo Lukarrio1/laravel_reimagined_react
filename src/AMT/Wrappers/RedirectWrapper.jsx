@@ -3,15 +3,25 @@ import useVerbiage from "../Custom Hooks/useVerbiage";
 import { useNavigate } from "react-router-dom";
 import useSettings from "../Custom Hooks/useSettings";
 import useAuthUser from "../Custom Hooks/useAuthUser";
+import { Constants } from "../Abstract/Constants";
 /**
  *
  *@description This handles the redirecting of user if they are not logged
   in or lack the required permission to view the requested page
  */
+
+const {
+  uuids: {
+    system_uuids: { redirect_wrapper_component_uuid },
+  },
+} = Constants;
 export default function RedirectWrapper({ children, page }) {
   const { getSetting } = useSettings();
+
   const auth_user = useAuthUser();
+
   const navigate = useNavigate();
+
   useLayoutEffect(() => {
     const timeout = setTimeout(() => {
       if (auth_user && page?.hasAccess == false) {
@@ -26,9 +36,7 @@ export default function RedirectWrapper({ children, page }) {
     return () => clearTimeout(timeout);
   }, [page]);
 
-  const { getVerbiage } = useVerbiage(
-    "255ZjmZxTG8xHe3PRQc7BRVTqQTW1Tc9JXHOSvPkNGQPIPD4CT"
-  );
+  const { getVerbiage } = useVerbiage(redirect_wrapper_component_uuid);
 
   return (
     <>

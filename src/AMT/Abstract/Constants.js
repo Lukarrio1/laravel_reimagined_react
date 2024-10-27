@@ -2,6 +2,7 @@ export const Constants = {
   app_cache_ttl: "app_cache_ttl",
   settings: "xBULrpJXyMrElSIu6OhIlizi3WwrQnQTm7x6RloTyg4QzmOE3p",
   base_source_url: "http://localhost:8000/api/nodes/",
+  node_link_type_value: 2,
   uuids: {
     home_page: {
       welcome_component_uuid:
@@ -25,6 +26,8 @@ export const Constants = {
         "xBULrpJXyMrElSIu6OhIlizi3WwrQnQTm7x6RloTyg4QzmOE3p",
       monitor_endpoint_uuid:
         "IvSpS0YVKV4ZKZJ2UahEMoPwzotH67iKvHd9rq6LJk2NMyCVDf",
+      redirect_wrapper_component_uuid:
+        "255ZjmZxTG8xHe3PRQc7BRVTqQTW1Tc9JXHOSvPkNGQPIPD4CT",
     },
 
     auth_uuids: {
