@@ -15,7 +15,7 @@ function App() {
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
-    document.title = "Loading ...";
+    document.title = "";
     assembleApp(dispatch);
     const interval = setInterval(() => monitorCache(), 30000);
     return () => clearInterval(interval);

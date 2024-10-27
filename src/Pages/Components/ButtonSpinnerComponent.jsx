@@ -1,12 +1,15 @@
 import React from "react";
 
-export default function ButtonSpinnerComponent({ text, isLoading }) {
+export default function ButtonSpinnerComponent({
+  text = "",
+  isLoading = false,
+}) {
   return (
     <>
       {text}{" "}
       {isLoading && (
         <span
-          class="spinner-border spinner-border-sm"
+          className="spinner-border spinner-border-sm"
           role="status"
           aria-hidden="true"
         ></span>

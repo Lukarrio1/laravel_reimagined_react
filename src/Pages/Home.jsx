@@ -6,9 +6,6 @@ import useSettings from "../AMT/Custom Hooks/useSettings";
 import useAuthUser from "../AMT/Custom Hooks/useAuthUser";
 import { Constants } from "../AMT/Abstract/Constants";
 import useNavigator from "../AMT/Custom Hooks/useNavigator";
-import Loading from "./Components/Loading";
-import useRest from "../AMT/Custom Hooks/useRest";
-import { restClient } from "../AMT/Abstract/restClient";
 
 const {
   uuids: {
@@ -37,20 +34,8 @@ const Home = () => {
     queryParams: { name: "jason" },
   });
 
-  const [posts, setPosts] = useState();
-
-  const getPosts = async () => {
-    const response = await restClient(
-      "dPxd1N1My1Ny3vyBJeBs2ARXJbXhCnQeJnlBPTuB7FOGjOYROH"
-    );
-    if (response == null) return;
-    const { data } = response;
-    setPosts(data);
-  };
-
   useEffect(() => {
     console.log(LoginPageLink.node);
-    getPosts();
   }, []);
 
   return (
@@ -67,16 +52,6 @@ const Home = () => {
             {getVerbiage("welcome_message", { user_name: user?.name })}
           </p>
         </PermissionWrapper>
-
-        {posts &&
-          posts?.map((post) => {
-            return (
-              <>
-                <div className="">{post?.title}</div>
-                <div className="">{post?.body}</div>
-              </>
-            );
-          })}
       </div>
     </AnimationWrapper>
   );
