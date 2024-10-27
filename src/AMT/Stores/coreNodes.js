@@ -98,6 +98,13 @@ export const getMemPages = createSelector(
   (pages) => [...pages]
 );
 
+export const getMemCurrentPage = createSelector(
+  [(state) => state?.coreNodes?.currentPage],
+  (page) => {
+    return { ...page };
+  }
+);
+
 export const getMemLayouts = createSelector(
   [(state) => state?.coreNodes?.layouts],
   (layouts) => [...layouts]

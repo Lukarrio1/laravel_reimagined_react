@@ -6,7 +6,8 @@ import { BrowserRouter, Routes } from "react-router-dom";
 import { generateRoutes, monitorCache } from "./AMT/Abstract/AppStructure";
 import { assembleApp } from "./AMT/Abstract/AppStructure";
 import Loading from "./Pages/Components/Loading";
-import { getMemPages } from "./AMT/Stores/coreNodes";
+import { getMemCurrentPage, getMemPages } from "./AMT/Stores/coreNodes";
+import { getMemSettings } from "./AMT/Stores/setting";
 
 function App() {
   const [pages_properties, setPagesProperties] = useState(null);
@@ -22,16 +23,15 @@ function App() {
 
   useLayoutEffect(() => {
     store.subscribe(() => {
-      const app_name =
-        store.getState().setting?.settings?.client_app_name?.value;
-      const page_name = store.getState().coreNodes?.currentPage?.name ?? "";
+      setPagesProperties(getMemPages(store.getState()));
+      const app_name = getMemSettings(store.getState())?.client_app_name?.value;
+      const page_name = getMemCurrentPage(store.getState())?.name;
       const title = page_name ? `${app_name} | ${page_name}` : "";
       document.title = title;
-      setPagesProperties(getMemPages(store.getState()));
     });
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!pages_properties) return;
     setRoutes(generateRoutes(pages_properties));
   }, [pages_properties]);

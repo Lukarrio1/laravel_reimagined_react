@@ -36,7 +36,9 @@ const Home = () => {
     params: {},
     queryParams: { name: "jason" },
   });
+
   const [posts, setPosts] = useState();
+
   const getPosts = async () => {
     const response = await restClient(
       "dPxd1N1My1Ny3vyBJeBs2ARXJbXhCnQeJnlBPTuB7FOGjOYROH"
@@ -48,7 +50,7 @@ const Home = () => {
 
   useEffect(() => {
     console.log(LoginPageLink.node);
-    // getPosts();
+    getPosts();
   }, []);
 
   return (
