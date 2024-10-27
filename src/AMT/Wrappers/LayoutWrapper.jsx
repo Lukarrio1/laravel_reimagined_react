@@ -1,7 +1,6 @@
 import React, { useLayoutEffect, useState } from "react";
 import { layouts } from "../Abstract/PagesAndLayouts";
 import useLayouts from "../Custom Hooks/useLayouts";
-import useSettings from "../Custom Hooks/useSettings";
 import { useDispatch } from "react-redux";
 import { setCurrentPage } from "../Stores/coreNodes";
 /**
