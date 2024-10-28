@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import Navbar from "../Pages/Components/Navbar";
 import Footer from "../Pages/Components/Footer";
 import SystemErrorMessageBanner from "../AMT/Components/SystemErrorMessageBanner";
 
-export default function AuthLayout({ Component, page }) {
+const AuthLayout = memo(({ Component, page }) => {
   return (
     <div className="container-fluid">
       <Navbar></Navbar>
@@ -12,4 +12,6 @@ export default function AuthLayout({ Component, page }) {
       <Footer />
     </div>
   );
-}
+});
+
+export default AuthLayout;

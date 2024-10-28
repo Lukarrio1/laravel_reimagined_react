@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { restClient } from "../Abstract/restClient";
 import { setErrors } from "../Stores/errors";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { getWithTTL, setWithTTL } from "../Abstract/localStorage";
 import { getMemRoutes } from "../Stores/coreNodes";
 import { setLoadingProperties } from "../Stores/loading";
@@ -17,9 +17,9 @@ export default function useRest() {
   const { isLoading } = useIsLoading();
   const dispatch = useDispatch();
 
-  const handleIsLoading = (uuid, currentState) => {
+  const handleIsLoading = useCallback((uuid, currentState) => {
     dispatch(setLoadingProperties({ key: uuid, loading: currentState }));
-  };
+  }, []);
 
   const fetchData = async (
     uuid,

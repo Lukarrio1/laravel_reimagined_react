@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { memo, useLayoutEffect, useMemo } from "react";
 import useVerbiage from "../Custom Hooks/useVerbiage";
 import { useNavigate } from "react-router-dom";
 import useSettings from "../Custom Hooks/useSettings";
@@ -15,9 +15,9 @@ const {
     system_uuids: { redirect_wrapper_component_uuid },
   },
 } = Constants;
-export default function RedirectWrapper({ children, page }) {
-  const { getSetting } = useSettings();
 
+const RedirectWrapper = memo(({ children, page }) => {
+  const { getSetting } = useSettings();
   const auth_user = useAuthUser();
 
   const navigate = useNavigate();
@@ -38,23 +38,29 @@ export default function RedirectWrapper({ children, page }) {
 
   const { getVerbiage } = useVerbiage(redirect_wrapper_component_uuid);
 
-  return (
-    <>
-      {page?.hasAccess == false ? (
-        <div className="row">
-          <div className="col-sm-6 offset-sm-3 h4 mt-5 text-center">
-            <div className="alert alert-warning" role="alert">
-              {getVerbiage("on_redirect_message", {
-                url: auth_user
-                  ? getSetting("redirect_to_after_login", "key")
-                  : getSetting("redirect_to_after_logout", "key"),
-              })}
+  const Html = useMemo(
+    () => (
+      <>
+        {page?.hasAccess == false ? (
+          <div className="row">
+            <div className="col-sm-6 offset-sm-3 h4 mt-5 text-center">
+              <div className="alert alert-warning" role="alert">
+                {getVerbiage("on_redirect_message", {
+                  url: auth_user
+                    ? getSetting("redirect_to_after_login", "key")
+                    : getSetting("redirect_to_after_logout", "key"),
+                })}
+              </div>
             </div>
           </div>
-        </div>
-      ) : (
-        children
-      )}
-    </>
+        ) : (
+          children
+        )}
+      </>
+    ),
+    [page, auth_user]
   );
-}
+
+  return Html;
+});
+export default RedirectWrapper;

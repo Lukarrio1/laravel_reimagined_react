@@ -1,9 +1,6 @@
-import React from "react";
+import React, { memo } from "react";
 
-export default function ButtonSpinnerComponent({
-  text = "",
-  isLoading = false,
-}) {
+const ButtonSpinnerComponent = memo(({ text = "", isLoading = false }) => {
   return (
     <>
       {text}{" "}
@@ -16,4 +13,5 @@ export default function ButtonSpinnerComponent({
       )}
     </>
   );
-}
+});
+export default ButtonSpinnerComponent;

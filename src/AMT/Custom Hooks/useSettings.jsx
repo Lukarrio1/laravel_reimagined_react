@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { getMemSettings } from "../Stores/setting";
+import { useCallback } from "react";
 /**
  * @description useSettings hook returns getSettings,
   getSettings takes parameters key and return_value,
@@ -9,18 +10,23 @@ import { getMemSettings } from "../Stores/setting";
  */
 export default function useSettings() {
   const settings = useSelector((state) => getMemSettings(state));
-  return {
-    /**
-     *
-     * @param {string} key
-     * @param {string} return_value
-     * @returns mixed
-     */
-    getSetting: (key, return_value = "value") => {
+  /**
+   *
+   * @param {string} key
+   * @param {string} return_value
+   * @returns mixed
+   */
+  const getSetting = useCallback(
+    (key, return_value = "value") => {
       if (settings[key] == undefined) {
         return null;
       }
       return settings[key][return_value];
     },
+    [settings]
+  );
+
+  return {
+    getSetting,
   };
 }

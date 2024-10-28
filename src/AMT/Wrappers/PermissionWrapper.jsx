@@ -2,18 +2,19 @@ import { useSelector } from "react-redux";
 import NoPermission from "../../Pages/NoPermission";
 import { getMemLinksAndComponents } from "../Stores/coreNodes";
 import { Constants } from "../Abstract/Constants";
+import { memo, useMemo } from "react";
 /**
  *@description This is used to apply the defined permission to a component of page given the uuid
  */
 
 const { node_link_type_value } = Constants;
 
-const PermissionWrapper = ({ uuid, children, Alternative = null }) => {
+const PermissionWrapper = memo(({ uuid, children, Alternative = null }) => {
   const currentNode = useSelector((state) =>
     getMemLinksAndComponents(state)
   )?.find((cl) => cl.uuid == uuid);
 
-  const hasAccess = currentNode?.hasAccess ?? false;
+  const hasAccess = useMemo(() => currentNode?.hasAccess, [currentNode]);
 
   return hasAccess ? (
     children
@@ -31,6 +32,6 @@ const PermissionWrapper = ({ uuid, children, Alternative = null }) => {
   ) : (
     ""
   );
-};
+});
 
 export default PermissionWrapper;

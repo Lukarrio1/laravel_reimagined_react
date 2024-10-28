@@ -9,5 +9,5 @@ export default function useLayouts(layout_id = null) {
   const layout = useSelector((state) => getMemLayouts(state))?.find(
     (item) => item?.id == layout_id
   );
-  return layout;
+  return { ...layout };
 }

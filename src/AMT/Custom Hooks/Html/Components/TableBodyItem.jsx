@@ -1,10 +1,6 @@
 import React from "react";
 
-export default function TableBodyItem({
-  headings = [],
-  item = {},
-  actions = {},
-}) {
+const TableBodyItem = memo(({ headings = [], item = {}, actions = {} }) => {
   return (
     <tr>
       {headings &&
@@ -31,4 +27,6 @@ export default function TableBodyItem({
       )}
     </tr>
   );
-}
+});
+
+export default TableBodyItem;

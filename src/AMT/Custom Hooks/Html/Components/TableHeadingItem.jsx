@@ -1,5 +1,6 @@
 import React from "react";
 
-export default function TableHeadingItem({ heading }) {
+const TableHeadingItem = memo(({ heading }) => {
   return <th>{heading?.text}</th>;
-}
+});
+export default TableHeadingItem;

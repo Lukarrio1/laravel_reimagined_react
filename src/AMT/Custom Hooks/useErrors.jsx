@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, getMemErrors } from "../Stores/errors";
+import { useCallback } from "react";
 
 /**
  * @description This hook returns getError which could be used to retrieve an error given the error key
@@ -16,10 +17,13 @@ export default function useErrors() {
    * @description this function returns an array of errors given the error key
    * @returns array
    */
-  const getError = (key) => {
-    const currentError = errors?.find((e) => e.key == key);
-    return currentError != undefined ? currentError?.messages : [];
-  };
+  const getError = useCallback(
+    (key) => {
+      const currentError = errors?.find((e) => e.key == key);
+      return currentError != undefined ? currentError?.messages : [];
+    },
+    [errors]
+  );
 
   /**
    *
@@ -27,9 +31,9 @@ export default function useErrors() {
    * @description if key is empty it will clear all of the errors
    * if not it will clear all occurrences of key
    */
-  const clearError = (key = null) => {
+  const clearError = useCallback((key = null) => {
     dispatch(clearErrors(key));
-  };
+  }, []);
 
   return {
     getError,
