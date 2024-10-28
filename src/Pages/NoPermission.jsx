@@ -28,7 +28,7 @@ const {
   },
 } = Constants;
 
-export default function NoPermission({ className, Node }) {
+const NoPermission = ({ className, Node }) => {
   const { getSetting } = useSettings();
   const { getVerbiage } = useVerbiage(no_permission_component_uuid);
 
@@ -54,4 +54,5 @@ export default function NoPermission({ className, Node }) {
       </div>
     </div>
   );
-}
+};
+export default NoPermission;

@@ -19,6 +19,7 @@ const {
 
 export default function Navbar() {
   const { getSetting } = useSettings();
+
   const { getVerbiage: getLogoutVerbiage } = useVerbiage(logout_component_uuid);
   const dispatch = useDispatch();
 

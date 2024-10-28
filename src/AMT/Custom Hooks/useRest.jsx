@@ -1,26 +1,46 @@
 import { useDispatch, useSelector } from "react-redux";
 import { restClient } from "../Abstract/restClient";
 import { setErrors } from "../Stores/errors";
-import { useCallback, useState } from "react";
-import { getWithTTL, setWithTTL } from "../Abstract/localStorage";
+import { useCallback } from "react";
+
 import { getMemRoutes } from "../Stores/coreNodes";
 import { setLoadingProperties } from "../Stores/loading";
 import useIsLoading from "./useIsLoading";
-// the save word for a empty variable is "empty_search_value" instead of passing it with an empty value
+
+// The save word for an empty variable is "empty_search_value" instead of passing it with an empty value
+
 /**
- * @description This hook return the restClient which could be used to make async calls to the serve
- * and it automatically pushes the errors to error state for ease of use
- * @returns restClient()
+ * @description This hook returns the restClient which can be used to make async calls to the server
+ * and it automatically pushes errors to error state for ease of use.
+ * @returns {object} - An object containing the restClient function and loading state functions.
  */
 export default function useRest() {
-  const Routes = useSelector((state) => getMemRoutes(state));
-  const { isLoading } = useIsLoading();
-  const dispatch = useDispatch();
+  const Routes = useSelector((state) => getMemRoutes(state)); // Retrieve routes from Redux state
+  const { isLoading } = useIsLoading(); // Get loading states from the custom hook
+  const dispatch = useDispatch(); // Initialize the Redux dispatch function
 
-  const handleIsLoading = useCallback((uuid, currentState) => {
-    dispatch(setLoadingProperties({ key: uuid, loading: currentState }));
-  }, []);
+  /**
+   * @description Handles loading state for a specific UUID.
+   * @param {string} uuid - The unique identifier for the route.
+   * @param {boolean} currentState - The current loading state (true/false).
+   */
+  const handleIsLoading = useCallback(
+    (uuid, currentState) => {
+      dispatch(setLoadingProperties({ key: uuid, loading: currentState })); // Dispatch loading state
+    },
+    [dispatch]
+  ); // Dependency for memoization
 
+  /**
+   * @description Fetches data from the server using the rest client.
+   * @param {string} uuid - The unique identifier for the route.
+   * @param {object} route_params - Parameters to be included in the route.
+   * @param {object} data_to_send - Data to be sent in the request body.
+   * @param {object} route - The route object retrieved from Redux state.
+   * @param {boolean} use_cache - Flag to indicate if caching should be used.
+   * @param {object} query_params - Query parameters to be appended to the URL.
+   * @returns {Promise<object>} - The data retrieved from the server.
+   */
   const fetchData = async (
     uuid,
     route_params,
@@ -36,10 +56,20 @@ export default function useRest() {
       route,
       use_cache,
       query_params
-    );
-    return data;
+    ); // Call the rest client to fetch data
+    return data; // Return the fetched data
   };
 
+  /**
+   * @description Handles caching of fetched data based on TTL.
+   * @param {string} uuid - The unique identifier for the route.
+   * @param {object} route_params - Parameters to be included in the route.
+   * @param {object} data_to_send - Data to be sent in the request body.
+   * @param {object} route - The route object retrieved from Redux state.
+   * @param {boolean} use_cache - Flag to indicate if caching should be used.
+   * @param {object} query_params - Query parameters to be appended to the URL.
+   * @returns {Promise<object>} - The data retrieved from the server.
+   */
   const handleCaching = async (
     uuid,
     route_params,
@@ -48,18 +78,13 @@ export default function useRest() {
     use_cache = false,
     query_params
   ) => {
+    // Uncomment and implement caching logic as needed
     // const node_cache_ttl = route?.properties?.value?.node_cache_ttl;
     // const cache_name = `${uuid}_${node_cache_ttl}`;
     // const cached_data = getWithTTL(cache_name);
     // if (node_cache_ttl > 0) {
     //   if (!cached_data) {
-    //     const data = await fetchData(
-    //       uuid,
-    //       route_params,
-    //       data_to_send,
-    //       route,
-    //       use_cache
-    //     );
+    //     const data = await fetchData(uuid, route_params, data_to_send, route, use_cache);
     //     setWithTTL(cache_name, data, node_cache_ttl);
     //     return data;
     //   } else {
@@ -73,22 +98,18 @@ export default function useRest() {
       route,
       use_cache,
       query_params
-    );
+    ); // Return the fetched data
   };
 
   return {
     /**
-     *
-     * @param {string} uuid
-     * @param {object} route_params
-     * @param {object} data_to_send
-     * @param {boolean} use_cache
-     * @description This function is used to make rest calls to the serve given
-     * the uuid which is used to identify the route that is being requested
-     * the route_params which is add to the url as a query string
-     * the data_to_send which is sent to the server
-     * the use_cache which is used to tell the rest client to cache the return data
-     * @returns data
+     * @description Makes REST calls to the server given the parameters and handles loading state and errors.
+     * @param {string} uuid - The unique identifier for the route being requested.
+     * @param {object} route_params - Parameters to be added to the URL as a query string.
+     * @param {object} data_to_send - Data to be sent to the server.
+     * @param {boolean} use_cache - Flag to indicate if the returned data should be cached.
+     * @param {object} query_params - Query parameters to be appended to the URL.
+     * @returns {Promise<object|null>} - The data retrieved from the server or null in case of an error.
      */
     restClient: async (
       uuid,
@@ -97,9 +118,9 @@ export default function useRest() {
       use_cache = false,
       query_params = {}
     ) => {
-      const route = Routes?.find((r) => r?.uuid == uuid);
-      if (!route) return null;
-      handleIsLoading(uuid, true);
+      const route = Routes?.find((r) => r?.uuid === uuid); // Find the route by UUID
+      if (!route) return null; // Return null if route is not found
+      handleIsLoading(uuid, true); // Set loading state to true
       try {
         const data = await handleCaching(
           uuid,
@@ -108,23 +129,22 @@ export default function useRest() {
           route,
           use_cache,
           query_params
-        );
-        handleIsLoading(uuid, false);
-        return data;
+        ); // Fetch data with caching
+        handleIsLoading(uuid, false); // Set loading state to false
+        return data; // Return the fetched data
       } catch (error) {
-        if (error != null) dispatch(setErrors(error));
-        handleIsLoading(uuid, false);
-        return null;
+        if (error != null) dispatch(setErrors(error)); // Dispatch error if present
+        handleIsLoading(uuid, false); // Set loading state to false
+        return null; // Return null in case of error
       }
     },
     /**
-     *
-     * @param {string} uuid
-     * @description gets the loading state of a xhr request given the uuid of the route
-     * @returns boolean
+     * @description Gets the loading state of a request given the UUID of the route.
+     * @param {string} uuid - The unique identifier for the route.
+     * @returns {boolean} - The loading state (true/false).
      */
     getIsLoading: (uuid) => {
-      return isLoading(uuid) ?? false;
+      return isLoading(uuid) ?? false; // Return the loading state
     },
   };
 }

@@ -3,30 +3,44 @@ import { layouts } from "../Abstract/PagesAndLayouts";
 import useLayouts from "../Custom Hooks/useLayouts";
 import { useDispatch } from "react-redux";
 import { setCurrentPage } from "../Stores/coreNodes";
+
 /**
+ * A wrapper component that applies a dynamic layout to a given page component.
  *
- *@description This is the general layout component that is used  to apply a pages layout dynamically .
+ * @component
+ * @param {Object} props - The props for the LayoutWrapper component.
+ * @param {React.ComponentType} props.Component - The component to be wrapped by the layout.
+ * @param {Object} props.page - The page object containing layout information.
+ * @param {string} props.page.layout_id - The unique identifier for the page's layout.
+ *
+ * @returns {JSX.Element} The layout-wrapped component or the original component if no layout is applied.
  */
 const LayoutWrapper = memo(({ Component, page }) => {
   const layout = useLayouts(page?.layout_id);
-
   const [ActualLayoutComponent, setActualLayoutComponent] = useState(null);
-
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
-    if (!page) return;
+    if (!page) return; // Exit if no page is provided
+
+    // Retrieve the actual layout component from the layouts collection based on layout properties
     const ActualLayout = layouts[layout?.properties?.value?.actual_component];
+
+    // If an actual layout is found, set it in state; otherwise, set null
     setActualLayoutComponent(
       ActualLayout != null ? (
-        <ActualLayout Component={Component} page={page}></ActualLayout>
+        <ActualLayout Component={Component} page={page} />
       ) : null
     );
+
+    // Dispatch the current page to Redux to update the application state
     dispatch(setCurrentPage(page));
   }, [page]);
 
+  // Render either the layout-wrapped component or the base Component if no layout is applied
   return page && ActualLayoutComponent != null
-    ? ActualLayoutComponent
-    : Component;
+    ? ActualLayoutComponent // Return the wrapped layout component if it exists
+    : Component; // Return the original component if no layout is applied
 });
+
 export default LayoutWrapper;

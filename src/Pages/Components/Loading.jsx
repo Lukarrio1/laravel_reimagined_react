@@ -1,5 +1,6 @@
 import React from "react";
-export default function Loading({ textElement = null }) {
+
+export default function Loading() {
   return (
     <div
       style={{

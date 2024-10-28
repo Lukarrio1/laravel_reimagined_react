@@ -11,6 +11,7 @@ const {
     auth_uuids: { register_page_uuid, login_page_link_uuid },
   },
 } = Constants;
+
 const Register = () => {
   const { getVerbiage } = useVerbiage(register_page_uuid);
   const { register, registering } = useAuthDataLayer();

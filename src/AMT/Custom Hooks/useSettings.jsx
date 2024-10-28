@@ -1,29 +1,31 @@
 import { useSelector } from "react-redux";
 import { getMemSettings } from "../Stores/setting";
 import { useCallback } from "react";
+
 /**
- * @description useSettings hook returns getSettings,
-  getSettings takes parameters key and return_value,
-  return_value can either "value" or "key"
-   which are of the requested setting object
-   * @returns getSettings()
+ * @description The useSettings hook returns a function to retrieve settings.
+ * The getSetting function takes a key and an optional return_value,
+ * which can be either "value" or "key" to access the requested setting object.
+ * @returns {object} An object containing the getSetting function.
  */
 export default function useSettings() {
   const settings = useSelector((state) => getMemSettings(state));
+
   /**
-   *
-   * @param {string} key
-   * @param {string} return_value
-   * @returns mixed
+   * @description Retrieves a specific setting based on the provided key.
+   * @param {string} key - The key of the setting to retrieve.
+   * @param {string} [return_value="value"] - The specific property to return,
+   * can be either "value" or "key".
+   * @returns {mixed|null} The value of the requested setting property, or null if the key does not exist.
    */
   const getSetting = useCallback(
     (key, return_value = "value") => {
-      if (settings[key] == undefined) {
-        return null;
+      if (settings[key] === undefined) {
+        return null; // Return null if the key does not exist
       }
-      return settings[key][return_value];
+      return settings[key][return_value]; // Return the requested property of the setting
     },
-    [settings]
+    [settings] // Dependency array to ensure the function updates if settings change
   );
 
   return {

@@ -22,6 +22,7 @@ const styles = {
     height: "80vh",
   },
 };
+
 const Home = () => {
   const user = useAuthUser();
   const { getVerbiage } = useVerbiage(home_page_uuid);
