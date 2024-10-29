@@ -46,6 +46,8 @@ export const Constants = {
         "QGXWjhKGG4odx9O6zOcy7MSKyjYO3KW9nw9orosCQD6vEEHMnk",
       guest_nodes_enpoint_uuid:
         "ITD2Dj5t8NFdl8FCjsQxldnMPwdSnq1iuAYh7qpmjMbSZktUUF",
+      logout_endpoint_uuid:
+        "PdpUUpC5YkxEsrVcbUcaVp2VgaJznxkMjR3DpSV1hBMrmqZU5n",
     },
     user_uuids: {
       profile_endpoint_uuid:

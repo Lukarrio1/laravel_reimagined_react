@@ -6,6 +6,7 @@ import { logout } from "../../AMT/Stores/auth";
 import useVerbiage from "../../AMT/Custom Hooks/useVerbiage";
 import useSettings from "../../AMT/Custom Hooks/useSettings";
 import { Constants } from "../../AMT/Abstract/Constants";
+import useAuthDataLayer from "../../AMT/Data-layer/useAuthDataLayer";
 const {
   uuids: {
     auth_uuids: {
@@ -18,6 +19,7 @@ const {
 } = Constants;
 
 export default function Navbar() {
+  const { logoutUser } = useAuthDataLayer();
   const { getSetting } = useSettings();
 
   const { getVerbiage: getLogoutVerbiage } = useVerbiage(logout_component_uuid);
@@ -81,13 +83,7 @@ export default function Navbar() {
           </li>
           <li className="nav-item">
             <PermissionWrapper uuid={logout_component_uuid}>
-              <a
-                href={getSetting("redirect_to_after_logout")}
-                onClick={() => {
-                  dispatch(logout());
-                }}
-                className="nav-link"
-              >
+              <a href={"#"} onClick={() => logoutUser()} className="nav-link">
                 {getLogoutVerbiage("logout_button", {}, true)}
               </a>
             </PermissionWrapper>
