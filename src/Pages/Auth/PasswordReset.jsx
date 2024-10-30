@@ -4,16 +4,28 @@ import ButtonSpinnerComponent from "../../AMT/Components/ButtonSpinnerComponent"
 import useInput from "../../AMT/Custom Hooks/Html/useInput";
 import { Constants } from "../../AMT/Abstract/Constants";
 import useVerbiage from "../../AMT/Custom Hooks/useVerbiage";
+import useAuthDataLayer from "../../AMT/Data-layer/useAuthDataLayer";
+import Link from "../../AMT/Components/Link";
 const {
   uuids: {
-    auth_uuids: { password_reset_page_uuid },
+    auth_uuids: { password_reset_page_uuid, login_page_link_uuid },
   },
 } = Constants;
 export default function PasswordReset() {
-  const { setProperties: passwordInput, Html: passwordHtml } = useInput();
-  const { setProperties: confirmPasswordInput, Html: confirmPasswordHtml } =
-    useInput();
-  const { getVerbiage } = useVerbiage();
+  const {
+    setProperties: passwordInput,
+    Html: passwordHtml,
+    value: passwordValue,
+  } = useInput();
+  const {
+    setProperties: confirmPasswordInput,
+    Html: confirmPasswordHtml,
+    value: confirmPasswordValue,
+  } = useInput();
+  const { updateUserPassword, updatingUserPassword } = useAuthDataLayer();
+
+  const { getVerbiage } = useVerbiage(password_reset_page_uuid);
+
   useLayoutEffect(() => {
     passwordInput({
       name: "password",
@@ -50,13 +62,17 @@ export default function PasswordReset() {
         <div className="col-sm-8 offset-sm-2">
           <div className="card">
             <div className="card-header text-center bg-white">
-              Password Reset
+              {getVerbiage("password_form_title")}
             </div>
             <div className="card-body">
               <div className="form">
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
+                    updateUserPassword({
+                      password: passwordValue,
+                      confirm_password: confirmPasswordValue,
+                    });
                   }}
                 >
                   <div className="mb-3">{passwordHtml}</div>
@@ -65,8 +81,8 @@ export default function PasswordReset() {
                     <div className="text-center">
                       <button className="btn btn-sm btn-primary" type="submit">
                         <ButtonSpinnerComponent
-                          text={"update password"}
-                          isLoading={false}
+                          text={getVerbiage("password_reset_form_btn")}
+                          isLoading={updatingUserPassword()}
                         ></ButtonSpinnerComponent>
                       </button>
                     </div>
@@ -74,7 +90,20 @@ export default function PasswordReset() {
                 </form>
               </div>
             </div>
-            <div className="card-footer">this is the footer</div>
+            <div className="card-footer h5 bg-white">
+              or{" "}
+              <Link
+                uuid={login_page_link_uuid}
+                enable_verbiage={{
+                  enable: true,
+                  flat_value: true,
+                  verbiage_key: "login_nav_text",
+                  verbiage_properties: {},
+                  addPrefixOrSuffix: [],
+                }}
+                className="btn btn-sm btn-default"
+              ></Link>
+            </div>
           </div>
         </div>
       </div>

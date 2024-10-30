@@ -3,9 +3,8 @@ import { clearErrors } from "../Stores/errors";
 import useRest from "../Custom Hooks/useRest";
 import useSettings from "../Custom Hooks/useSettings";
 import { Constants } from "../Abstract/Constants";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useNavigator from "../Custom Hooks/useNavigator";
-import { clear } from "@testing-library/user-event/dist/clear";
 import { useDispatch } from "react-redux";
 import { logout } from "../Stores/auth";
 import useSystemMessage from "../Custom Hooks/useSystemMessage";
@@ -24,7 +23,6 @@ export default function useAuthDataLayer() {
   const { getSetting } = useSettings();
   const { setNavProperties } = useNavigator(home_page_link_uuid);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { token } = useParams();
 
   const login = async (obj) => {
@@ -84,12 +82,31 @@ export default function useAuthDataLayer() {
     setMessage(data?.message);
   };
 
+  const updateUserPassword = async (obj) => {
+    const response = await restClient(
+      auth_uuids?.password_reset_endpoint_uuid,
+      { param: token },
+      obj
+    );
+    if (response == null) return;
+    const { data } = response;
+    setMessage(data?.message);
+    setTimeout(
+      () =>
+        (window.location.href = getSetting("redirect_to_after_password_reset")),
+      3000
+    );
+  };
+
   return {
     logoutUser,
     login,
     register,
     verifyEmail,
     sendPasswordResetEmail,
+    updateUserPassword,
+    updatingUserPassword: () =>
+      getIsLoading(auth_uuids?.password_reset_endpoint_uuid),
     sendingPasswordResetEmail: () =>
       getIsLoading(auth_uuids?.password_reset_email_endpoint_uuid),
     registering: () => getIsLoading(auth_uuids?.register_endpoint_uuid),

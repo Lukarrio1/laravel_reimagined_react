@@ -5,11 +5,11 @@ import { Constants } from "../../AMT/Abstract/Constants";
 import useAuthDataLayer from "../../AMT/Data-layer/useAuthDataLayer";
 import useVerbiage from "../../AMT/Custom Hooks/useVerbiage";
 import ButtonSpinnerComponent from "../../AMT/Components/ButtonSpinnerComponent";
-import useSystemMessage from "../../AMT/Custom Hooks/useSystemMessage";
+import Link from "../../AMT/Components/Link";
 
 const {
   uuids: {
-    auth_uuids: { password_reset_email_page_uuid },
+    auth_uuids: { password_reset_email_page_uuid, login_page_link_uuid },
   },
 } = Constants;
 
@@ -68,7 +68,20 @@ export default function PasswordResetEmail() {
                 </form>
               </div>
             </div>
-            <div className="card-footer">this is the footer</div>
+            <div className="card-footer h5 bg-white">
+              or{" "}
+              <Link
+                uuid={login_page_link_uuid}
+                enable_verbiage={{
+                  enable: true,
+                  flat_value: true,
+                  verbiage_key: "login_nav_text",
+                  verbiage_properties: {},
+                  addPrefixOrSuffix: [],
+                }}
+                className="btn btn-sm btn-default"
+              ></Link>
+            </div>
           </div>
         </div>
       </div>

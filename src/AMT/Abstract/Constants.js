@@ -31,6 +31,8 @@ export const Constants = {
     },
 
     auth_uuids: {
+      password_reset_endpoint_uuid:
+        "urIwPtJGoZbqSKM6uY0ZNAIoKBZpfcOHfJrEPtq3f8knoUVDFJ",
       password_reset_page_uuid:
         "dreXm3owrtyDl776iHVLTzhA2hRDHqFVjfHA3vthlJYkGUOmbp",
       password_reset_email_endpoint_uuid:
