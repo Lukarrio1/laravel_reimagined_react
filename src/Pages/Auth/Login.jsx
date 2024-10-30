@@ -10,7 +10,11 @@ import ButtonSpinnerComponent from "../../AMT/Components/ButtonSpinnerComponent"
 
 const {
   uuids: {
-    auth_uuids: { login_page_uuid, register_page_link_uuid },
+    auth_uuids: {
+      login_page_uuid,
+      register_page_link_uuid,
+      password_reset_email_link_uuid,
+    },
   },
 } = Constants;
 
@@ -111,6 +115,17 @@ const Login = () => {
                   enable: true,
                   flat_value: true,
                   verbiage_key: "register_nav_text",
+                  verbiage_properties: {},
+                  addPrefixOrSuffix: [],
+                }}
+              ></Link>{" "}
+              <Link
+                uuid={password_reset_email_link_uuid}
+                className="btn btn-sm btn-default"
+                enable_verbiage={{
+                  enable: true,
+                  flat_value: true,
+                  verbiage_key: "password_reset_nav_text",
                   verbiage_properties: {},
                   addPrefixOrSuffix: [],
                 }}

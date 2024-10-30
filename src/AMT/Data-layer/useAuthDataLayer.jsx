@@ -8,6 +8,7 @@ import useNavigator from "../Custom Hooks/useNavigator";
 import { clear } from "@testing-library/user-event/dist/clear";
 import { useDispatch } from "react-redux";
 import { logout } from "../Stores/auth";
+import useSystemMessage from "../Custom Hooks/useSystemMessage";
 
 const {
   uuids: {
@@ -19,6 +20,7 @@ const {
 
 export default function useAuthDataLayer() {
   const { restClient, getIsLoading } = useRest();
+  const { setMessage } = useSystemMessage();
   const { getSetting } = useSettings();
   const { setNavProperties } = useNavigator(home_page_link_uuid);
   const dispatch = useDispatch();
@@ -71,11 +73,25 @@ export default function useAuthDataLayer() {
     }).node?.node_route;
   };
 
+  const sendPasswordResetEmail = async (obj) => {
+    const response = await restClient(
+      auth_uuids?.password_reset_email_endpoint_uuid,
+      {},
+      obj
+    );
+    if (response == null) return;
+    const { data } = response;
+    setMessage(data?.message);
+  };
+
   return {
     logoutUser,
     login,
     register,
     verifyEmail,
+    sendPasswordResetEmail,
+    sendingPasswordResetEmail: () =>
+      getIsLoading(auth_uuids?.password_reset_email_endpoint_uuid),
     registering: () => getIsLoading(auth_uuids?.register_endpoint_uuid),
     loggingout: () => getIsLoading(auth_uuids?.logout_endpoint_uuid),
     signing: () => getIsLoading(auth_uuids.login_endpoint_uuid),

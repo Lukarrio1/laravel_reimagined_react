@@ -31,6 +31,14 @@ export const Constants = {
     },
 
     auth_uuids: {
+      password_reset_page_uuid:
+        "dreXm3owrtyDl776iHVLTzhA2hRDHqFVjfHA3vthlJYkGUOmbp",
+      password_reset_email_endpoint_uuid:
+        "fzKzdQSmwnCZMU4KSVhtcL7qohUeIDrPYJEwQEZqeVyNshBrZw",
+      password_reset_email_page_uuid:
+        "KpEOyarDh9roGTfcmINUuHC2uGKLD3SRcPZyyuVZVBXyEav2Bo",
+      password_reset_email_link_uuid:
+        "dfx6ZNgouusNjDswNYgc79dZ1XcOfkcEpi5M4CLNb2PjJh8bu4",
       logout_component_uuid:
         "YiNfpDugNwyu1yTlOsGGvPAj2YZpoitcuEgEGphxrQxcK1HT0t",
       register_page_uuid: "0mTYGdLvyQAKwHxiYKyugFNfNOjtPtDAVTexeHWemObldfr5RP",

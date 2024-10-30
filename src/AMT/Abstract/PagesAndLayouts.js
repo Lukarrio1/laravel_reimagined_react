@@ -10,6 +10,8 @@ const pages = {
   NoPermission: lazy(() => import("../../Pages/NoPermission")),
   RegisterPage: lazy(() => import("../../Pages/Auth/Register")),
   EmailVerification: lazy(() => import("../../Pages/EmailVerification")),
+  PasswordResetEmail: lazy(() => import("../../Pages/Auth/PasswordResetEmail")),
+  PasswordReset: lazy(() => import("../../Pages/Auth/PasswordReset")),
 };
 
 const layouts = {

@@ -4,6 +4,7 @@ import AuthenticationReducer from "./auth";
 import ErrorsReducer from "./errors";
 import ResponseReducer from "./response";
 import LoadingReducer from "./loading";
+import MessageReducer from "./message";
 
 export default {
   coreNodes: coreNodesReducer,
@@ -12,4 +13,5 @@ export default {
   errors: ErrorsReducer,
   response: ResponseReducer,
   loading: LoadingReducer,
+  message: MessageReducer,
 };
