@@ -3,6 +3,7 @@ import { layouts } from "../Abstract/PagesAndLayouts";
 import useLayouts from "../Custom Hooks/useLayouts";
 import { useDispatch } from "react-redux";
 import { setCurrentPage } from "../Stores/coreNodes";
+import useCurrentPage from "../Custom Hooks/useCurrentPage";
 
 /**
  * A wrapper component that applies a dynamic layout to a given page component.
@@ -18,8 +19,7 @@ import { setCurrentPage } from "../Stores/coreNodes";
 const LayoutWrapper = memo(({ Component, page }) => {
   const layout = useLayouts(page?.layout_id);
   const [ActualLayoutComponent, setActualLayoutComponent] = useState(null);
-  const dispatch = useDispatch();
-
+  const currentPage = useCurrentPage();
   useLayoutEffect(() => {
     if (!page) return; // Exit if no page is provided
 
@@ -34,7 +34,7 @@ const LayoutWrapper = memo(({ Component, page }) => {
     );
 
     // Dispatch the current page to Redux to update the application state
-    dispatch(setCurrentPage(page));
+    currentPage.setCurrentPage(page);
   }, [page]);
 
   // Render either the layout-wrapped component or the base Component if no layout is applied

@@ -1,17 +1,17 @@
 import React, { memo } from "react";
 
-const ButtonSpinnerComponent = memo(({ text = "", isLoading = false }) => {
+const SpinnerComponent = ({ text = "", isLoading = false }) => {
   return (
     <>
-      {text}{" "}
-      {isLoading && (
+      {text ? <span>{text}</span> : null}
+      {isLoading ? (
         <span
           className="spinner-border spinner-border-sm"
           role="status"
           aria-hidden="true"
         ></span>
-      )}
+      ) : null}
     </>
   );
-});
-export default ButtonSpinnerComponent;
+};
+export default SpinnerComponent;

@@ -11,79 +11,90 @@ import RedirectWrapper from "../Wrappers/RedirectWrapper";
 import { getWithTTL, setWithTTL } from "./localStorage";
 import { Constants } from "./Constants";
 import { setSettings } from "../Stores/setting";
+import NotFound from "../../Pages/NotFound";
 
 const {
   uuids: {
     user_uuids: { profile_endpoint_uuid },
     system_uuids: { monitor_endpoint_uuid, settings_endpoint_uuid },
-    auth_uuids: { auth_nodes_endpoint_uuid, guest_nodes_enpoint_uuid },
+    auth_uuids: { auth_nodes_endpoint_uuid, guest_nodes_endpoint_uuid },
   },
 } = Constants;
 
 const generateRoutes = (pages_properties) => {
-  if (pages_properties.length === 0) {
+  if (!pages_properties || pages_properties.length === 0) {
     return null;
   }
-  return [
-    ...Object.keys(pages).map((page) => {
-      let page_props =
-        pages_properties.find((p) => p.component && p.component === page) ?? {};
-      const path = page_props?.path ? page_props.path : "/";
-      const Component = pages[page_props.component ?? "NoFound"];
-      return (
-        <Route
-          key={path}
-          path={path}
-          element={
-            <RedirectWrapper page={{ ...page_props }}>
-              <LayoutWrapper
-                page={{ ...page_props }}
-                Component={
-                  <Suspense fallback={<Loading></Loading>}>
-                    <Component></Component>
-                  </Suspense>
-                }
-              ></LayoutWrapper>
-            </RedirectWrapper>
-          }
-        />
-      );
-    }),
-    // <Route component={NotFound} />,
-  ];
+  const routes = pages_properties.map((page_props) => {
+    const path = page_props.path || "/";
+    const Component = pages[page_props.component] || NotFound;
+    return (
+      <Route
+        key={path}
+        path={path}
+        element={
+          <RedirectWrapper page={page_props}>
+            <LayoutWrapper
+              page={page_props}
+              Component={
+                <Suspense fallback={<Loading />}>
+                  <Component />
+                </Suspense>
+              }
+            />
+          </RedirectWrapper>
+        }
+      />
+    );
+  });
+  routes.push(<Route path="*" element={<NotFound />} key="not-found" />);
+  return routes;
 };
 
-const assembleApp = async (dispatch) => {
-  let settingsData = getWithTTL(settings_endpoint_uuid);
-  if (!settingsData) {
-    const {
-      data: { settings },
-    } = await restClient(settings_endpoint_uuid);
-    settingsData = settings;
-    setWithTTL(
-      Constants.app_cache_ttl,
-      settingsData?.find((s) => s.key == "cache_ttl")?.properties?.value
-    );
-    setWithTTL(
-      settings_endpoint_uuid,
-      settings,
-      getWithTTL(Constants.app_cache_ttl)
-    );
-    dispatch(setSettings(settings));
-  } else {
-    dispatch(setSettings(settingsData));
-  }
-  // gets the user profile data
+const assembleApp = async (
+  dispatch,
+  isAuthValid = false,
+  callback = () => null
+) => {
+  callback();
+  if ((await getUserProfile(dispatch)) == true) {
+    setUpNodes(auth_nodes_endpoint_uuid, dispatch);
+  } else setUpNodes(guest_nodes_endpoint_uuid, dispatch);
+  return true;
+};
+
+const getUserProfile = async (dispatch) => {
   try {
     const {
       data: { user },
     } = await restClient(profile_endpoint_uuid);
-    setUpNodes(auth_nodes_endpoint_uuid, dispatch);
     dispatch(setAuthProperties(user));
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const getAppSettings = async (dispatch) => {
+  let settingsData = getWithTTL(settings_endpoint_uuid);
+  if (settingsData != null) {
+    dispatch(setSettings(settingsData));
     return;
-  } catch (error) {}
-  setUpNodes(guest_nodes_enpoint_uuid, dispatch);
-  return true;
+  }
+  const {
+    data: { settings },
+  } = await restClient(settings_endpoint_uuid);
+  settingsData = settings;
+  setWithTTL(
+    Constants.app_cache_ttl,
+    settingsData?.find((s) => s.key == "cache_ttl")?.properties?.value
+  );
+  setWithTTL(
+    settings_endpoint_uuid,
+    settings,
+    getWithTTL(Constants.app_cache_ttl)
+  );
+  dispatch(setSettings(settings));
 };
 
 export const setUpNodes = async (uuid, dispatch) => {
@@ -95,16 +106,18 @@ export const setUpNodes = async (uuid, dispatch) => {
   } else {
     dispatch(setNodes(nodesCachedData));
   }
+  getAppSettings(dispatch);
 };
 
 export const monitorCache = async () => {
   let current_cache_token = getWithTTL(settings_endpoint_uuid);
-  if (current_cache_token != null) {
+  if (current_cache_token != null || current_cache_token != undefined) {
     current_cache_token = current_cache_token?.find(
       (s) => s.key == "is_cache_valid"
     )?.properties?.value;
-  }
+  } else return;
   const { data } = await restClient(monitor_endpoint_uuid);
+  if (!data?.is_cache_valid) return;
   if (data?.is_cache_valid !== current_cache_token) {
     if (current_cache_token) localStorage.clear();
   }

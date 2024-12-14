@@ -1,4 +1,4 @@
-import React, { memo, useLayoutEffect, useMemo } from "react";
+import React, { memo, useEffect, useLayoutEffect, useMemo } from "react";
 import useVerbiage from "../Custom Hooks/useVerbiage"; // Custom hook for retrieving verbiage
 import { useNavigate } from "react-router-dom"; // Hook to programmatically navigate between routes
 import useSettings from "../Custom Hooks/useSettings"; // Custom hook for application settings
@@ -28,13 +28,12 @@ const RedirectWrapper = memo(({ children, page }) => {
 
   const navigate = useNavigate();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const timeout = setTimeout(() => {
       // Set a timeout to manage the redirection logic
       if (auth_user && page?.hasAccess === false) {
         // If the user is authenticated but lacks access
         navigate(getSetting("redirect_to_after_login")); // Redirect to the specified post-login page
-        console.log("at the first if", page);
         return;
       }
       if (!auth_user && page?.hasAccess === false) {

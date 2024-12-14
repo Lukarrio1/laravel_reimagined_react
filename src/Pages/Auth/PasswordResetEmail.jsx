@@ -4,8 +4,8 @@ import useInput from "../../AMT/Custom Hooks/Html/useInput";
 import { Constants } from "../../AMT/Abstract/Constants";
 import useAuthDataLayer from "../../AMT/Data-layer/useAuthDataLayer";
 import useVerbiage from "../../AMT/Custom Hooks/useVerbiage";
-import ButtonSpinnerComponent from "../../AMT/Components/ButtonSpinnerComponent";
 import Link from "../../AMT/Components/Link";
+import SpinnerComponent from "../../AMT/Components/SpinnerComponent";
 
 const {
   uuids: {
@@ -58,10 +58,10 @@ export default function PasswordResetEmail() {
                   <div className="mb-3">
                     <div className="text-center">
                       <button className="btn btn-sm btn-primary" type="submit">
-                        <ButtonSpinnerComponent
+                        <SpinnerComponent
                           text={getVerbiage("password_email_send_btn")}
                           isLoading={sendingPasswordResetEmail()}
-                        ></ButtonSpinnerComponent>
+                        ></SpinnerComponent>
                       </button>
                     </div>
                   </div>

@@ -6,7 +6,7 @@ import useErrors from "../../AMT/Custom Hooks/useErrors";
 import useInput from "../../AMT/Custom Hooks/Html/useInput";
 import useAuthDataLayer from "../../AMT/Data-layer/useAuthDataLayer";
 import { Constants } from "../../AMT/Abstract/Constants";
-import ButtonSpinnerComponent from "../../AMT/Components/ButtonSpinnerComponent";
+import SpinnerComponent from "../../AMT/Components/SpinnerComponent";
 
 const {
   uuids: {
@@ -98,10 +98,10 @@ const Login = () => {
                     className="btn btn-primary"
                     disabled={signing()}
                   >
-                    <ButtonSpinnerComponent
+                    <SpinnerComponent
                       text={getVerbiage("login_button")}
                       isLoading={signing()}
-                    ></ButtonSpinnerComponent>
+                    ></SpinnerComponent>
                   </button>
                 </div>
               </form>

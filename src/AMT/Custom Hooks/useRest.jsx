@@ -6,8 +6,7 @@ import { useCallback } from "react";
 import { getMemRoutes } from "../Stores/coreNodes";
 import { setLoadingProperties } from "../Stores/loading";
 import useIsLoading from "./useIsLoading";
-
-// The save word for an empty variable is "empty_search_value" instead of passing it with an empty value
+import useSystemMessage from "./useSystemMessage";
 
 /**
  * @description This hook returns the restClient which can be used to make async calls to the server
@@ -15,8 +14,9 @@ import useIsLoading from "./useIsLoading";
  * @returns {object} - An object containing the restClient function and loading state functions.
  */
 export default function useRest() {
+  const { setMessage } = useSystemMessage();
   const Routes = useSelector((state) => getMemRoutes(state)); // Retrieve routes from Redux state
-  const { isLoading } = useIsLoading(); // Get loading states from the custom hook
+  const { isLoading, isLoadingV2 } = useIsLoading(); // Get loading states from the custom hook
   const dispatch = useDispatch(); // Initialize the Redux dispatch function
 
   /**
@@ -25,8 +25,10 @@ export default function useRest() {
    * @param {boolean} currentState - The current loading state (true/false).
    */
   const handleIsLoading = useCallback(
-    (uuid, currentState) => {
-      dispatch(setLoadingProperties({ key: uuid, loading: currentState })); // Dispatch loading state
+    (uuid, currentState, loading_ref) => {
+      dispatch(
+        setLoadingProperties({ key: uuid, loading: currentState, loading_ref })
+      ); // Dispatch loading state
     },
     [dispatch]
   ); // Dependency for memoization
@@ -102,25 +104,23 @@ export default function useRest() {
   };
 
   return {
-    /**
-     * @description Makes REST calls to the server given the parameters and handles loading state and errors.
-     * @param {string} uuid - The unique identifier for the route being requested.
-     * @param {object} route_params - Parameters to be added to the URL as a query string.
-     * @param {object} data_to_send - Data to be sent to the server.
-     * @param {boolean} use_cache - Flag to indicate if the returned data should be cached.
-     * @param {object} query_params - Query parameters to be appended to the URL.
-     * @returns {Promise<object|null>} - The data retrieved from the server or null in case of an error.
-     */
     restClient: async (
       uuid,
-      route_params,
-      data_to_send,
+      route_params = {},
+      data_to_send = {},
       use_cache = false,
-      query_params = {}
+      query_params = {},
+      loading_state_ref = 0
     ) => {
       const route = Routes?.find((r) => r?.uuid === uuid); // Find the route by UUID
-      if (!route) return null; // Return null if route is not found
-      handleIsLoading(uuid, true); // Set loading state to true
+      if (!route) {
+        // setMessage({
+        //   message: "Something went wrong try again later ...",
+        //   className: "text-center h3 text-danger",
+        // });
+        return null;
+      } // Return null if route is not found
+      handleIsLoading(uuid, true, loading_state_ref); // Set loading state to true
       try {
         const data = await handleCaching(
           uuid,
@@ -130,11 +130,13 @@ export default function useRest() {
           use_cache,
           query_params
         ); // Fetch data with caching
-        handleIsLoading(uuid, false); // Set loading state to false
+        handleIsLoading(uuid, false, loading_state_ref); // Set loading state to false
         return data; // Return the fetched data
       } catch (error) {
-        if (error != null) dispatch(setErrors(error)); // Dispatch error if present
-        handleIsLoading(uuid, false); // Set loading state to false
+        if (error != null) {
+          dispatch(setErrors(error));
+        } // Dispatch error if present
+        handleIsLoading(uuid, false, loading_state_ref); // Set loading state to false
         return null; // Return null in case of error
       }
     },
@@ -145,6 +147,13 @@ export default function useRest() {
      */
     getIsLoading: (uuid) => {
       return isLoading(uuid) ?? false; // Return the loading state
+    },
+    getIsLoadingV2: (uuid) => {
+      const isLoading = isLoadingV2(uuid);
+      return {
+        isLoading: isLoading?.isLoading ?? false,
+        loading_ref: isLoading?.loading_ref ?? null,
+      };
     },
   };
 }

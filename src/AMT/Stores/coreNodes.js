@@ -9,7 +9,7 @@ const coreNodes = createSlice({
     components: [],
     routes: [],
     layouts: [],
-    currentPage: null,
+    currentPage: { name: "", extra_data: "" },
   },
   reducers: {
     setNodes: (state, { payload }) => {

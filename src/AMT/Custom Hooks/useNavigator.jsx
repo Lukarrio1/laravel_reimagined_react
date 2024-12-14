@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getMemLinksAndComponents } from "../Stores/coreNodes";
 import { createQueryString } from "../Abstract/Helpers";
 import { useCallback } from "react";
+import useIsRegularReactLinkValid from "./useIsRegularReactLinkValid";
 
 /**
  * @description Custom hook for navigating through the application using a specific UUID.
@@ -41,7 +42,7 @@ export default function useNavigator(UUID) {
       // Construct the link segment by replacing parameter placeholders
       linkSeg = linkSeg
         .map((seg) => {
-          if (linkSegValue[seg] != null) {
+          if (linkSegValue[seg] != undefined) {
             return linkSegValue[seg]; // Replace with parameter value if it exists
           }
           return seg; // Keep the segment as is if no replacement is needed
@@ -56,7 +57,7 @@ export default function useNavigator(UUID) {
     },
     [Actual_link] // Dependency for memoization to recalculate if Actual_link changes
   );
-
+  const isRegularLinkValid = useIsRegularReactLinkValid();
   /**
    * @description Sets navigation properties by processing the link with provided parameters.
    * @param {object} options - Options object containing params and queryParams.
@@ -68,11 +69,17 @@ export default function useNavigator(UUID) {
     ({ params = {}, queryParams = {} }) => {
       const linkSeg = processLink(params, queryParams); // Process the link with params and query params
       return {
-        navigate: () => navigate(linkSeg), // Function to navigate to the constructed link
+        navigate: () => {
+          if (isRegularLinkValid) {
+            navigate(linkSeg);
+            return;
+          }
+          window.location.href = linkSeg;
+        }, // Function to navigate to the constructed link
         node: { ...Actual_link, node_route: linkSeg }, // Return the modified node with the new route
       };
     },
-    [navigate, Actual_link] // Dependencies for memoization
+    [navigate, Actual_link, isRegularLinkValid] // Dependencies for memoization
   );
 
   return {

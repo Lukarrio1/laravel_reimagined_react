@@ -1,11 +1,11 @@
 import React, { useLayoutEffect } from "react";
 import AnimationWrapper from "../../AMT/Wrappers/AnimationWrapper";
-import ButtonSpinnerComponent from "../../AMT/Components/ButtonSpinnerComponent";
 import useInput from "../../AMT/Custom Hooks/Html/useInput";
 import { Constants } from "../../AMT/Abstract/Constants";
 import useVerbiage from "../../AMT/Custom Hooks/useVerbiage";
 import useAuthDataLayer from "../../AMT/Data-layer/useAuthDataLayer";
 import Link from "../../AMT/Components/Link";
+import SpinnerComponent from "../../AMT/Components/SpinnerComponent";
 const {
   uuids: {
     auth_uuids: { password_reset_page_uuid, login_page_link_uuid },
@@ -80,10 +80,10 @@ export default function PasswordReset() {
                   <div className="mb-3">
                     <div className="text-center">
                       <button className="btn btn-sm btn-primary" type="submit">
-                        <ButtonSpinnerComponent
+                        <SpinnerComponent
                           text={getVerbiage("password_reset_form_btn")}
                           isLoading={updatingUserPassword()}
-                        ></ButtonSpinnerComponent>
+                        ></SpinnerComponent>
                       </button>
                     </div>
                   </div>

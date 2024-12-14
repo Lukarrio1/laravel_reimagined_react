@@ -5,7 +5,7 @@ import AnimationWrapper from "../../AMT/Wrappers/AnimationWrapper";
 import useInput from "../../AMT/Custom Hooks/Html/useInput";
 import useAuthDataLayer from "../../AMT/Data-layer/useAuthDataLayer";
 import { Constants } from "../../AMT/Abstract/Constants";
-import ButtonSpinnerComponent from "../../AMT/Components/ButtonSpinnerComponent";
+import SpinnerComponent from "../../AMT/Components/SpinnerComponent";
 const {
   uuids: {
     auth_uuids: { register_page_uuid, login_page_link_uuid },
@@ -154,10 +154,10 @@ const Register = () => {
                     className="btn btn-primary"
                     disabled={registering()}
                   >
-                    <ButtonSpinnerComponent
+                    <SpinnerComponent
                       text={getVerbiage("register_button")}
                       isLoading={registering()}
-                    ></ButtonSpinnerComponent>
+                    ></SpinnerComponent>
                   </button>
                 </div>
               </form>
