@@ -6,7 +6,7 @@ import { Constants } from "../Abstract/Constants";
 import { useParams } from "react-router-dom";
 import useNavigator from "../Custom Hooks/useNavigator";
 import { useDispatch } from "react-redux";
-import { logout } from "../Stores/auth";
+import { logout, setAuthProperties } from "../Stores/auth";
 import useSystemMessage from "../Custom Hooks/useSystemMessage";
 
 const {
@@ -14,6 +14,7 @@ const {
     auth_uuids,
     email_verification_page: { email_verification_endpoint_uuid },
     home_page: { home_page_link_uuid },
+    user_uuids: { profile_endpoint_uuid },
   },
 } = Constants;
 
@@ -98,7 +99,20 @@ export default function useAuthDataLayer() {
     );
   };
 
+  const getUserProfile = async () => {
+    try {
+      const {
+        data: { user },
+      } = await restClient(profile_endpoint_uuid);
+      dispatch(setAuthProperties(user));
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
   return {
+    getUserProfile,
     logoutUser,
     login,
     register,

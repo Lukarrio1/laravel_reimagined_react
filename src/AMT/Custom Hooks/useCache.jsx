@@ -1,10 +1,11 @@
 import { getWithTTL, setWithTTL } from "../Abstract/localStorage";
 import useGetNode from "./useGetNode";
 
-export default function useCache(uuid = "") {
-  const { getProperties } = useGetNode(uuid);
-  const ttl = +getProperties("node_cache_ttl");
-  const cachedRestData = async (key = "", restCall = async () => null) => {
+export default function useCache() {
+  const { getProperties } = useGetNode();
+
+  const process = async (uuid = "", key = "", restCall = async () => null) => {
+    const ttl = +getProperties(uuid, "node_cache_ttl");
     let cachedData = getWithTTL(key);
     if (ttl == 0) {
       const response = await restCall();
@@ -23,6 +24,6 @@ export default function useCache(uuid = "") {
     return cachedData;
   };
   return {
-    cachedRestData,
+    process,
   };
 }

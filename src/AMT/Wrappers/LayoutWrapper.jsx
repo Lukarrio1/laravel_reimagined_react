@@ -1,8 +1,6 @@
 import React, { memo, useLayoutEffect, useState } from "react";
 import { layouts } from "../Abstract/PagesAndLayouts";
 import useLayouts from "../Custom Hooks/useLayouts";
-import { useDispatch } from "react-redux";
-import { setCurrentPage } from "../Stores/coreNodes";
 import useCurrentPage from "../Custom Hooks/useCurrentPage";
 
 /**
@@ -32,7 +30,6 @@ const LayoutWrapper = memo(({ Component, page }) => {
         <ActualLayout Component={Component} page={page} />
       ) : null
     );
-
     // Dispatch the current page to Redux to update the application state
     currentPage.setCurrentPage(page);
   }, [page]);

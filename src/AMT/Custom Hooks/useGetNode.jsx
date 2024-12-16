@@ -4,19 +4,21 @@ import {
   getMemRoutes,
 } from "../Stores/coreNodes";
 
-export default function useGetNode(uuid = "") {
-  const Node = [
+export default function useGetNode() {
+  const Nodes = [
     ...useSelector((state) => getLinksPagesLayoutsAndComponents(state)),
     ...useSelector((state) => getMemRoutes(state)),
-  ]?.find((node) => node?.uuid === uuid);
+  ];
 
   return {
     node: { ...Node },
-    getProperties: (prop = null) =>
-      prop
+    getProperties: (uuid, prop = null) => {
+      Node = Nodes?.find((node) => node?.uuid === uuid);
+      return prop
         ? Node?.properties?.value[prop] === undefined
           ? null
           : Node?.properties?.value[prop]
-        : Node?.properties?.value,
+        : Node?.properties?.value;
+    },
   };
 }

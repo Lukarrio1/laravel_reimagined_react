@@ -28,6 +28,10 @@ const RedirectWrapper = memo(({ children, page }) => {
 
   const navigate = useNavigate();
 
+  const { getVerbiage } = useVerbiage(redirect_wrapper_component_uuid); // Hook to retrieve verbiage for the redirect wrapper
+
+  const redirectTimeout = +getVerbiage("timeout", {}, true);
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       // Set a timeout to manage the redirection logic
@@ -41,13 +45,10 @@ const RedirectWrapper = memo(({ children, page }) => {
         navigate(getSetting("redirect_to_after_logout")); // Redirect to the specified post-logout page
         return;
       }
-    }, 1100); // Wait for 1.1 seconds before executing the redirection logic
+    }, redirectTimeout);
 
     return () => clearTimeout(timeout); // Cleanup timeout on component unmount
-  }, [page, auth_user]);
-
-  const { getVerbiage } = useVerbiage(redirect_wrapper_component_uuid); // Hook to retrieve verbiage for the redirect wrapper
-
+  }, [page, auth_user, redirectTimeout]);
   // Memoize the rendered HTML content to optimize performance
   const Html = useMemo(
     () => (
