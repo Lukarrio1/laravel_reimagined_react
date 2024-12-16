@@ -9,9 +9,7 @@ export default function useGetNode() {
     ...useSelector((state) => getLinksPagesLayoutsAndComponents(state)),
     ...useSelector((state) => getMemRoutes(state)),
   ];
-
   return {
-    node: { ...Node },
     getProperties: (uuid, prop = null) => {
       Node = Nodes?.find((node) => node?.uuid === uuid);
       return prop
