@@ -27,3 +27,23 @@ export function getWithTTL(key) {
 
   return item.value;
 }
+export function checkLocalStorageUsage() {
+  let used = 0;
+  const maxSize = 5120; // 5MB in KB
+
+  for (let key in localStorage) {
+    if (localStorage.hasOwnProperty(key)) {
+      // Safely get the length of stored items
+      const item = localStorage.getItem(key);
+      if (item) {
+        used += item.length;
+      }
+    }
+  }
+
+  used = (used / 1024).toFixed(2); // Convert bytes to KB
+  const percentageUsed = ((used / maxSize) * 100).toFixed(2);
+  console.log(
+    `Used localStorage: ${percentageUsed}%  ${used}KB / ${maxSize}KB`
+  );
+}

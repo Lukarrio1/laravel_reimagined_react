@@ -1,8 +1,11 @@
 import React, { Suspense, useEffect, useState } from "react";
 import useCache from "./useCache";
-import { assembleApp, pages } from "../Abstract/AppStructure";
 import { useDispatch, useSelector } from "react-redux";
-import { getWithTTL, setWithTTL } from "../Abstract/localStorage";
+import {
+  checkLocalStorageUsage,
+  getWithTTL,
+  setWithTTL,
+} from "../Abstract/localStorage";
 import { getMemCurrentPage, getMemPages, setNodes } from "../Stores/coreNodes";
 import { Constants } from "../Abstract/Constants";
 import { getMemSettings, setSettings } from "../Stores/setting";
@@ -16,6 +19,8 @@ import NotFound from "../../Pages/NotFound";
 import Loading from "../../Pages/Components/Loading";
 import { store } from "../../store/store";
 import useAuthUser from "./useAuthUser";
+import useDocumentTitle from "./useDocumentTitle";
+import { pages } from "../Abstract/PagesAndLayouts";
 
 const {
   uuids: {
@@ -107,6 +112,20 @@ export default function useAssembleApp() {
     return routes;
   };
 
+  const monitorCache = async () => {
+    let current_cache_token = getWithTTL(settings_endpoint_uuid);
+    if (current_cache_token != null || current_cache_token != undefined) {
+      current_cache_token = current_cache_token?.find(
+        (s) => s.key == "is_cache_valid"
+      )?.properties?.value;
+    } else return;
+    const { data } = await restClient(monitor_endpoint_uuid);
+    if (!data?.is_cache_valid) return;
+    if (data?.is_cache_valid !== current_cache_token) {
+      if (current_cache_token) localStorage.clear();
+    }
+  };
+
   const user = useAuthUser();
 
   const assembleApp = async (isAuthValid = false, callback = () => null) => {
@@ -125,7 +144,12 @@ export default function useAssembleApp() {
   useEffect(() => {
     if (!pages_properties) return;
     setRoutes((prev) => generateRoutes());
+    const timeout = setTimeout(() => monitorCache(), 20000);
+    checkLocalStorageUsage();
+    return () => clearTimeout(timeout);
   }, [pages_properties]);
+
+  useDocumentTitle();
 
   return routes;
 }

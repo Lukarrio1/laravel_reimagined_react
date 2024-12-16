@@ -1,13 +1,12 @@
-import React from "react";
-import { clearErrors } from "../Stores/errors";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { Constants } from "../Abstract/Constants";
+import useNavigator from "../Custom Hooks/useNavigator";
 import useRest from "../Custom Hooks/useRest";
 import useSettings from "../Custom Hooks/useSettings";
-import { Constants } from "../Abstract/Constants";
-import { useParams } from "react-router-dom";
-import useNavigator from "../Custom Hooks/useNavigator";
-import { useDispatch } from "react-redux";
-import { logout, setAuthProperties } from "../Stores/auth";
 import useSystemMessage from "../Custom Hooks/useSystemMessage";
+import { logout, setAuthProperties } from "../Stores/auth";
+import { clearErrors } from "../Stores/errors";
 
 const {
   uuids: {
