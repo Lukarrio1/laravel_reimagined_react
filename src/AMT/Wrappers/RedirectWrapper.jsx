@@ -30,7 +30,10 @@ const RedirectWrapper = memo(({ children, page }) => {
 
   const { getVerbiage } = useVerbiage(redirect_wrapper_component_uuid); // Hook to retrieve verbiage for the redirect wrapper
 
-  const redirectTimeout = +getVerbiage("timeout", {}, true);
+  const redirectTimeout = useMemo(
+    () => +getVerbiage("timeout", {}, true),
+    [getVerbiage]
+  );
 
   useEffect(() => {
     const timeout = setTimeout(() => {

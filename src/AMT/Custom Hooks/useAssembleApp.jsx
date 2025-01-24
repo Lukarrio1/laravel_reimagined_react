@@ -1,26 +1,24 @@
 import React, { Suspense, useEffect, useState } from "react";
-import useCache from "./useCache";
 import { useDispatch, useSelector } from "react-redux";
+import { Route } from "react-router-dom";
+import Loading from "../../Pages/Components/Loading";
+import NotFound from "../../Pages/NotFound";
+import { Constants } from "../Abstract/Constants";
 import {
   checkLocalStorageUsage,
   getWithTTL,
   setWithTTL,
 } from "../Abstract/localStorage";
-import { getMemCurrentPage, getMemPages, setNodes } from "../Stores/coreNodes";
-import { Constants } from "../Abstract/Constants";
-import { getMemSettings, setSettings } from "../Stores/setting";
+import { pages } from "../Abstract/PagesAndLayouts";
 import { restClient } from "../Abstract/restClient";
 import { setAuthProperties } from "../Stores/auth";
-import useAuthDataLayer from "../Data-layer/useAuthDataLayer";
-import { Route } from "react-router-dom";
-import RedirectWrapper from "../Wrappers/RedirectWrapper";
+import { getMemPages, setNodes } from "../Stores/coreNodes";
+import { setSettings } from "../Stores/setting";
 import LayoutWrapper from "../Wrappers/LayoutWrapper";
-import NotFound from "../../Pages/NotFound";
-import Loading from "../../Pages/Components/Loading";
-import { store } from "../../store/store";
+import RedirectWrapper from "../Wrappers/RedirectWrapper";
 import useAuthUser from "./useAuthUser";
 import useDocumentTitle from "./useDocumentTitle";
-import { pages } from "../Abstract/PagesAndLayouts";
+import useMonitorCache from "./useMonitorCache";
 
 const {
   uuids: {
@@ -112,22 +110,6 @@ export default function useAssembleApp() {
     return routes;
   };
 
-  const monitorCache = async () => {
-    let current_cache_token = getWithTTL(settings_endpoint_uuid);
-    if (current_cache_token != null || current_cache_token != undefined) {
-      current_cache_token = current_cache_token?.find(
-        (s) => s.key == "is_cache_valid"
-      )?.properties?.value;
-    } else return;
-    const { data } = await restClient(monitor_endpoint_uuid);
-    if (!data?.is_cache_valid) return;
-    if (data?.is_cache_valid !== current_cache_token) {
-      if (current_cache_token) localStorage.clear();
-    }
-  };
-
-  const user = useAuthUser();
-
   const assembleApp = async (isAuthValid = false, callback = () => null) => {
     callback();
     if ((await getUserProfile()) == true) {
@@ -135,6 +117,8 @@ export default function useAssembleApp() {
     } else setUpNodes(guest_nodes_endpoint_uuid, dispatch);
     return true;
   };
+
+  const user = useAuthUser();
 
   useEffect(() => {
     if (user) return;
@@ -144,12 +128,11 @@ export default function useAssembleApp() {
   useEffect(() => {
     if (!pages_properties) return;
     setRoutes((prev) => generateRoutes());
-    const timeout = setTimeout(() => monitorCache(), 20000);
     checkLocalStorageUsage();
-    return () => clearTimeout(timeout);
   }, [pages_properties]);
 
   useDocumentTitle();
+  useMonitorCache();
 
   return routes;
 }

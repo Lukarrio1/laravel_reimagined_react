@@ -19,10 +19,15 @@ const {
 
 export default function useAuthDataLayer() {
   const { restClient, getIsLoading } = useRest();
+
   const { setMessage } = useSystemMessage();
+
   const { getSetting } = useSettings();
+
   const { setNavProperties } = useNavigator(home_page_link_uuid);
+
   const dispatch = useDispatch();
+
   const { token } = useParams();
 
   const login = async (obj) => {

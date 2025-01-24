@@ -24,10 +24,6 @@ const Login = () => {
 
   const { clearError, getError } = useErrors();
 
-  useEffect(() => {
-    return () => clearError();
-  }, []);
-
   const {
     setProperties: setEmailProperties,
     value: email,
