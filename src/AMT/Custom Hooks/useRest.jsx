@@ -6,7 +6,7 @@ import { useCallback } from "react";
 import { getMemRoutes } from "../Stores/coreNodes";
 import { setLoadingProperties } from "../Stores/loading";
 import useIsLoading from "./useIsLoading";
-import useSystemMessage from "./useSystemMessage";
+import useCache from "./useCache";
 
 /**
  * @description This hook returns the restClient which can be used to make async calls to the server
@@ -14,7 +14,6 @@ import useSystemMessage from "./useSystemMessage";
  * @returns {object} - An object containing the restClient function and loading state functions.
  */
 export default function useRest() {
-  const { setMessage } = useSystemMessage();
   const Routes = useSelector((state) => getMemRoutes(state)); // Retrieve routes from Redux state
   const { isLoading, isLoadingV2 } = useIsLoading(); // Get loading states from the custom hook
   const dispatch = useDispatch(); // Initialize the Redux dispatch function
@@ -32,77 +31,7 @@ export default function useRest() {
     },
     [dispatch]
   ); // Dependency for memoization
-
-  /**
-   * @description Fetches data from the server using the rest client.
-   * @param {string} uuid - The unique identifier for the route.
-   * @param {object} route_params - Parameters to be included in the route.
-   * @param {object} data_to_send - Data to be sent in the request body.
-   * @param {object} route - The route object retrieved from Redux state.
-   * @param {boolean} use_cache - Flag to indicate if caching should be used.
-   * @param {object} query_params - Query parameters to be appended to the URL.
-   * @returns {Promise<object>} - The data retrieved from the server.
-   */
-  const fetchData = async (
-    uuid,
-    route_params,
-    data_to_send,
-    route,
-    use_cache,
-    query_params
-  ) => {
-    const data = await restClient(
-      uuid,
-      route_params,
-      data_to_send,
-      route,
-      use_cache,
-      query_params
-    ); // Call the rest client to fetch data
-    return data; // Return the fetched data
-  };
-
-  /**
-   * @description Handles caching of fetched data based on TTL.
-   * @param {string} uuid - The unique identifier for the route.
-   * @param {object} route_params - Parameters to be included in the route.
-   * @param {object} data_to_send - Data to be sent in the request body.
-   * @param {object} route - The route object retrieved from Redux state.
-   * @param {boolean} use_cache - Flag to indicate if caching should be used.
-   * @param {object} query_params - Query parameters to be appended to the URL.
-   * @returns {Promise<object>} - The data retrieved from the server.
-   */
-  const handleCaching = async (
-    uuid,
-    route_params,
-    data_to_send,
-    route,
-    use_cache = false,
-    query_params
-  ) => {
-    // Uncomment and implement caching logic as needed
-    // const node_cache_ttl = route?.properties?.value?.node_cache_ttl;
-    // const cache_name = `${uuid}_${node_cache_ttl}`;
-    // const cached_data = getWithTTL(cache_name);
-    // if (node_cache_ttl > 0) {
-    //   if (!cached_data) {
-    //     const data = await fetchData(uuid, route_params, data_to_send, route, use_cache);
-    //     setWithTTL(cache_name, data, node_cache_ttl);
-    //     return data;
-    //   } else {
-    //     return cached_data;
-    //   }
-    // }
-    return await fetchData(
-      uuid,
-      route_params,
-      data_to_send,
-      route,
-      use_cache,
-      query_params
-    ); // Return the fetched data
-  };
-
+  const processCache = useCache();
   return {
     restClient: async (
       uuid,
@@ -122,13 +51,18 @@ export default function useRest() {
       } // Return null if route is not found
       handleIsLoading(uuid, true, loading_state_ref); // Set loading state to true
       try {
-        const data = await handleCaching(
+        const data = await processCache.process(
           uuid,
-          route_params,
-          data_to_send,
-          route,
-          use_cache,
-          query_params
+          uuid + "_data",
+          async () =>
+            await restClient(
+              uuid,
+              route_params,
+              data_to_send,
+              route,
+              use_cache,
+              query_params
+            )
         ); // Fetch data with caching
         handleIsLoading(uuid, false, loading_state_ref); // Set loading state to false
         return data; // Return the fetched data

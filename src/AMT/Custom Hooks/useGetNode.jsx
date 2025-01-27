@@ -11,7 +11,7 @@ export default function useGetNode() {
   ];
   return {
     getProperties: (uuid, prop = null) => {
-      Node = Nodes?.find((node) => node?.uuid === uuid);
+      const Node = Nodes?.find((node) => node?.uuid === uuid);
       return prop
         ? Node?.properties?.value[prop] === undefined
           ? null

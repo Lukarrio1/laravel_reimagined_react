@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useLayoutEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import useVerbiage from "../Custom Hooks/useVerbiage"; // Custom hook for retrieving verbiage
 import { useNavigate } from "react-router-dom"; // Hook to programmatically navigate between routes
 import useSettings from "../Custom Hooks/useSettings"; // Custom hook for application settings
@@ -22,7 +22,7 @@ const {
  *
  * @returns {JSX.Element} A warning message if access is denied or the child components if access is granted.
  */
-const RedirectWrapper = memo(({ children, page }) => {
+const RedirectWrapper = ({ children, page }) => {
   const { getSetting } = useSettings();
   const auth_user = useAuthUser();
 
@@ -79,6 +79,6 @@ const RedirectWrapper = memo(({ children, page }) => {
   );
 
   return Html;
-});
+};
 
 export default RedirectWrapper;

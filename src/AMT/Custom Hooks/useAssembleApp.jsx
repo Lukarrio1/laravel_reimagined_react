@@ -23,7 +23,7 @@ import useMonitorCache from "./useMonitorCache";
 const {
   uuids: {
     user_uuids: { profile_endpoint_uuid },
-    system_uuids: { monitor_endpoint_uuid, settings_endpoint_uuid },
+    system_uuids: { settings_endpoint_uuid },
     auth_uuids: { auth_nodes_endpoint_uuid, guest_nodes_endpoint_uuid },
   },
 } = Constants;
@@ -110,7 +110,7 @@ export default function useAssembleApp() {
     return routes;
   };
 
-  const assembleApp = async (isAuthValid = false, callback = () => null) => {
+  const assembleApp = async (callback = () => null) => {
     callback();
     if ((await getUserProfile()) == true) {
       setUpNodes(auth_nodes_endpoint_uuid, dispatch);
@@ -127,7 +127,7 @@ export default function useAssembleApp() {
 
   useEffect(() => {
     if (!pages_properties) return;
-    setRoutes((prev) => generateRoutes());
+    setRoutes(generateRoutes());
     checkLocalStorageUsage();
   }, [pages_properties]);
 

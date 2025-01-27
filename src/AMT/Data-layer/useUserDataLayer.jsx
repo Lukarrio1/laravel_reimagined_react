@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useDispatch } from "react-redux";
 import { setAuthProperties } from "../Stores/auth";
 import { Constants } from "../Abstract/Constants";

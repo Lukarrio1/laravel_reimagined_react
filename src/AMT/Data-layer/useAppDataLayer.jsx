@@ -5,7 +5,6 @@ import { setSettings } from "../Stores/setting";
 import { restClient } from "../Abstract/restClient";
 import { Constants } from "../Abstract/Constants";
 import { getMemPages, setNodes } from "../Stores/coreNodes";
-import useUserDataLayer from "./useUserDataLayer";
 import useAuthUser from "../Custom Hooks/useAuthUser";
 import { Route } from "react-router-dom";
 import RedirectWrapper from "../Wrappers/RedirectWrapper";
@@ -15,8 +14,7 @@ import Loading from "../../Pages/Components/Loading";
 
 const {
   uuids: {
-    user_uuids: { profile_endpoint_uuid },
-    system_uuids: { monitor_endpoint_uuid, settings_endpoint_uuid },
+    system_uuids: { settings_endpoint_uuid },
     auth_uuids: { auth_nodes_endpoint_uuid, guest_nodes_endpoint_uuid },
   },
 } = Constants;
@@ -25,7 +23,7 @@ export default function useAppDataLayer() {
   const dispatch = useDispatch();
   const [loading, setIsLoading] = useState(false);
   const [routes, setRoutes] = useState([]);
-  const { getProfile } = useUserDataLayer();
+
   const pages_properties = useSelector((state) => getMemPages(state));
 
   const auth_user = useAuthUser();
@@ -108,11 +106,11 @@ export default function useAppDataLayer() {
   //   }, [auth_user]);
 
   useEffect(() => {
-    setIsLoading((prev) => true);
+    setIsLoading((prev) => !prev);
     // if (!pages_properties) return;
     setRoutes(generateRoutes());
     getSettings();
-    setIsLoading((prev) => false);
+    setIsLoading((prev) => !prev);
   }, [pages_properties]);
 
   return { getSettings, assembleApp, loading, routes };

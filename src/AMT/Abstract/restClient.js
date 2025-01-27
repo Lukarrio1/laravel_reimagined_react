@@ -8,7 +8,6 @@ export const restClient = async (
   route_params = {},
   data_to_send = {},
   route_data = null,
-  use_cache = false,
   query_params = {}
 ) => {
   let node = !route_data ? await getNodeData(route_uuid) : route_data;

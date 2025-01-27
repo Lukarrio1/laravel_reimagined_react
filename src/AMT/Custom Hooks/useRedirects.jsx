@@ -1,4 +1,3 @@
-import React from "react";
 import useNavigator from "./useNavigator";
 import { store } from "../../store/store";
 import { getMemRedirect } from "../Stores/redirect";

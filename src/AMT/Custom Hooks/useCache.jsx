@@ -10,14 +10,14 @@ export default function useCache() {
     if (ttl == 0) {
       const response = await restCall();
       if (response == null) return;
-      const { data } = response;
+      const data = response;
       return data;
     }
 
     if (cachedData == null) {
       const response = await restCall();
       if (response == null) return;
-      const { data } = response;
+      const data = response;
       setWithTTL(key, data, ttl);
       cachedData = data;
     }
