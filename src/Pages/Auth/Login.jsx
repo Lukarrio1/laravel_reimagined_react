@@ -83,6 +83,7 @@ const Login = () => {
                 onSubmit={(e) => {
                   e.preventDefault();
                   clearError();
+
                   login({ password, email });
                 }}
               >

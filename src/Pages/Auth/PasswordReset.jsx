@@ -79,7 +79,11 @@ export default function PasswordReset() {
                   <div className="mb-3">{confirmPasswordHtml}</div>
                   <div className="mb-3">
                     <div className="text-center">
-                      <button className="btn btn-sm btn-primary" type="submit">
+                      <button
+                        className="btn btn-sm btn-primary"
+                        type="submit"
+                        disabled={updatingUserPassword()}
+                      >
                         <SpinnerComponent
                           text={getVerbiage("password_reset_form_btn")}
                           isLoading={updatingUserPassword()}

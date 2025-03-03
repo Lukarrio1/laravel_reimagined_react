@@ -7,17 +7,15 @@ import { getMemRoutes } from "../Stores/coreNodes";
 import { setLoadingProperties } from "../Stores/loading";
 import useIsLoading from "./useIsLoading";
 import useCache from "./useCache";
+import { createCacheName } from "../Abstract/Helpers";
+import useAppState from "./useAppState";
+import useGetNode from "./useGetNode";
 
-/**
- * @description This hook returns the restClient which can be used to make async calls to the server
- * and it automatically pushes errors to error state for ease of use.
- * @returns {object} - An object containing the restClient function and loading state functions.
- */
 export default function useRest() {
   const Routes = useSelector((state) => getMemRoutes(state)); // Retrieve routes from Redux state
   const { isLoading, isLoadingV2 } = useIsLoading(); // Get loading states from the custom hook
   const dispatch = useDispatch(); // Initialize the Redux dispatch function
-
+  const { state, set: setCacheKey } = useAppState();
   /**
    * @description Handles loading state for a specific UUID.
    * @param {string} uuid - The unique identifier for the route.
@@ -27,51 +25,62 @@ export default function useRest() {
     (uuid, currentState, loading_ref) => {
       dispatch(
         setLoadingProperties({ key: uuid, loading: currentState, loading_ref })
-      ); // Dispatch loading state
+      );
     },
     [dispatch]
-  ); // Dependency for memoization
+  );
   const processCache = useCache();
+
+  const getProperties = useGetNode();
+
   return {
     restClient: async (
       uuid,
       route_params = {},
       data_to_send = {},
-      use_cache = false,
       query_params = {},
+      ignoreCache = false,
       loading_state_ref = 0
     ) => {
-      const route = Routes?.find((r) => r?.uuid === uuid); // Find the route by UUID
+      const route = Routes?.find((r) => r?.uuid === uuid);
+      const route_method = getProperties(uuid, "route_method");
       if (!route) {
-        // setMessage({
-        //   message: "Something went wrong try again later ...",
-        //   className: "text-center h3 text-danger",
-        // });
         return null;
-      } // Return null if route is not found
-      handleIsLoading(uuid, true, loading_state_ref); // Set loading state to true
+      }
+      handleIsLoading(uuid, true, loading_state_ref);
       try {
+        const cacheName = uuid + "_" + createCacheName(query_params);
+        if (route_method === "get") {
+          const restCacheNames = state[uuid] ?? [];
+          setCacheKey({
+            key: uuid,
+            value: [
+              ...(restCacheNames?.filter((cn) => cn !== cacheName) ?? []),
+              cacheName,
+            ],
+          });
+        }
         const data = await processCache.process(
           uuid,
-          uuid + "_data",
+          cacheName,
           async () =>
             await restClient(
               uuid,
               route_params,
               data_to_send,
               route,
-              use_cache,
               query_params
-            )
-        ); // Fetch data with caching
-        handleIsLoading(uuid, false, loading_state_ref); // Set loading state to false
-        return data; // Return the fetched data
+            ),
+          ignoreCache
+        );
+        handleIsLoading(uuid, false, loading_state_ref);
+        return data;
       } catch (error) {
         if (error != null) {
           dispatch(setErrors(error));
-        } // Dispatch error if present
-        handleIsLoading(uuid, false, loading_state_ref); // Set loading state to false
-        return null; // Return null in case of error
+        }
+        handleIsLoading(uuid, false, loading_state_ref);
+        return null;
       }
     },
     /**

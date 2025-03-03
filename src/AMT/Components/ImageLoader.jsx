@@ -17,11 +17,11 @@ export const ImageLoader = memo(({ src = null, alt, className, style }) => {
   };
 
   useEffect(() => {
-    if (isLoading == true) {
+    if (isLoading === true) {
       setImgSrc((prev) => LoadingImage);
       return;
     }
-    if (error == true) {
+    if (error === true) {
       setImgSrc((prev) => ImageNotFound);
       return;
     }

@@ -5,12 +5,6 @@ import { createQueryString } from "../Abstract/Helpers";
 import { useCallback } from "react";
 import useIsRegularReactLinkValid from "./useIsRegularReactLinkValid";
 
-/**
- * @description Custom hook for navigating through the application using a specific UUID.
- * This hook processes links and generates navigation properties based on provided parameters and query parameters.
- * @param {string} UUID - The unique identifier for the link to navigate to.
- * @returns {object} - An object containing a method to set navigation properties and navigate to the constructed link.
- */
 export default function useNavigator(UUID) {
   const navigate = useNavigate();
 
@@ -65,7 +59,7 @@ export default function useNavigator(UUID) {
    * @param {object} options.queryParams - Query parameters to append to the link.
    * @returns {object} - An object containing a navigate function and the modified node.
    */
-  const setNavProperties = useCallback(
+  const setProperties = useCallback(
     ({ params = {}, queryParams = {} }) => {
       const linkSeg = processLink(params, queryParams); // Process the link with params and query params
       return {
@@ -79,10 +73,10 @@ export default function useNavigator(UUID) {
         node: { ...Actual_link, node_route: linkSeg }, // Return the modified node with the new route
       };
     },
-    [navigate, Actual_link, isRegularLinkValid] // Dependencies for memoization
+    [navigate, Actual_link, isRegularLinkValid, processLink] // Dependencies for memoization
   );
 
   return {
-    setNavProperties, // Expose the setNavProperties function
+    setProperties,
   };
 }

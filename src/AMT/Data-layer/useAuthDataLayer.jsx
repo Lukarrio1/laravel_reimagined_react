@@ -13,7 +13,7 @@ const {
     auth_uuids,
     email_verification_page: { email_verification_endpoint_uuid },
     home_page: { home_page_link_uuid },
-    user_uuids: { profile_endpoint_uuid },
+    user_uuids: { profile_endpoint_uuid, get_users_endpoint_uuid },
   },
 } = Constants;
 
@@ -34,12 +34,14 @@ export default function useAuthDataLayer() {
 
   const login = async (obj) => {
     clearErrors("invalid_credentials");
+    console.log("logining in");
     const response = await restClient(
       auth_uuids?.login_endpoint_uuid,
       {},
       { ...obj }
     );
     if (response === null) return;
+
     const { data } = response;
     sessionStorage.setItem("bearerToken", data?.token);
     window.location.href = getSetting("redirect_to_after_login");
@@ -117,7 +119,15 @@ export default function useAuthDataLayer() {
     }
   };
 
+  const getUsers = async () => {
+    const response = await restClient(get_users_endpoint_uuid);
+    if (response == null) return;
+    const { data } = response;
+    console.log(data);
+  };
+
   return {
+    getUsers,
     getUserProfile,
     logoutUser,
     login,

@@ -20,9 +20,9 @@ export default function useMonitorCache() {
 
   const monitorCache = async () => {
     let current_cache_token = getWithTTL(settings_endpoint_uuid);
-    if (current_cache_token != null || current_cache_token != undefined) {
+    if (current_cache_token != null || current_cache_token !== undefined) {
       current_cache_token = current_cache_token?.find(
-        (s) => s.key == "is_cache_valid"
+        (s) => s.key === "is_cache_valid"
       )?.properties?.value;
     } else return;
     const { data } = await restClient(monitor_endpoint_uuid);

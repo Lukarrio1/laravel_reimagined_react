@@ -55,10 +55,9 @@ export default function useAssembleApp() {
     } else {
       dispatch(setNodes(nodesCachedData));
     }
-    getAppSettings(dispatch);
   };
 
-  const getAppSettings = async (dispatch) => {
+  const getAppSettings = async () => {
     let settingsData = getWithTTL(settings_endpoint_uuid);
     if (settingsData != null) {
       dispatch(setSettings(settingsData));
@@ -122,6 +121,7 @@ export default function useAssembleApp() {
 
   useEffect(() => {
     if (user) return;
+    getAppSettings();
     assembleApp();
   }, [user]);
 

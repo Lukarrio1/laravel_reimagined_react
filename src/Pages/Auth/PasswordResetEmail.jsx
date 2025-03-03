@@ -56,7 +56,11 @@ export default function PasswordResetEmail() {
                   <div className="mb-3">{Html}</div>
                   <div className="mb-3">
                     <div className="text-center">
-                      <button className="btn btn-sm btn-primary" type="submit">
+                      <button
+                        className="btn btn-sm btn-primary"
+                        type="submit"
+                        disabled={sendingPasswordResetEmail()}
+                      >
                         <SpinnerComponent
                           text={getVerbiage("password_email_send_btn")}
                           isLoading={sendingPasswordResetEmail()}

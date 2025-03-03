@@ -6,6 +6,7 @@ import useSettings from "../AMT/Custom Hooks/useSettings";
 import useAuthUser from "../AMT/Custom Hooks/useAuthUser";
 import { Constants } from "../AMT/Abstract/Constants";
 import useNavigator from "../AMT/Custom Hooks/useNavigator";
+import useAuthDataLayer from "../AMT/Data-layer/useAuthDataLayer";
 
 const {
   uuids: {
@@ -28,6 +29,8 @@ const Home = () => {
   const { getVerbiage } = useVerbiage(home_page_uuid);
   const { getSetting } = useSettings();
 
+  const { getUsers } = useAuthDataLayer();
+
   const { setNavProperties } = useNavigator(login_page_link_uuid);
 
   const LoginPageLink = setNavProperties({
@@ -37,6 +40,7 @@ const Home = () => {
 
   useEffect(() => {
     console.log(LoginPageLink.node);
+    getUsers();
   }, []);
 
   return (

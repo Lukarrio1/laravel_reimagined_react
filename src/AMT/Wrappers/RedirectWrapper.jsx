@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from "react";
-import useVerbiage from "../Custom Hooks/useVerbiage"; // Custom hook for retrieving verbiage
 import { useNavigate } from "react-router-dom"; // Hook to programmatically navigate between routes
-import useSettings from "../Custom Hooks/useSettings"; // Custom hook for application settings
-import useAuthUser from "../Custom Hooks/useAuthUser"; // Custom hook for retrieving authenticated user data
 import { Constants } from "../Abstract/Constants"; // Constants used throughout the application
+import useAuthUser from "../Custom Hooks/useAuthUser"; // Custom hook for retrieving authenticated user data
+import useSettings from "../Custom Hooks/useSettings"; // Custom hook for application settings
+import useVerbiage from "../Custom Hooks/useVerbiage"; // Custom hook for retrieving verbiage
 
 const {
   uuids: {
@@ -26,14 +26,9 @@ const RedirectWrapper = ({ children, page }) => {
   const { getSetting } = useSettings();
   const auth_user = useAuthUser();
 
+  const { getVerbiage } = useVerbiage(redirect_wrapper_component_uuid);
+
   const navigate = useNavigate();
-
-  const { getVerbiage } = useVerbiage(redirect_wrapper_component_uuid); // Hook to retrieve verbiage for the redirect wrapper
-
-  const redirectTimeout = useMemo(
-    () => +getVerbiage("timeout", {}, true),
-    [getVerbiage]
-  );
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -48,24 +43,53 @@ const RedirectWrapper = ({ children, page }) => {
         navigate(getSetting("redirect_to_after_logout")); // Redirect to the specified post-logout page
         return;
       }
-    }, redirectTimeout);
+    }, 2000); // Wait for 1.5 seconds before executing the redirection logic
 
     return () => clearTimeout(timeout); // Cleanup timeout on component unmount
-  }, [page, auth_user, redirectTimeout]);
+  }, [page, auth_user, getSetting]);
+
+  // Hook to retrieve verbiage for the redirect wrapper
+
   // Memoize the rendered HTML content to optimize performance
   const Html = useMemo(
     () => (
       <>
         {page?.hasAccess === false ? (
           // If the user does not have access, show a warning message
-          <div className="row">
-            <div className="col-sm-6 offset-sm-3 h4 mt-5 text-center">
-              <div className="alert alert-warning" role="alert">
-                {getVerbiage("on_redirect_message", {
-                  url: auth_user
-                    ? getSetting("redirect_to_after_login", "key") // URL for logged-in users
-                    : getSetting("redirect_to_after_logout", "key"), // URL for logged-out users
-                })}
+          <div className="d-flex justify-content-center align-items-center vh-100">
+            <div className="col-sm-8 col-md-6 col-lg-5">
+              <div
+                className="alert alert-primary text-center shadow-lg p-4 rounded"
+                role="alert"
+              >
+                <h4 className="alert-heading mb-3">
+                  {getVerbiage("page_message")}
+                </h4>
+                <p className="mb-3">
+                  {getVerbiage("on_redirect_message", {
+                    url: auth_user
+                      ? getSetting("redirect_to_after_login", "key")
+                      : getSetting("redirect_to_after_logout", "key"),
+                  })}
+                </p>
+                <p>{getVerbiage("page_message_two")}</p>
+                <p>
+                  {getVerbiage("page_message_three")}{" "}
+                  <a
+                    href={
+                      auth_user
+                        ? getSetting("redirect_to_after_login")
+                        : getSetting("redirect_to_after_logout")
+                    }
+                  >
+                    {auth_user
+                      ? getSetting("redirect_to_after_login", "key")
+                      : getSetting("redirect_to_after_logout", "key")}
+                  </a>
+                </p>
+                <div className="d-flex justify-content-center mt-4">
+                  <div className="spinner-border text-warning" role="status" />
+                </div>
               </div>
             </div>
           </div>

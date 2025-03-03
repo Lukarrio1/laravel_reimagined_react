@@ -2,13 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, getMemErrors } from "../Stores/errors";
 import { useCallback } from "react";
 
-/**
- * @description Custom hook for managing errors in the application.
- * Provides functions to retrieve specific error messages and to clear errors from the state.
- * @returns {Object} - An object containing:
- *  - getError: Function to retrieve error messages by key
- *  - clearError: Function to clear errors, either all or specific ones based on key
- */
 export default function useErrors() {
   // Get current errors from the Redux state
   const errors = useSelector((state) => getMemErrors(state));

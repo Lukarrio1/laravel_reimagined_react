@@ -2,18 +2,14 @@ import React, { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { getLinksPagesLayoutsAndComponents } from "../Stores/coreNodes";
 
-/**
- *@description This hook is used to get the verbiage associated
- * with an item found by comparing the given UUID with the item's UUID.
- * @param {string} uuid - The UUID of the item to retrieve verbiage for.
- * @returns {Object} getVerbiage() - A function to retrieve interpolated verbiage.
- */
 export default function useVerbiage(uuid) {
   // Retrieve the verbiage associated with the provided UUID from the Redux store
-  const PageVerbiage =
-    useSelector((state) => getLinksPagesLayoutsAndComponents(state))?.find(
-      (item) => item?.uuid == uuid
-    )?.verbiage ?? {}; // Fallback to an empty object if not found
+  const PageVerbiage = useSelector(
+    (state) =>
+      getLinksPagesLayoutsAndComponents(state)?.find(
+        (item) => item?.uuid === uuid
+      )?.verbiage ?? {}
+  ); // Fallback to an empty object if not found
 
   /**
    * @description Updates the value of a variable based on provided prefix/suffix rules.
@@ -26,7 +22,7 @@ export default function useVerbiage(uuid) {
     (variable_name, variable_value, addPrefixOrSuffix = []) => {
       // Find the configuration for the given variable name
       const variable_to_update = addPrefixOrSuffix?.filter(
-        (item) => item?.variable_name == variable_name
+        (item) => item?.variable_name === variable_name
       )[0];
       // If no configuration is found, return the original variable value
       return variable_to_update == null
@@ -74,14 +70,14 @@ export default function useVerbiage(uuid) {
               ?.split("-}")[0];
 
             const first_seg =
-              middle_seg == undefined
+              middle_seg === undefined
                 ? ""
                 : item
                     .split("{-")
                     .filter((new_item) => new_item.length > 0)[0] ?? "";
 
             const last_seg =
-              middle_seg == undefined
+              middle_seg === undefined
                 ? ""
                 : item
                     .split("{-")
@@ -90,12 +86,13 @@ export default function useVerbiage(uuid) {
 
             // Check if the property for the variable is defined and interpolate it
             return properties[
-              middle_seg != undefined ? middle_seg : variable
-            ] != undefined
+              middle_seg !== undefined ? middle_seg : variable
+            ] !== undefined
               ? `${first_seg}${updateValues(
-                  middle_seg != undefined ? middle_seg : variable,
-                  properties[middle_seg != undefined ? middle_seg : variable] ??
-                    "",
+                  middle_seg !== undefined ? middle_seg : variable,
+                  properties[
+                    middle_seg !== undefined ? middle_seg : variable
+                  ] ?? "",
                   addPrefixOrSuffix
                 )}${last_seg}`
               : ""; // Return an empty string if no property is found
@@ -105,7 +102,7 @@ export default function useVerbiage(uuid) {
         .join(" ");
 
       // Return the processed content based on whether the key is found
-      return PageVerbiage[key] != undefined && PageVerbiage[key] != null ? (
+      return PageVerbiage[key] !== undefined && PageVerbiage[key] != null ? (
         flat_value === true ? (
           content // Return plain text if flat_value is true
         ) : (
@@ -119,7 +116,7 @@ export default function useVerbiage(uuid) {
         "" // Return an empty string if the key is not found
       );
     },
-    [PageVerbiage] // Dependency array for the useCallback hook
+    [PageVerbiage, updateValues] // Dependency array for the useCallback hook
   );
 
   return {

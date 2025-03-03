@@ -15,7 +15,7 @@ export default function useDocumentTitle() {
             extra_data ? "(" + extra_data + ")" : ""
           }`
         : "",
-    [app_name, extra_data, page_name, page, getSetting]
+    [app_name, extra_data, page_name]
   );
 
   useLayoutEffect(() => {

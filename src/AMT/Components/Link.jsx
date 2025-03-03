@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 import useIsRegularReactLinkValid from "../Custom Hooks/useIsRegularReactLinkValid";
 import useNavigator from "../Custom Hooks/useNavigator";
@@ -18,7 +18,7 @@ import useVerbiage from "../Custom Hooks/useVerbiage";
  * @param {Object} [props.enable_verbiage.verbiage_properties={}] - Properties used for interpolating values into the verbiage string.
  * @param {Array} [props.enable_verbiage.addPrefixOrSuffix=[]] - Configuration for adding prefix/suffix to interpolated values.
  * @param {Object} [props.queryParams={}] - An object containing any query parameters to append to the link URL.
- * @param {function|null} [props.prefetch=null] - Optional callback function for prefetching data related to the link.
+ * @param {function|null} [props.prefetch=()=>null] - Optional callback function for prefetching data related to the link.
  * @param {...Object} rest - Additional props to be passed to the NavLink component.
  *
  * @returns {JSX.Element|null} A NavLink element if the user has access; otherwise, null.
@@ -36,33 +36,38 @@ const Link = ({
   },
   queryParams = {},
   params = {},
-  prefetch = null,
+  prefetch = () => null,
   ...rest
 }) => {
-  const [newLink, setNewLink] = useState(null);
   const { getVerbiage } = useVerbiage(uuid);
-  const queryParamsKeys = Object.keys(queryParams);
-  const { setNavProperties } = useNavigator(uuid);
-  const navigator = setNavProperties({
+  const { setProperties } = useNavigator(uuid);
+
+  const navigator = setProperties({
     queryParams: queryParams,
     params: params,
   });
+
   const isRegularLinkValid = useIsRegularReactLinkValid();
   // Callback to handle prefetching when the link is hovered over
   const handlePrefetch = useCallback(
-    () => (prefetch === null ? null : prefetch()), // Call prefetch if it is defined
+    () => prefetch(), // Call prefetch if it is defined
     [prefetch]
   );
-  const content = !text
-    ? enable_verbiage?.enable === true
-      ? getVerbiage(
-          enable_verbiage?.verbiage_key, // Retrieve verbiage based on the specified key
-          enable_verbiage?.verbiage_properties, // Pass properties for interpolation
-          enable_verbiage?.flat_value, // Specify if the return value should be flat
-          enable_verbiage?.addPrefixOrSuffix // Pass prefix/suffix settings for interpolation
-        )
-      : newLink?.name // Fallback to the name from the actual link if no text or verbiage is provided
-    : text;
+
+  const content = useMemo(
+    () =>
+      !text
+        ? enable_verbiage?.enable === true
+          ? getVerbiage(
+              enable_verbiage?.verbiage_key, // Retrieve verbiage based on the specified key
+              enable_verbiage?.verbiage_properties, // Pass properties for interpolation
+              enable_verbiage?.flat_value, // Specify if the return value should be flat
+              enable_verbiage?.addPrefixOrSuffix // Pass prefix/suffix settings for interpolation
+            )
+          : navigator?.node?.name // Fallback to the name from the actual link if no text or verbiage is provided
+        : text,
+    [enable_verbiage, navigator, getVerbiage, text]
+  );
 
   const NewNavLink = useMemo(
     () => (
@@ -75,14 +80,17 @@ const Link = ({
         {content}
       </NavLink>
     ),
-    [navigator]
+    [navigator, handlePrefetch, content, rest]
   );
-  const standard_link =
-    isRegularLinkValid == false ? (
-      <a href={navigator?.node?.node_route} {...rest}>
-        {content}
-      </a>
-    ) : null;
+  const standard_link = useMemo(
+    () =>
+      isRegularLinkValid === false ? (
+        <a href={navigator?.node?.node_route} {...rest}>
+          {content}
+        </a>
+      ) : null,
+    [isRegularLinkValid, navigator, rest, content]
+  );
 
   // Render the NavLink if the user has access to the link
   return navigator?.node?.hasAccess

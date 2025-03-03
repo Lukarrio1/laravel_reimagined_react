@@ -62,6 +62,8 @@ export const Constants = {
     user_uuids: {
       profile_endpoint_uuid:
         "kZ5ZSVmv6BWUYWbPI0is2N3kiy6agWIm4fZw4LUBUbx2xi2Reo",
+      get_users_endpoint_uuid:
+        "1MViVNWWkbyZcy0CRK2ACCSiOzBlSQhT6qegcKnKTpn4tYkcb9",
     },
   },
 };
